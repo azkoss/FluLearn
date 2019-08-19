@@ -1,28 +1,41 @@
-# flutter_app
+buildscript {
+    repositories {
+        //仓库源是从上往下寻找的，优先从阿里云镜像仓库获取
+        maven {
+            url 'https://maven.aliyun.com/repository/jcenter'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/google'
+        }
+        jcenter()
+        google()
+    }
 
-安卓 Native+Flutter 应用开发实战
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+    }
+}
 
+allprojects {
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/jcenter'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/google'
+        }
+        jcenter()
+        google()
+    }
+}
 
-## Getting Started
-
-- [第三方共享包检索](https://pub.dev/flutter)
-- [Flutter开发环境搭建](https://flutter.dev/docs/get-started/install)
-- [Flutter API手册](https://api.flutter.dev/)
-- [《Flutter实战》电子书](https://book.flutterchina.club)
-
-
-## 踩坑记录
-
-- 在Android Studio中准备好Dart & Flutter插件及SDK后，无法连接模拟器。
-```
-因为Android SDK的位置不是默认的C:\Users\Administrator\AppData\Local\Android\Sdk导致的，新增系统环境变量“ANDROID_HOME”指向自己的Android SDK的位置，在系统环境变量“Path”增加“%ANDROID_HOME%\platform-tools”，重启Android Studio即可。
-```
-
-
-- 运行提示“Android dependency 'androidx...' has different version for the compile...”。
-```
-问题参见 https://github.com/flutter/flutter/issues/27254 。这是多个安卓模块依赖的androidx版本冲突导致的，解决办法：
-根据报错，在安卓原生项目的根部build.gradle里加入以下类似的规则：
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
 subprojects {
     project.configurations.all {
         //此处可用于解决依赖冲突问题，参阅 https://developer.android.google.cn/studio/build/dependencies#duplicate_classes
@@ -47,6 +60,7 @@ subprojects {
 
     project.evaluationDependsOn(':app')
 }
-```
 
-
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
