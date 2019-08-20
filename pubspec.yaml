@@ -37,8 +37,6 @@ dependencies:
   flustars: ^0.2.6+1
   # SharedPreferences或NSUserDefaults https://github.com/flutter/plugins
   shared_preferences: ^0.5.3+4
-  # 格式化字符串 https://github.com/Naddiseo/dart-sprintf
-  sprintf: ^4.0.2
   # 吐司 https://github.com/PonnamKarthik/FlutterToast
   # If you don't want to use androidx then use version 2.2.11
   fluttertoast: ^3.1.0

@@ -1,6 +1,5 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:sprintf/sprintf.dart';
 
 import '../browser/browser_router.dart';
 import '../manager/app_manager.dart';
@@ -71,7 +70,6 @@ class RouteUtils {
     //fluro 不支持传中文,需转换
     String titleEn = Uri.encodeComponent(title);
     String urlEn = Uri.encodeComponent(url);
-    push(context,
-        sprintf("%s?title=%s&url=%s", [BrowserRouter.webPage, titleEn, urlEn]));
+    push(context, BrowserRouter.webPage + "?title=$titleEn&url=$urlEn");
   }
 }

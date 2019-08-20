@@ -14,9 +14,14 @@ void main() {
   runApp(new MyApp());
 
   if (Platform.isAndroid) {
-    AppManager.logger.d("设置状态栏完全透明，默认是半透明的");
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    AppManager.logger.d("改变状态栏及系统虚拟导航栏默认颜色");
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarDividerColor: Colors.white10,
+        systemNavigationBarIconBrightness: Brightness.dark));
   }
 }
 

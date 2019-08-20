@@ -11,7 +11,7 @@ class LyjTitleBar extends StatelessWidget implements PreferredSizeWidget {
       {Key key,
       this.backgroundColor: Colors.white,
       this.title: "",
-      this.centerTitle: "",
+        this.centerTitle: true,
       this.actionName: "",
       this.backIcon: "assets/image/ic_back_black.png",
       this.onPressed,
@@ -20,7 +20,7 @@ class LyjTitleBar extends StatelessWidget implements PreferredSizeWidget {
 
   final Color backgroundColor;
   final String title;
-  final String centerTitle;
+  final bool centerTitle;
   final String backIcon;
   final String actionName;
   final VoidCallback onPressed;
@@ -44,11 +44,10 @@ class LyjTitleBar extends StatelessWidget implements PreferredSizeWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    alignment: centerTitle.isEmpty
-                        ? Alignment.centerLeft
-                        : Alignment.center,
+                    alignment:
+                    centerTitle ? Alignment.center : Alignment.centerLeft,
                     width: double.infinity,
-                    child: Text(title.isEmpty ? centerTitle : title,
+                    child: Text(title,
                         maxLines: 1,
                         style: TextStyle(
                           fontSize: 18,

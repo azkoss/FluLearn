@@ -45,7 +45,7 @@ class _BrowserPageState extends State<BrowserPage> {
       onWillPop: _goBack,
       child: Scaffold(
         appBar: LyjTitleBar(
-          centerTitle: widget.changeTitle ? _title : widget.title,
+          title: widget.changeTitle ? _title : widget.title,
           actionName: "关闭",
           onPressed: () {
             RouteUtils.goBack(context);

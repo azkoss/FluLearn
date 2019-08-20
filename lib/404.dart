@@ -10,7 +10,7 @@ class PageNotFound extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: LyjTitleBar(
-        centerTitle: "页面不存在",
+        title: "页面不存在",
       ),
       body: const LyjStateLayout(
         type: StateType.error,
