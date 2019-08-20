@@ -8,6 +8,7 @@ import 'app_manager.dart';
 
 ///
 /// 路由集中管理
+/// Adapted from https://github.com/simplezhli/flutter_deer/.../routers.dart
 ///
 class RouteManager {
   static List<IRouterProvider> _listRouter = [];

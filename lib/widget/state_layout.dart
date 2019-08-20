@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 
 ///
 /// 无网络\无数据\出错等空页面
+/// Adapted from https://github.com/simplezhli/flutter_deer/.../state_layout.dart
 ///
-class LyjStateLayout extends StatefulWidget {
-  const LyjStateLayout(
+class StateLayout extends StatefulWidget {
+  const StateLayout(
       {Key key, @required this.type, this.hintImage, this.hintText})
       : super(key: key);
 
@@ -13,10 +14,10 @@ class LyjStateLayout extends StatefulWidget {
   final String hintText;
 
   @override
-  _LyjStateLayoutState createState() => _LyjStateLayoutState();
+  _StateLayoutState createState() => _StateLayoutState();
 }
 
-class _LyjStateLayoutState extends State<LyjStateLayout> {
+class _StateLayoutState extends State<StateLayout> {
   String _hintImage;
   String _hintText;
 

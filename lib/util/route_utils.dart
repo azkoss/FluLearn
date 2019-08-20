@@ -6,9 +6,12 @@ import '../manager/app_manager.dart';
 
 ///
 /// 路由跳转工具类
+/// Adapted from https://github.com/simplezhli/flutter_deer/.../NavigatorUtils.dart
 ///
 class RouteUtils {
+  ///
   ///打开新页面
+  ///
   static push(BuildContext context, String path,
       {bool replace = false, bool clearStack = false}) {
     AppManager.logger.d("open route: path=" + path);
@@ -19,7 +22,9 @@ class RouteUtils {
         transition: TransitionType.native);
   }
 
+  ///
   ///打开新页面,返回上一页时携带参数
+  ///
   static pushResult(
       BuildContext context, String path, Function(Object) function,
       {bool replace = false, bool clearStack = false}) {
@@ -40,7 +45,9 @@ class RouteUtils {
     });
   }
 
+  ///
   ///打开新页面
+  ///
   static goPage(BuildContext context, Widget page) {
     FocusScope.of(context).requestFocus(new FocusNode());
     Navigator.push(context, new MaterialPageRoute<Widget>(builder: (context) {
@@ -48,19 +55,25 @@ class RouteUtils {
     }));
   }
 
+  ///
   /// 返回
+  ///
   static void goBack(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
     Navigator.pop(context);
   }
 
+  ///
   /// 带参数返回
+  ///
   static void goBackWithParams(BuildContext context, result) {
     FocusScope.of(context).requestFocus(new FocusNode());
     Navigator.pop(context, result);
   }
 
+  ///
   /// 跳到网页
+  ///
   static goWebPage(BuildContext context, String url, [String title = ""]) {
     if (title
         .trim()

@@ -20,7 +20,7 @@ void main() {
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.white,
-        systemNavigationBarDividerColor: Colors.white10,
+        systemNavigationBarDividerColor: Colors.white30,
         systemNavigationBarIconBrightness: Brightness.dark));
   }
 }

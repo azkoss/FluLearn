@@ -4,6 +4,7 @@ import 'package:flutter_app/widget/title_bar.dart';
 
 ///
 /// 路由跳转错误提示页
+/// Adapted from https://github.com/simplezhli/flutter_deer/.../404.dart
 ///
 class PageNotFound extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class PageNotFound extends StatelessWidget {
       appBar: LyjTitleBar(
         title: "页面不存在",
       ),
-      body: const LyjStateLayout(
+      body: const StateLayout(
         type: StateType.error,
         hintText: "页面不存在",
       ),
