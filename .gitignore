@@ -5,6 +5,7 @@
 *.swp
 .DS_Store
 .atom/
+build/
 .buildlog/
 .history
 .svn/
@@ -25,10 +26,10 @@
 .dart_tool/
 .flutter-plugins
 .packages
+**/generated/
 .pub-cache/
 .pub/
 *.lock
-/build/
 
 # Android related
 **/android/**/gradle-wrapper.jar

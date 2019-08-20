@@ -2,18 +2,19 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 
-import '../manager/router_manager.dart';
+import '../manager/app_manager.dart';
 import '../web/web_router.dart';
 
 ///
 /// 路由跳转工具类
 ///
-class RouterUtils {
+class RouteUtils {
   ///打开新页面
   static push(BuildContext context, String path,
       {bool replace = false, bool clearStack = false}) {
+    AppManager.logger.d("open route: path=" + path);
     FocusScope.of(context).requestFocus(new FocusNode());
-    RouteManager.router.navigateTo(context, path,
+    AppManager.router.navigateTo(context, path,
         replace: replace,
         clearStack: clearStack,
         transition: TransitionType.native);
@@ -23,12 +24,13 @@ class RouterUtils {
   static pushResult(
       BuildContext context, String path, Function(Object) function,
       {bool replace = false, bool clearStack = false}) {
+    AppManager.logger.d("open route for result: path=" + path);
     FocusScope.of(context).requestFocus(new FocusNode());
-    RouteManager.router
+    AppManager.router
         .navigateTo(context, path,
-            replace: replace,
-            clearStack: clearStack,
-            transition: TransitionType.native)
+        replace: replace,
+        clearStack: clearStack,
+        transition: TransitionType.native)
         .then((result) {
       if (result == null) {
         return;
@@ -60,11 +62,16 @@ class RouterUtils {
   }
 
   /// 跳到网页
-  static goWebPage(BuildContext context, String title, String url) {
+  static goWebPage(BuildContext context, String url, [String title = ""]) {
+    if (title
+        .trim()
+        .isEmpty) {
+      title = "网页浏览器";
+    }
     //fluro 不支持传中文,需转换
-    String urlEn = Uri.encodeComponent(url);
     String titleEn = Uri.encodeComponent(title);
+    String urlEn = Uri.encodeComponent(url);
     push(context,
-        sprintf("%s?title=%s&url=%s", [WebRouter.webPage, urlEn, titleEn]));
+        sprintf("%s?title=%s&url=%s", [WebRouter.webPage, titleEn, urlEn]));
   }
 }

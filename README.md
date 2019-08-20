@@ -8,7 +8,7 @@
 - [第三方共享包检索](https://pub.dev/flutter)
 - [Flutter开发环境搭建](https://flutter.dev/docs/get-started/install)
 - [Flutter API手册](https://api.flutter.dev/)
-- [《Flutter实战》电子书](https://book.flutterchina.club)
+- [电子书《Flutter实战》](https://book.flutterchina.club)
 
 
 ## 踩坑记录

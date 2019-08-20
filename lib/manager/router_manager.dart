@@ -1,22 +1,21 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
+import '../404.dart';
 import '../home/home_router.dart';
 import '../web/web_router.dart';
-import '../404.dart';
+import 'app_manager.dart';
 
 ///
 /// 路由集中管理
 ///
 class RouteManager {
-  static Router router;
   static List<IRouterProvider> _listRouter = [];
 
   static void configureRoutes(Router router) {
-    RouteManager.router = router;
     router.notFoundHandler = Handler(
         handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      debugPrint("未找到目标页");
+          AppManager.logger.e("未找到目标页：" + params.toString());
       return new WidgetNotFound();
     });
 

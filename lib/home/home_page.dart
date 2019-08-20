@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'home_drawer.dart';
-import '../util/router_utils.dart';
 import '../splash.dart';
+import '../util/route_utils.dart';
+import 'home_drawer.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -57,7 +57,12 @@ class _HomePageState extends State<HomePage> {
                   highlightColor: Colors.blue[300],
                   child: Text("splash page"),
                   onPressed: () {
-                    RouterUtils.goPage(context, new SplashPage());
+                    RouteUtils.goPage(context, new SplashPage());
+                  }),
+              new RaisedButton(
+                  child: Text("web page"),
+                  onPressed: () {
+                    RouteUtils.goWebPage(context, "http://qqtheme.cn");
                   }),
             ],
           ),

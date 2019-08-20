@@ -24,6 +24,11 @@ dependencies:
   # https://github.com/flutter/flutter
   flutter:
     sdk: flutter
+  # 国际化参阅 https://www.jianshu.com/p/8356a3bc8f6c
+  flutter_localizations:
+    sdk: flutter
+  # 国际化方案 https://github.com/ilteoood/flutter_i18n
+  flutter_i18n: ^0.6.4
   # 调试日志工具类库 https://github.com/leisim/logger
   logger: ^0.7.0+2
   # Dart 常用工具类库 https://github.com/Sky24n/common_utils
@@ -51,6 +56,8 @@ dependencies:
   image_cropper: ^1.0.2
   # 网页加载 https://github.com/flutter/plugins/tree/master/packages/webview_flutter
   webview_flutter: ^0.3.13
+  # 网页加载 https://github.com/pichillilorenzo/flutter_inappbrowser
+  flutter_inappbrowser: ^1.2.1
   # 文件下载 https://github.com/fluttercommunity/flutter_downloader
   flutter_downloader: ^1.1.9
   # 下拉刷新上拉加载 https://github.com/peng8350/flutter_pulltorefresh
@@ -128,5 +135,5 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
-    - assets/data/
+    - assets/i18n/
     - assets/image/

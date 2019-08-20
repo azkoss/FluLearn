@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
+import '../config/constant.dart';
 import '../manager/router_manager.dart' show IRouterProvider;
 import 'home_page.dart';
 
@@ -8,7 +9,7 @@ import 'home_page.dart';
 /// 首页路由
 ///
 class HomeRouter implements IRouterProvider {
-  static String homePage = "/home";
+  static String homePage = Constant.scheme + "home";
 
   @override
   void initRouter(Router router) {
