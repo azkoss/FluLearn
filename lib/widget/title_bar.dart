@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 ///
-/// 自定义[AppBar]
+/// 自定义标题栏，类似于[AppBar]
 /// Adapted from https://github.com/simplezhli/flutter_deer/.../app_bar.dart
 ///
-class LyjAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const LyjAppBar(
+class LyjTitleBar extends StatelessWidget implements PreferredSizeWidget {
+  const LyjTitleBar(
       {Key key,
       this.backgroundColor: Colors.white,
       this.title: "",

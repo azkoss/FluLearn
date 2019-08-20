@@ -6,7 +6,7 @@ import '../manager/app_manager.dart';
 import '../util/common_utils.dart';
 import '../util/route_utils.dart';
 import '../util/toast_utils.dart';
-import '../widget/app_bar.dart';
+import '../widget/title_bar.dart';
 
 ///
 /// 网页浏览器
@@ -44,7 +44,7 @@ class _BrowserPageState extends State<BrowserPage> {
     return WillPopScope(
       onWillPop: _goBack,
       child: Scaffold(
-        appBar: LyjAppBar(
+        appBar: LyjTitleBar(
           centerTitle: widget.changeTitle ? _title : widget.title,
           actionName: "关闭",
           onPressed: () {

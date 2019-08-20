@@ -54,8 +54,6 @@ dependencies:
   photo_view: ^0.4.2
   # 图片裁剪 https://github.com/hnvn/flutter_image_cropper
   image_cropper: ^1.0.2
-  # 网页加载 https://github.com/flutter/plugins/tree/master/packages/webview_flutter
-  webview_flutter: ^0.3.13
   # 网页加载 https://github.com/pichillilorenzo/flutter_inappbrowser
   flutter_inappbrowser: ^1.2.1
   # 文件下载 https://github.com/fluttercommunity/flutter_downloader

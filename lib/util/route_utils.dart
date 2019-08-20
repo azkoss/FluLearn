@@ -2,8 +2,8 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 
+import '../browser/browser_router.dart';
 import '../manager/app_manager.dart';
-import '../web/web_router.dart';
 
 ///
 /// 路由跳转工具类
@@ -72,6 +72,6 @@ class RouteUtils {
     String titleEn = Uri.encodeComponent(title);
     String urlEn = Uri.encodeComponent(url);
     push(context,
-        sprintf("%s?title=%s&url=%s", [WebRouter.webPage, titleEn, urlEn]));
+        sprintf("%s?title=%s&url=%s", [BrowserRouter.webPage, titleEn, urlEn]));
   }
 }
