@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../config/constant.dart';
+
 ///
 /// 自定义标题栏，类似于[AppBar]
 /// Adapted from https://github.com/simplezhli/flutter_deer/.../app_bar.dart
 ///
-class LyjTitleBar extends StatelessWidget implements PreferredSizeWidget {
-  const LyjTitleBar(
+class TitleBar extends StatelessWidget implements PreferredSizeWidget {
+  const TitleBar(
       {Key key,
       this.backgroundColor: Colors.white,
       this.title: "",
@@ -102,5 +104,5 @@ class LyjTitleBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(48.0);
+  Size get preferredSize => Size.fromHeight(Constant.titleBarHeight);
 }

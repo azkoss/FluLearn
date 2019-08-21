@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 ///
 /// 常量集中管理
 ///
@@ -9,13 +11,28 @@ class Constant {
   static const bool isDebug = !const bool.fromEnvironment("dart.vm.product");
 
   ///
+  /// 标题栏高度
+  ///
+  static const double titleBarHeight = 48.0;
+
+  ///
+  /// 主色
+  ///
+  static const Color primaryColor = Color(0xff4688FA);
+
+  ///
   /// 路由协议头
   ///
-  static const String scheme = "lyj://";
+  static const String urlScheme = "lyj://";
 
   ///
   /// 网页加载器代理串
   ///
   static const String userAgent =
       "Mozilla/5.0 (Linux; Android 7.0; PLUS Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.98 Mobile Safari/537.36";
+
+  ///
+  /// 闪屏延时
+  ///
+  static const int splashSeconds = 5;
 }

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'config/constant.dart';
 import 'manager/app_manager.dart';
 import 'manager/router_manager.dart';
 import 'splash.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: true,
         theme: new ThemeData(
-          primarySwatch: Colors.blue,
+          primaryColor: Constant.primaryColor,
           scaffoldBackgroundColor: Colors.white,
         ),
         home: SplashPage(),

@@ -9,7 +9,7 @@ import 'home_page.dart';
 /// 首页路由
 ///
 class HomeRouter implements IRouterProvider {
-  static String homePage = Constant.scheme + "home";
+  static String homePage = Constant.urlScheme + "home";
 
   @override
   void initRouter(Router router) {

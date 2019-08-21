@@ -1,5 +1,6 @@
 {
   "splash": {
-    "welcome_title": "欢迎进入闪屏页，{user}"
+    "welcome_title": "欢迎进入闪屏页，{user}",
+    "welcome_loading": "加载中"
   }
 }

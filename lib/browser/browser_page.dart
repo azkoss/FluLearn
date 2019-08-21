@@ -30,7 +30,7 @@ class BrowserPage extends StatefulWidget {
 class _BrowserPageState extends State<BrowserPage> {
   InAppWebViewController _controller;
   String _title = "";
-  double _progress = 0;
+  bool _loading = true;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _BrowserPageState extends State<BrowserPage> {
     return WillPopScope(
       onWillPop: _goBack,
       child: Scaffold(
-        appBar: LyjTitleBar(
+        appBar: TitleBar(
           title: widget.changeTitle ? _title : widget.title,
           actionName: "关闭",
           onPressed: () {
@@ -53,14 +53,14 @@ class _BrowserPageState extends State<BrowserPage> {
         ),
         body: Column(
           children: <Widget>[
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 2,
-              child: _progress == 1.0
-                  ? null
-                  : LinearProgressIndicator(
-                      value: _progress,
-                    ),
+            //当offstage为true隐藏，当offstage为false显示；
+            Offstage(
+              offstage: !_loading,
+              child: SizedBox(
+                child: LinearProgressIndicator(),
+                width: double.infinity,
+                height: 2,
+              ),
             ),
             Expanded(
               child: InAppWebView(
@@ -82,7 +82,7 @@ class _BrowserPageState extends State<BrowserPage> {
                 shouldOverrideUrlLoading:
                     (InAppWebViewController controller, String url) {
                   AppManager.logger.d("should override url loading: $url");
-                  if (url.startsWith(Constant.scheme)) {
+                  if (url.startsWith(Constant.urlScheme)) {
                     RouteUtils.push(context, url);
                     return;
                   }
@@ -91,6 +91,7 @@ class _BrowserPageState extends State<BrowserPage> {
                       ToastUtils.showShort("不支持APK下载");
                       return;
                     }
+                    _notifyLoadStateChanged(true);
                     controller.loadUrl(url);
                     return;
                   }
@@ -104,28 +105,23 @@ class _BrowserPageState extends State<BrowserPage> {
                     WebResourceResponse response,
                     WebResourceRequest request) {},
                 onLoadStart: (InAppWebViewController controller, String url) {
+                  _notifyLoadStateChanged(true);
                   AppManager.logger.d("page started: url=$url");
                 },
                 onProgressChanged:
-                    (InAppWebViewController controller, int progress) {
-                  setState(() {
-                    this._progress = progress / 100;
-                  });
-                },
+                    (InAppWebViewController controller, int progress) {},
                 onConsoleMessage: (InAppWebViewController controller,
                     ConsoleMessage consoleMessage) {},
                 onLoadError: (InAppWebViewController controller, String url,
                     int code, String message) {
-                  setState(() {
-                    this._progress = 1.0;
-                  });
+                  _notifyLoadStateChanged(false);
                   AppManager.logger
                       .d("page error: url=$url, code=$code, message=$message");
                 },
                 onLoadStop: (InAppWebViewController controller, String url) {
+                  _notifyLoadStateChanged(false);
                   controller.getTitle().then((String title) {
                     setState(() {
-                      this._progress = 1.0;
                       this._title = title;
                       AppManager.logger
                           .d("page stopped: url=$url, title=$title");
@@ -138,6 +134,12 @@ class _BrowserPageState extends State<BrowserPage> {
         ),
       ),
     );
+  }
+
+  void _notifyLoadStateChanged(bool loading) {
+    setState(() {
+      _loading = loading;
+    });
   }
 
   Future<bool> _goBack() async {

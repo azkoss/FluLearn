@@ -1,5 +1,6 @@
-import 'package:flutter_app/util/toast_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../util/toast_utils.dart';
 
 ///
 /// 基础工具类
@@ -16,4 +17,5 @@ class CommonUtils {
       ToastUtils.showShort('拨号失败！');
     }
   }
+
 }

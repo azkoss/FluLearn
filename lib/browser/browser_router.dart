@@ -8,7 +8,7 @@ import 'browser_page.dart';
 /// 网页浏览器路由
 ///
 class BrowserRouter implements IRouterProvider {
-  static String webPage = Constant.scheme + "browser";
+  static String webPage = Constant.urlScheme + "browser";
 
   @override
   void initRouter(Router router) {

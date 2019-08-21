@@ -1,5 +1,6 @@
 {
   "splash": {
-    "welcome_title": "Welcome In SplashScreen, {user}"
+    "welcome_title": "Welcome In SplashScreen, {user}",
+    "welcome_loading": "Loading"
   }
 }
