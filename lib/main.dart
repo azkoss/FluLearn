@@ -14,14 +14,14 @@ void main() {
   runApp(new MyApp());
 
   if (Platform.isAndroid) {
-    AppManager.logger.d("改变状态栏及系统虚拟导航栏默认颜色");
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarBrightness: Brightness.dark,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.white,
-        systemNavigationBarDividerColor: Colors.white30,
-        systemNavigationBarIconBrightness: Brightness.dark));
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarDividerColor: Colors.white30,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ));
   }
 }
 

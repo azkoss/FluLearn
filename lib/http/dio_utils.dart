@@ -11,7 +11,7 @@ import 'api.dart';
 import 'entity_factory.dart';
 import 'error_handle.dart';
 import 'interceptor.dart';
-import 'response.dart';
+import 'response.dart' as HttpRes;
 
 ///
 /// 网络请求工具类
@@ -61,9 +61,6 @@ class DioUtils {
     /// 统一添加身份验证请求头
     _dio.interceptors.add(AuthInterceptor());
 
-    /// 刷新Token
-    _dio.interceptors.add(TokenInterceptor());
-
     /// 打印Log(生产模式去除)
     if (Constant.isDebug) {
       _dio.interceptors.add(LoggingInterceptor());
@@ -74,7 +71,7 @@ class DioUtils {
   }
 
   // 数据返回格式统一，统一处理异常
-  Future<HttpResponse<T>> _request<T>(String method, String url,
+  Future<HttpRes.Response<T>> _request<T>(String method, String url,
       {dynamic data,
       Map<String, dynamic> queryParameters,
       CancelToken cancelToken,
@@ -105,12 +102,12 @@ class DioUtils {
       }
     } catch (e) {
       print(e);
-      return HttpResponse(ExceptionHandle.parse_error, "数据解析错误", _data);
+      return HttpRes.Response(ExceptionHandle.parse_error, "数据解析错误", _data);
     }
-    return HttpResponse(_code, _msg, _data);
+    return HttpRes.Response(_code, _msg, _data);
   }
 
-  Future<HttpResponse<List<T>>> _requestList<T>(String method, String url,
+  Future<HttpRes.Response<List<T>>> _requestList<T>(String method, String url,
       {dynamic data,
       Map<String, dynamic> queryParameters,
       CancelToken cancelToken,
@@ -136,9 +133,9 @@ class DioUtils {
       }
     } catch (e) {
       print(e);
-      return HttpResponse(ExceptionHandle.parse_error, "数据解析错误", _data);
+      return HttpRes.Response(ExceptionHandle.parse_error, "数据解析错误", _data);
     }
-    return HttpResponse(_code, _msg, _data);
+    return HttpRes.Response(_code, _msg, _data);
   }
 
   Options _checkOptions(method, options) {
@@ -162,7 +159,7 @@ class DioUtils {
             queryParameters: queryParameters,
             options: options,
             cancelToken: cancelToken)
-        .then((HttpResponse<T> result) {
+        .then((HttpRes.Response<T> result) {
       if (result.code == 0) {
         if (onSuccess != null) {
           onSuccess(result.data);
@@ -190,7 +187,7 @@ class DioUtils {
             queryParameters: queryParameters,
             options: options,
             cancelToken: cancelToken)
-        .then((HttpResponse<List<T>> result) {
+        .then((HttpRes.Response<List<T>> result) {
       if (result.code == 0) {
         if (onSuccess != null) {
           onSuccess(result.data);

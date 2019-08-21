@@ -5,7 +5,6 @@ import 'package:flutter_app/manager/app_manager.dart';
 
 import '../config/prefs_key.dart';
 import '../util/prefs_utils.dart';
-import 'dio_utils.dart';
 import 'error_handle.dart';
 
 ///
@@ -21,63 +20,6 @@ class AuthInterceptor extends Interceptor {
           "Bearer ${PrefsUtils.getString(PrefsKey.access_token)}";
     }
     return super.onRequest(options);
-  }
-}
-
-class TokenInterceptor extends Interceptor {
-  Future<String> getToken() async {
-    Map<String, String> params = Map();
-    params["refresh_token"] = PrefsUtils.getString(PrefsKey.access_token);
-    try {
-      _tokenDio.options = DioUtils.instance.getDio().options;
-      var response = await _tokenDio.post("lgn/refreshToken", data: params);
-      if (response.statusCode == ExceptionHandle.success) {
-        return json.decode(response.data.toString())["access_token"];
-      }
-    } catch (e) {
-      AppManager.logger.e("刷新Token失败！", e);
-    }
-    return null;
-  }
-
-  Dio _tokenDio = Dio();
-
-  @override
-  onResponse(Response response) async {
-    //401代表token过期
-    if (response != null &&
-        response.statusCode == ExceptionHandle.unauthorized) {
-      AppManager.logger.d("-----------自动刷新Token------------");
-      Dio dio = DioUtils.instance.getDio();
-      dio.interceptors.requestLock.lock();
-      String accessToken = await getToken(); // 获取新的accessToken
-      AppManager.logger.e("-----------NewToken: $accessToken ------------");
-      PrefsUtils.putString(PrefsKey.access_token, accessToken);
-      dio.interceptors.requestLock.unlock();
-
-      if (accessToken != null) {
-        {
-          // 重新请求失败接口
-          var request = response.request;
-          request.headers["Authorization"] = "Bearer $accessToken";
-          try {
-            AppManager.logger.e("----------- 重新请求接口 ------------");
-
-            /// 避免重复执行拦截器，使用tokenDio
-            var response = await _tokenDio.request(request.path,
-                data: request.data,
-                queryParameters: request.queryParameters,
-                cancelToken: request.cancelToken,
-                options: request,
-                onReceiveProgress: request.onReceiveProgress);
-            return response;
-          } on DioError catch (e) {
-            return e;
-          }
-        }
-      }
-    }
-    return super.onResponse(response);
   }
 }
 
@@ -137,19 +79,19 @@ class AdapterInterceptor extends Interceptor {
 
   @override
   onResponse(Response response) {
-    Response r = adapterData(response);
+    Response r = _adapterData(response);
     return super.onResponse(r);
   }
 
   @override
   onError(DioError err) {
     if (err.response != null) {
-      adapterData(err.response);
+      _adapterData(err.response);
     }
     return super.onError(err);
   }
 
-  Response adapterData(Response response) {
+  Response _adapterData(Response response) {
     String result;
     String content = response.data == null ? "" : response.data.toString();
 
