@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../util/repeat_utils.dart';
 import '../util/toast_utils.dart';
@@ -18,17 +19,16 @@ class ExitContainer extends StatelessWidget {
       child: Material(
         child: child,
       ),
-      onWillPop: _exitApp,
+      onWillPop: () async {
+        if (!RepeatUtils.isFastClick()) {
+          ToastUtils.showLong(
+              FlutterI18n.translate(context, "exit.double_click_tip"));
+          return Future.value(false);
+        }
+        ToastUtils.cancel();
+        await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        return Future.value(true);
+      },
     );
-  }
-
-  Future<bool> _exitApp() async {
-    if (!RepeatUtils.isFastClick()) {
-      ToastUtils.showLong('再按一次退出应用');
-      return Future.value(false);
-    }
-    ToastUtils.cancel();
-    await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-    return Future.value(true);
   }
 }
