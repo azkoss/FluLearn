@@ -62,7 +62,7 @@ class DioUtils {
     _dio.interceptors.add(AuthInterceptor());
 
     /// 打印Log(生产模式去除)
-    if (Constant.isDebug) {
+    if (Constant.enableDebug) {
       _dio.interceptors.add(LoggingInterceptor());
     }
 

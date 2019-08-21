@@ -51,6 +51,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
                     width: double.infinity,
                     child: Text(title,
                         maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 18,
                           color: _overlayStyle == SystemUiOverlayStyle.light

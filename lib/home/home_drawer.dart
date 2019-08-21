@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../util/image_utils.dart';
+import '../util/toast_utils.dart';
+
 ///
 /// 主页抽屉
 ///
@@ -11,41 +14,105 @@ class HomeDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 38.0),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: ClipOval(
-                      child: CircleAvatar(child: Icon(Icons.favorite)),
-                    ),
-                  ),
-                  Text(
-                    "liyujiang",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  ListTile(
-                    leading: const Icon(Icons.settings),
-                    title: const Text('Settings'),
-                  ),
-                ],
-              ),
-            ),
-          ],
+      child: _buildDrawer(context),
+      elevation: 10.0,
+    );
+  }
+
+  Widget _buildDrawer(BuildContext context) {
+    return ListView(
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        _buildHeader(),
+        ListTile(
+          leading: CircleAvatar(child: Text("A")),
+          title: Text('Drawer item A'),
+          onTap: () {
+            ToastUtils.showShort("click item A");
+          },
         ),
+        Divider(
+          height: 1,
+          color: Colors.grey[350],
+        ),
+        ListTile(
+          leading: CircleAvatar(child: Text("B")),
+          title: Text('Drawer item B'),
+          subtitle: Text("Drawer item B subtitle"),
+          onTap: () {
+            ToastUtils.showShort("click item B");
+          },
+        ),
+        Container(
+          width: double.infinity,
+          height: 10,
+          color: Colors.grey[300],
+        ),
+        ListTile(
+          leading: Icon(Icons.settings),
+          title: Text('设置'),
+          trailing: new Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            ToastUtils.showShort("设置");
+          },
+        ),
+        Divider(
+          height: 1,
+          color: Colors.grey[350],
+        ),
+        ListTile(
+          leading: Icon(Icons.copyright),
+          title: Text("许可"),
+          trailing: new Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            showLicensePage(
+              context: context,
+              applicationVersion: "v1.0",
+              applicationIcon: ImageUtils.fromAsset(
+                "assets/image/app_banner.png",
+                width: 120,
+                height: 120,
+                fit: BoxFit.contain,
+              ),
+              applicationLegalese: "本应用使用了第三方开源程序，许可协议详见如下。",
+            );
+          },
+        ),
+        Divider(
+          height: 1,
+          color: Colors.grey[350],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHeader() {
+    return DrawerHeader(
+      child: Column(
+        children: <Widget>[
+          ClipOval(
+            child: GestureDetector(
+              onTap: () {
+                ToastUtils.showShort("用户头像");
+              },
+              child: ImageUtils.fromNetwork(
+                "https://avatars3.githubusercontent.com/u/16816717?s=460&v=4",
+                width: 60,
+                height: 60,
+              ),
+            ),
+          ),
+          Container(height: 10),
+          Center(
+            child: Text(
+              "穿青人",
+              style: TextStyle(),
+            ),
+          ),
+        ],
+      ),
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
       ),
     );
   }

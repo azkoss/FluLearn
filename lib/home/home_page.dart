@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/manager/app_manager.dart';
 
-import '../splash.dart';
 import '../util/image_utils.dart';
-import '../util/route_utils.dart';
 import '../widget/exit_container.dart';
 import 'home_drawer.dart';
 
@@ -17,79 +16,98 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
-  int _selectedIndex = 0;
+  int _tabIndex = 0;
+  var _tabIcons = [
+    ["order_n", "order_s"],
+    ["commodity_n", "commodity_s"],
+    ["statistics_n", "statistics_s"],
+    ["statistics_n", "statistics_s"],
+    ["shop_n", "shop_s"]
+  ];
+  var _tabTexts = ['考试', '提问', '下载', '学习', '我的'];
+  var _pageList;
+  final _pageController = PageController();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() {
+    _pageList = [
+      Text("考试"),
+      Text("提问"),
+      Text("下载"),
+      Text("学习"),
+      Text("我的"),
+    ];
+  }
+
+  Widget _buildTabIcon(int index) {
+    String name;
+    if (index == _tabIndex) {
+      name = _tabIcons[index][1];
+    } else {
+      name = _tabIcons[index][0];
+    }
+    String icon = "assets/image/home/icon_$name.png";
+    AppManager.logger.d("selected: $_tabIndex, index: $index, icon: $icon");
+    return ImageUtils.fromAsset(icon);
+  }
+
+  Widget _buildTabText(int index) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 5.0),
+      child: Text(
+        _tabTexts[index],
+        maxLines: 1,
+        textAlign: TextAlign.center,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return ExitContainer(
       child: Scaffold(
-        appBar: AppBar(title: Text("首页标题"), centerTitle: true),
+        appBar: AppBar(title: Text("Flutter学习"), centerTitle: true),
         drawer: HomeDrawer(),
         bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home), title: Text('Home')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.business), title: Text('Business')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.school), title: Text('School')),
-          ],
-          currentIndex: _selectedIndex,
-          fixedColor: Colors.blue,
-          onTap: _onItemTapped,
+          backgroundColor: Colors.white,
+          items: List.generate(
+              _tabTexts.length,
+                  (i) =>
+                  BottomNavigationBarItem(
+                    icon: _buildTabIcon(i),
+                    title: _buildTabText(i),
+                  )),
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _tabIndex,
+          elevation: 5.0,
+          iconSize: 25.0,
+          selectedFontSize: 15,
+          unselectedFontSize: 15,
+          selectedItemColor: Colors.blueAccent,
+          unselectedItemColor: Color(0xFFBFBFBF),
+          onTap: (index) {
+            _pageController.jumpToPage(index);
+          },
         ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Image(
-                  image: ImageUtils.fromProvider(
-                      "https://avatars2.githubusercontent.com/u/20411648?s=460&v=4"),
-                  width: 100.0,
-                ),
-                new Text(
-                  '计数器: $_counter',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .display1,
-                ),
-                new FlatButton(
-                    color: Colors.blue,
-                    highlightColor: Colors.blue[300],
-                    child: Text("splash page"),
-                    onPressed: () {
-                      RouteUtils.goPage(context, new SplashPage());
-                    }),
-                new RaisedButton(
-                    child: Text("web page"),
-                    onPressed: () {
-                      RouteUtils.goWebPage(context, "http://qqtheme.cn");
-                    }),
-              ],
-            ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _incrementCounter,
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
+        // 使用PageView的原因参看 https://zhuanlan.zhihu.com/p/58582876
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: _onPageChanged,
+          children: _pageList,
+          physics: NeverScrollableScrollPhysics(),
         ),
       ),
     );
   }
 
-  void _onItemTapped(int index) {
+  void _onPageChanged(int index) {
     setState(() {
-      _selectedIndex = index;
+      _tabIndex = index;
     });
   }
 }

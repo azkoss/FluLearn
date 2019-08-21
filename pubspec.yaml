@@ -131,3 +131,4 @@ flutter:
   assets:
     - assets/i18n/
     - assets/image/
+    - assets/image/home/

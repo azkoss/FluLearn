@@ -8,8 +8,12 @@ import '../util/prefs_utils.dart';
 import 'error_handle.dart';
 
 ///
-/// 网络请求拦截器
+/// 网络请求/响应拦截器
 /// Adapted from https://github.com/simplezhli/flutter_deer/.../intercept.dart
+///
+
+///
+/// 认证鉴权拦截器
 ///
 class AuthInterceptor extends Interceptor {
   @override
@@ -23,6 +27,9 @@ class AuthInterceptor extends Interceptor {
   }
 }
 
+///
+/// 调试日志打印拦截器
+///
 class LoggingInterceptor extends Interceptor {
   DateTime startTime;
   DateTime endTime;
@@ -69,6 +76,9 @@ class LoggingInterceptor extends Interceptor {
   }
 }
 
+///
+/// 数据结构适配拦截器
+///
 class AdapterInterceptor extends Interceptor {
   static const String MSG = "msg";
   static const String SLASH = "\"";
@@ -148,3 +158,8 @@ class AdapterInterceptor extends Interceptor {
     return response;
   }
 }
+
+///
+/// 缓存拦截器，参阅 https://book.flutterchina.club/chapter15/network.html
+///
+class CacheInterceptor extends Interceptor {}

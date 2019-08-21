@@ -8,7 +8,13 @@ class Constant {
   /// 调试开关，上线需要关闭
   /// 运行在Release环境时为true；运行在Debug和Profile环境时为false
   ///
-  static const bool isDebug = !const bool.fromEnvironment("dart.vm.product");
+  static const bool enableDebug =
+  !const bool.fromEnvironment("dart.vm.product");
+
+  ///
+  /// 闪屏页启用开关
+  ///
+  static const bool enableSplash = false;
 
   ///
   /// 标题栏高度
@@ -18,7 +24,7 @@ class Constant {
   ///
   /// 主色
   ///
-  static const Color primaryColor = Color(0xff4688FA);
+  static const Color primaryColor = Color(0xFFF1F1F1);
 
   ///
   /// 路由协议头
