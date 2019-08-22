@@ -6,9 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../config/constant.dart';
+import '../entity_factory.dart';
 import '../manager/app_manager.dart';
 import 'api.dart';
-import 'entity_factory.dart';
 import 'error_handle.dart';
 import 'interceptor.dart';
 import 'response.dart' as HttpRes;
@@ -97,11 +97,11 @@ class DioUtils {
         } else if (T.toString() == "Map<dynamic, dynamic>") {
           _data = _map["data"] as T;
         } else {
-          _data = EntityFactory.generate(_map["data"]);
+          _data = EntityFactory.generateOBJ(_map["data"]);
         }
       }
     } catch (e) {
-      print(e);
+      AppManager.logger.e("JSON解析出出错", e);
       return HttpRes.Response(ExceptionHandle.parse_error, "数据解析错误", _data);
     }
     return HttpRes.Response(_code, _msg, _data);
@@ -128,11 +128,11 @@ class DioUtils {
       _msg = _map["message"];
       if (_map.containsKey("data")) {
         (_map["data"] as List).forEach((item) {
-          _data.add(EntityFactory.generate<T>(item));
+          _data.add(EntityFactory.generateOBJ(json)(item));
         });
       }
     } catch (e) {
-      print(e);
+      AppManager.logger.e("JSON解析出出错", e);
       return HttpRes.Response(ExceptionHandle.parse_error, "数据解析错误", _data);
     }
     return HttpRes.Response(_code, _msg, _data);

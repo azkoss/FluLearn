@@ -7,7 +7,7 @@ import '../util/toast_utils.dart';
 /// 主页抽屉
 ///
 class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({
+  HomeDrawer({
     Key key,
   }) : super(key: key);
 
@@ -20,10 +20,69 @@ class HomeDrawer extends StatelessWidget {
   }
 
   Widget _buildDrawer(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.zero,
+    return Column(
       children: <Widget>[
-        _buildHeader(),
+//        ListView(
+//          padding: EdgeInsets.zero,
+//          shrinkWrap: true,
+//          children: <Widget>[
+//            _buildHeader(context),
+//            _buildBody(context),
+//          ],
+//        ),
+        SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              _buildHeader(context),
+              _buildBody(context),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Container(
+            color: Colors.grey[300],
+          ),
+        ),
+        _buildFooter(context),
+      ],
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return DrawerHeader(
+      margin: EdgeInsets.zero,
+      child: Column(
+        children: <Widget>[
+          ClipOval(
+            child: GestureDetector(
+              onTap: () {
+                ToastUtils.showShort("用户头像");
+              },
+              child: ImageUtils.fromNetwork(
+                "https://avatars3.githubusercontent.com/u/16816717?s=460&v=4",
+                width: 60,
+                height: 60,
+              ),
+            ),
+          ),
+          Container(height: 10),
+          Center(
+            child: Text(
+              "穿青人",
+              style: TextStyle(),
+            ),
+          ),
+        ],
+      ),
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return Column(
+      children: <Widget>[
         ListTile(
           leading: CircleAvatar(child: Text("A")),
           title: Text('Drawer item A'),
@@ -52,9 +111,7 @@ class HomeDrawer extends StatelessWidget {
           leading: Icon(Icons.settings),
           title: Text('设置'),
           trailing: new Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            ToastUtils.showShort("设置");
-          },
+          onTap: () => _goToSettings(),
         ),
         Divider(
           height: 1,
@@ -64,56 +121,31 @@ class HomeDrawer extends StatelessWidget {
           leading: Icon(Icons.copyright),
           title: Text("许可"),
           trailing: new Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            showLicensePage(
-              context: context,
-              applicationVersion: "v1.0",
-              applicationIcon: ImageUtils.fromAsset(
-                "assets/image/app_banner.png",
-                width: 120,
-                height: 120,
-                fit: BoxFit.contain,
-              ),
-              applicationLegalese: "本应用使用了第三方开源程序，许可协议详见如下。",
-            );
-          },
-        ),
-        Divider(
-          height: 1,
-          color: Colors.grey[350],
+          onTap: () => _showLicense(context),
         ),
       ],
     );
   }
 
-  Widget _buildHeader() {
-    return DrawerHeader(
-      child: Column(
-        children: <Widget>[
-          ClipOval(
-            child: GestureDetector(
-              onTap: () {
-                ToastUtils.showShort("用户头像");
-              },
-              child: ImageUtils.fromNetwork(
-                "https://avatars3.githubusercontent.com/u/16816717?s=460&v=4",
-                width: 60,
-                height: 60,
-              ),
-            ),
-          ),
-          Container(height: 10),
-          Center(
-            child: Text(
-              "穿青人",
-              style: TextStyle(),
-            ),
-          ),
-        ],
+  Widget _buildFooter(BuildContext context) {
+    return SizedBox.shrink();
+  }
+
+  void _goToSettings() {
+    ToastUtils.showShort("设置");
+  }
+
+  void _showLicense(BuildContext context) {
+    showLicensePage(
+      context: context,
+      applicationVersion: "v1.0",
+      applicationIcon: ImageUtils.fromAsset(
+        "assets/image/app_banner.png",
+        width: 120,
+        height: 120,
+        fit: BoxFit.contain,
       ),
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-      ),
+      applicationLegalese: "本应用使用了第三方开源程序，许可协议详见如下。",
     );
   }
 }

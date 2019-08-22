@@ -33,13 +33,17 @@ class _SplashPageState extends State<SplashPage> {
         imageBackground: ImageUtils.fromProvider(
             'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=484070431,516280143&fm=26&gp=0.jpg'),
         backgroundColor: Colors.white,
-        loaderColor: Constant.primaryColor,
+        loaderColor: Theme
+            .of(context)
+            .primaryColor,
         loadingText: Text(
           FlutterI18n.translate(context, "splash.welcome_loading"),
           style: new TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16.0,
-            color: Constant.primaryColor,
+            color: Theme
+                .of(context)
+                .primaryColor,
           ),
         ),
       ),
