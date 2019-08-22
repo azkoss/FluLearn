@@ -10,7 +10,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'config/constant.dart';
 import 'manager/app_manager.dart';
 import 'manager/router_manager.dart';
-import 'splash.dart';
+import 'splash/splash_page.dart';
 
 void main() {
   runApp(new MyApp());
@@ -43,7 +43,12 @@ class MyApp extends StatelessWidget {
         primaryColor: Constant.primaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: Constant.enableSplash ? SplashPage() : HomePage(),
+      home: Constant.splashSeconds < 1
+          ? HomePage()
+          : SplashPage(
+        seconds: Constant.splashSeconds,
+        imageUrl: Constant.splashImage,
+      ),
       onGenerateRoute: AppManager.router.generator,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

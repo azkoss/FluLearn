@@ -140,7 +140,7 @@ class HomeDrawer extends StatelessWidget {
       context: context,
       applicationVersion: "v1.0",
       applicationIcon: ImageUtils.fromAsset(
-        "assets/image/app_banner.png",
+        "assets/image/app_logo.png",
         width: 120,
         height: 120,
         fit: BoxFit.contain,

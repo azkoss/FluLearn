@@ -1,3 +1,11 @@
+def gradleProperties = new Properties()
+def gradlePropertiesFile = rootProject.file('gradle.properties')
+if (gradlePropertiesFile.exists()) {
+    gradlePropertiesFile.withReader('UTF-8') { reader ->
+        gradleProperties.load(reader)
+    }
+}
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -8,7 +16,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new Error("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -25,7 +33,8 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion Integer.parseInt(gradleProperties.getProperty("compileSdkVersion"))
+    buildToolsVersion gradleProperties.getProperty("buildToolsVersion")
 
     lintOptions {
         // 如果构建时发现了致命（Fatal）的问题，会中止构建（具体由 abortOnError 控制）
@@ -36,16 +45,18 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.flutter_app"
-        minSdkVersion 17
-        targetSdkVersion 28
+        minSdkVersion Integer.parseInt(gradleProperties.getProperty("minSdkVersion"))
+        targetSdkVersion Integer.parseInt(gradleProperties.getProperty("targetSdkVersion"))
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         ndk {
             //支持的CPU架构：armeabi、armeabi-v7a、arm64-v8a、x86、x86_64、mips、mips64
             //参阅 https://blog.csdn.net/u011733020/article/details/84107354
-            abiFilters 'armeabi-v7a', 'x86'
+            if (Boolean.parseBoolean(gradleProperties.getProperty("supportX86Arch"))) {
+                abiFilters 'armeabi-v7a', 'x86'
+            } else {
+                abiFilters 'armeabi-v7a'
+            }
         }
     }
 
@@ -83,5 +94,6 @@ flutter {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
+    implementation "androidx.core:core:$androidxVersion"
+    implementation "androidx.lifecycle:lifecycle-common:$lifecycleVersion"
 }

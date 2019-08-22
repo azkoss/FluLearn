@@ -18,11 +18,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _tabIndex = 0;
   var _tabIcons = [
-    ["order_n", "order_s"],
-    ["commodity_n", "commodity_s"],
-    ["statistics_n", "statistics_s"],
-    ["statistics_n", "statistics_s"],
-    ["shop_n", "shop_s"]
+    ["statistics_normal", "statistics_selected"],
+    ["statistics_normal", "statistics_selected"],
+    ["statistics_normal", "statistics_selected"],
+    ["statistics_normal", "statistics_selected"],
+    ["statistics_normal", "statistics_selected"],
   ];
   var _tabTexts = ['考试', '提问', '下载', '学习', '我的'];
   var _pageList;
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       name = _tabIcons[index][0];
     }
-    String icon = "assets/image/home/icon_$name.png";
+    String icon = "assets/image/home/ic_$name.png";
     AppManager.logger.d("selected: $_tabIndex, index: $index, icon: $icon");
     return ImageUtils.fromAsset(icon);
   }

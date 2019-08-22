@@ -12,7 +12,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath "com.android.tools.build:gradle:$gradleBuildVersion"
     }
 }
 
@@ -41,19 +41,14 @@ subprojects {
         //此处可用于解决依赖冲突问题，参阅 https://developer.android.google.cn/studio/build/dependencies#duplicate_classes
         resolutionStrategy.eachDependency { details ->
             // Flutter混合开发问题参阅 https://github.com/flutter/flutter/issues/27254
-            if (details.requested.group == 'com.android.support'
-                    && !details.requested.name.contains('multidex')) {
-                details.useVersion "28.0.0"
-            } else if (details.requested.group == 'androidx.core') {
-                details.useVersion "1.0.2"
+            if (details.requested.group == 'androidx.core') {
+                details.useVersion androidxVersion
+            } else if (details.requested.group == 'androidx.legacy') {
+                details.useVersion androidxVersion
             } else if (details.requested.group == 'androidx.appcompat') {
-                details.useVersion "1.0.2"
+                details.useVersion androidxVersion
             } else if (details.requested.group == 'androidx.arch.core') {
-                details.useVersion "2.0.0"
-            } else if (details.requested.group == 'androidx.versionedparcelable') {
-                details.useVersion "1.1.0"
-            } else if (details.requested.group == 'androidx.vectordrawable') {
-                details.useVersion "1.0.0"
+                details.useVersion lifecycleVersion
             }
         }
     }

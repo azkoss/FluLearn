@@ -12,9 +12,15 @@ class Constant {
   !const bool.fromEnvironment("dart.vm.product");
 
   ///
-  /// 闪屏页启用开关
+  /// 闪屏延时
   ///
-  static const bool enableSplash = false;
+  static const int splashSeconds = 4;
+
+  ///
+  /// 闪屏背景图
+  ///
+  static const String splashImage =
+      "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=484070431,516280143&fm=26&gp=0.jpg";
 
   ///
   /// 标题栏高度
@@ -36,9 +42,4 @@ class Constant {
   ///
   static const String userAgent =
       "Mozilla/5.0 (Linux; Android 7.0; PLUS Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.98 Mobile Safari/537.36";
-
-  ///
-  /// 闪屏延时
-  ///
-  static const int splashSeconds = 5;
 }

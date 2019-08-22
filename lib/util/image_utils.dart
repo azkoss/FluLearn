@@ -34,7 +34,7 @@ class ImageUtils {
     if (TextUtil.isEmpty(imageUrl)) {
       return fromAsset(placeholder, height: height, width: width, fit: fit);
     }
-    return CachedNetworkImage(
+    return new CachedNetworkImage(
       imageUrl: imageUrl,
       placeholder: (context, url) =>
           fromAsset(placeholder, height: height, width: width, fit: fit),
@@ -49,8 +49,11 @@ class ImageUtils {
   static ImageProvider fromProvider(String imageUrl,
       {String placeholder: placeholder}) {
     if (TextUtil.isEmpty(imageUrl)) {
-      return AssetImage(placeholder);
+      return new AssetImage(placeholder);
     }
-    return CachedNetworkImageProvider(imageUrl);
+    if (imageUrl.startsWith("http")) {
+      return new CachedNetworkImageProvider(imageUrl);
+    }
+    return new AssetImage(imageUrl);
   }
 }
