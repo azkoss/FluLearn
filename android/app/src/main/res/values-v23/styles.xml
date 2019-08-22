@@ -3,11 +3,14 @@
 
     <style name="AppTheme" parent="android:Theme.Light.NoTitleBar">
         <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <style name="LaunchTheme" parent="AppTheme">
-        <!-- Show a splash screen on the activity. Automatically removed when
-             Flutter draws its first frame -->
         <item name="android:windowBackground">@drawable/launch_background</item>
     </style>
 </resources>

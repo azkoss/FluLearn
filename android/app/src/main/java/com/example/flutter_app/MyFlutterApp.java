@@ -11,6 +11,7 @@ public class MyFlutterApp extends FlutterApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        android.util.Log.w(null, "Android native is finished");
     }
 
 }

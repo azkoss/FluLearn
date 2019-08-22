@@ -21,7 +21,6 @@ void main() {
       statusBarBrightness: Brightness.dark,
       statusBarIconBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.white,
-      systemNavigationBarDividerColor: Colors.white30,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
   }
@@ -39,7 +38,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       theme: new ThemeData(
-        brightness: Brightness.light,
         primaryColor: Constant.primaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
