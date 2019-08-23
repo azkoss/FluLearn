@@ -37,12 +37,7 @@ Future main() async {
       primaryColor: Constant.primaryColor,
       scaffoldBackgroundColor: Colors.white,
     ),
-    home: Constant.splashSeconds < 1
-        ? HomePage()
-        : SplashPage(
-      seconds: Constant.splashSeconds,
-      imageUrl: Constant.splashImage,
-    ),
+    home: Constant.enableSplash ? SplashPage() : HomePage(),
     onGenerateRoute: AppManager.router.generator,
     localizationsDelegates: [
       GlobalMaterialLocalizations.delegate,
@@ -58,7 +53,7 @@ Future main() async {
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.dark,
       statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
+      systemNavigationBarColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
   }

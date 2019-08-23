@@ -12,15 +12,9 @@ class Constant {
   !const bool.fromEnvironment("dart.vm.product");
 
   ///
-  /// 闪屏延时
+  /// 闪屏启用开关
   ///
-  static const int splashSeconds = 4;
-
-  ///
-  /// 闪屏背景图
-  ///
-  static const String splashImage =
-      "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=484070431,516280143&fm=26&gp=0.jpg";
+  static const bool enableSplash = true;
 
   ///
   /// 标题栏高度
@@ -30,7 +24,7 @@ class Constant {
   ///
   /// 主色
   ///
-  static const Color primaryColor = Color(0xFFF1F1F1);
+  static const Color primaryColor = Color(0xFFF2F2F2);
 
   ///
   /// 路由协议头

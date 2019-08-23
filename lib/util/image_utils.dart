@@ -13,8 +13,11 @@ class ImageUtils {
   ///
   /// 加载本地资源图片
   ///
-  static Widget fromAsset(String name,
-      {double width, double height, BoxFit fit}) {
+  static Widget fromAsset(String name, {
+    double width,
+    double height,
+    BoxFit fit,
+  }) {
     return Image.asset(
       name.startsWith("assets") ? name : "assets/image/$name",
       height: height,
@@ -30,29 +33,42 @@ class ImageUtils {
       {double width,
       double height,
       BoxFit fit: BoxFit.cover,
-      String placeholder: placeholder}) {
+        String placeholder: placeholder,
+        bool cacheEnable: true}) {
     if (TextUtil.isEmpty(imageUrl)) {
       return fromAsset(placeholder, height: height, width: width, fit: fit);
     }
-    return new CachedNetworkImage(
-      imageUrl: imageUrl,
-      placeholder: (context, url) =>
-          fromAsset(placeholder, height: height, width: width, fit: fit),
-      errorWidget: (context, url, error) =>
-          fromAsset(placeholder, height: height, width: width, fit: fit),
-      width: width,
+    if (cacheEnable) {
+      return new CachedNetworkImage(
+        imageUrl: imageUrl,
+        placeholder: (context, url) =>
+            fromAsset(placeholder, height: height, width: width, fit: fit),
+        errorWidget: (context, url, error) =>
+            fromAsset(placeholder, height: height, width: width, fit: fit),
+        width: width,
+        height: height,
+        fit: fit,
+      );
+    }
+    return FadeInImage.assetNetwork(
+      placeholder: placeholder,
+      image: imageUrl,
       height: height,
+      width: width,
       fit: fit,
     );
   }
 
   static ImageProvider fromProvider(String imageUrl,
-      {String placeholder: placeholder}) {
+      ErrorListener errorListener) {
     if (TextUtil.isEmpty(imageUrl)) {
-      return new AssetImage(placeholder);
+      return AssetImage(placeholder);
     }
     if (imageUrl.startsWith("http")) {
-      return new CachedNetworkImageProvider(imageUrl);
+      return new CachedNetworkImageProvider(
+        imageUrl,
+        errorListener: errorListener,
+      );
     }
     return new AssetImage(imageUrl);
   }
