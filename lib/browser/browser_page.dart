@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/application.dart';
+import 'package:flutter_app/common/constant.dart';
+import 'package:flutter_app/empty/empty_router.dart';
+import 'package:flutter_app/util/common_utils.dart';
+import 'package:flutter_app/util/navigate_utils.dart';
+import 'package:flutter_app/util/toast_utils.dart';
+import 'package:flutter_app/widget/title_bar.dart';
 import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
-
-import '../config/constant.dart';
-import '../manager/app_manager.dart';
-import '../util/common_utils.dart';
-import '../util/route_utils.dart';
-import '../util/toast_utils.dart';
-import '../widget/title_bar.dart';
 
 ///
 /// 网页浏览器
@@ -48,7 +48,7 @@ class _BrowserPageState extends State<BrowserPage> {
           title: widget.changeTitle ? _title : widget.title,
           actionName: "关闭",
           onPressed: () {
-            RouteUtils.goBack(context);
+            NavigateUtils.goBack(context);
           },
         ),
         body: Column(
@@ -77,13 +77,13 @@ class _BrowserPageState extends State<BrowserPage> {
                 },
                 onWebViewCreated: (InAppWebViewController controller) {
                   _controller = controller;
-                  AppManager.logger.d("web view created");
+                  Application.logger.d("web view created");
                 },
                 shouldOverrideUrlLoading:
                     (InAppWebViewController controller, String url) {
-                  AppManager.logger.d("should override url loading: $url");
+                  Application.logger.d("should override url loading: $url");
                   if (url.startsWith(Constant.urlScheme)) {
-                    RouteUtils.push(context, url);
+                    NavigateUtils.push(context, url);
                     return;
                   }
                   if (url.startsWith("http") || url.startsWith("ftp")) {
@@ -99,14 +99,14 @@ class _BrowserPageState extends State<BrowserPage> {
                     CommonUtils.callPhone(url);
                     return;
                   }
-                  AppManager.logger.d('Url Scheme 未知，阻止加载： $url');
+                  Application.logger.d('Url Scheme 未知，阻止加载： $url');
                 },
                 onLoadResource: (InAppWebViewController controller,
                     WebResourceResponse response,
                     WebResourceRequest request) {},
                 onLoadStart: (InAppWebViewController controller, String url) {
                   _notifyLoadStateChanged(true);
-                  AppManager.logger.d("page started: url=$url");
+                  Application.logger.d("page started: url=$url");
                 },
                 onProgressChanged:
                     (InAppWebViewController controller, int progress) {},
@@ -115,15 +115,17 @@ class _BrowserPageState extends State<BrowserPage> {
                 onLoadError: (InAppWebViewController controller, String url,
                     int code, String message) {
                   _notifyLoadStateChanged(false);
-                  AppManager.logger
+                  Application.logger
                       .d("page error: url=$url, code=$code, message=$message");
+                  NavigateUtils.push(context, EmptyRouter.emptyPage,
+                      replace: true);
                 },
                 onLoadStop: (InAppWebViewController controller, String url) {
                   _notifyLoadStateChanged(false);
                   controller.getTitle().then((String title) {
                     setState(() {
                       this._title = title;
-                      AppManager.logger
+                      Application.logger
                           .d("page stopped: url=$url, title=$title");
                     });
                   });

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/util/repeat_utils.dart';
+import 'package:flutter_app/util/toast_utils.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-
-import '../util/repeat_utils.dart';
-import '../util/toast_utils.dart';
 
 ///
 /// 按两次返回键可退出应用

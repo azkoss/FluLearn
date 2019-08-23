@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/manager/app_manager.dart';
+import 'package:flutter_app/common/application.dart';
+import 'package:flutter_app/util/image_utils.dart';
+import 'package:flutter_app/widget/exit_container.dart';
 
-import '../util/image_utils.dart';
-import '../widget/exit_container.dart';
 import 'home_drawer.dart';
 
 ///
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
       name = _tabIcons[index][0];
     }
     String icon = "assets/image/home/ic_$name.png";
-    AppManager.logger.d("selected: $_tabIndex, index: $index, icon: $icon");
+    Application.logger.d("selected: $_tabIndex, index: $index, icon: $icon");
     return ImageUtils.fromAsset(icon);
   }
 

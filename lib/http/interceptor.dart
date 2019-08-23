@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_app/manager/app_manager.dart';
+import 'package:flutter_app/common/application.dart';
+import 'package:flutter_app/common/prefs_key.dart';
+import 'package:flutter_app/util/prefs_utils.dart';
 
-import '../config/prefs_key.dart';
-import '../util/prefs_utils.dart';
 import 'error_handle.dart';
 
 ///
@@ -37,20 +37,20 @@ class LoggingInterceptor extends Interceptor {
   @override
   onRequest(RequestOptions options) {
     startTime = DateTime.now();
-    AppManager.logger.d("----------Start----------");
+    Application.logger.d("----------Start----------");
     if (options.queryParameters.isEmpty) {
-      AppManager.logger.i("RequestUrl: " + options.baseUrl + options.path);
+      Application.logger.i("RequestUrl: " + options.baseUrl + options.path);
     } else {
-      AppManager.logger.i("RequestUrl: " +
+      Application.logger.i("RequestUrl: " +
           options.baseUrl +
           options.path +
           "?" +
           Transformer.urlEncodeMap(options.queryParameters));
     }
-    AppManager.logger.d("RequestMethod: " + options.method);
-    AppManager.logger.d("RequestHeaders:" + options.headers.toString());
-    AppManager.logger.d("RequestContentType: ${options.contentType}");
-    AppManager.logger.d("RequestData: ${options.data.toString()}");
+    Application.logger.d("RequestMethod: " + options.method);
+    Application.logger.d("RequestHeaders:" + options.headers.toString());
+    Application.logger.d("RequestContentType: ${options.contentType}");
+    Application.logger.d("RequestData: ${options.data.toString()}");
     return super.onRequest(options);
   }
 
@@ -59,19 +59,19 @@ class LoggingInterceptor extends Interceptor {
     endTime = DateTime.now();
     int duration = endTime.difference(startTime).inMilliseconds;
     if (response.statusCode == ExceptionHandle.success) {
-      AppManager.logger.d("ResponseCode: ${response.statusCode}");
+      Application.logger.d("ResponseCode: ${response.statusCode}");
     } else {
-      AppManager.logger.e("ResponseCode: ${response.statusCode}");
+      Application.logger.e("ResponseCode: ${response.statusCode}");
     }
     // 输出结果
-    AppManager.logger.d(response.data.toString());
-    AppManager.logger.d("----------End: $duration 毫秒----------");
+    Application.logger.d(response.data.toString());
+    Application.logger.d("----------End: $duration 毫秒----------");
     return super.onResponse(response);
   }
 
   @override
   onError(DioError err) {
-    AppManager.logger.d("----------Error-----------", err);
+    Application.logger.d("----------Error-----------", err);
     return super.onError(err);
   }
 }
@@ -144,7 +144,7 @@ class AdapterInterceptor extends Interceptor {
               response.statusCode = ExceptionHandle.success;
             }
           } catch (e) {
-            AppManager.logger.d("异常信息：$e");
+            Application.logger.d("异常信息：$e");
             // 解析异常直接按照返回原数据处理（一般为返回500,503 HTML页面代码）
             msg = "服务器异常";
           }

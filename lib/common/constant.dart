@@ -14,7 +14,7 @@ class Constant {
   ///
   /// 闪屏启用开关
   ///
-  static const bool enableSplash = true;
+  static const bool enableSplash = false;
 
   ///
   /// 标题栏高度

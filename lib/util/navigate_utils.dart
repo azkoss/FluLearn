@@ -1,25 +1,27 @@
 import 'package:fluro/fluro.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../browser/browser_router.dart';
-import '../manager/app_manager.dart';
+import 'package:flutter_app/browser/browser_router.dart';
+import 'package:flutter_app/common/application.dart';
 
 ///
 /// 路由跳转工具类
 /// Adapted from https://github.com/simplezhli/flutter_deer/.../NavigatorUtils.dart
 ///
-class RouteUtils {
+class NavigateUtils {
+  static const transitionDurationSeconds = 250;
+
   ///
   ///打开新页面
   ///
   static push(BuildContext context, String path,
       {bool replace = false, bool clearStack = false}) {
-    AppManager.logger.d("open route: path=" + path);
-    FocusScope.of(context).requestFocus(new FocusNode());
-    AppManager.router.navigateTo(context, path,
+    Application.logger.d("open route: path=" + path);
+    Application.router.navigateTo(context, path,
         replace: replace,
         clearStack: clearStack,
-        transition: TransitionType.native);
+        transitionDuration: Duration(seconds: transitionDurationSeconds),
+        transition: TransitionType.cupertino);
   }
 
   ///
@@ -28,13 +30,13 @@ class RouteUtils {
   static pushResult(
       BuildContext context, String path, Function(Object) function,
       {bool replace = false, bool clearStack = false}) {
-    AppManager.logger.d("open route for result: path=" + path);
-    FocusScope.of(context).requestFocus(new FocusNode());
-    AppManager.router
+    Application.logger.d("open route for result: path=" + path);
+    Application.router
         .navigateTo(context, path,
         replace: replace,
         clearStack: clearStack,
-        transition: TransitionType.native)
+        transitionDuration: Duration(seconds: transitionDurationSeconds),
+        transition: TransitionType.cupertino)
         .then((result) {
       if (result == null) {
         return;
@@ -49,8 +51,8 @@ class RouteUtils {
   ///打开新页面
   ///
   static goPage(BuildContext context, Widget page) {
-    FocusScope.of(context).requestFocus(new FocusNode());
-    Navigator.push(context, new MaterialPageRoute<Widget>(builder: (context) {
+    Application.logger.d("open page: page=" + page.toString());
+    Navigator.push(context, new CupertinoPageRoute(builder: (context) {
       return page;
     }));
   }
@@ -59,7 +61,6 @@ class RouteUtils {
   /// 返回
   ///
   static void goBack(BuildContext context) {
-    FocusScope.of(context).requestFocus(new FocusNode());
     Navigator.pop(context);
   }
 
@@ -67,14 +68,13 @@ class RouteUtils {
   /// 带参数返回
   ///
   static void goBackWithParams(BuildContext context, result) {
-    FocusScope.of(context).requestFocus(new FocusNode());
     Navigator.pop(context, result);
   }
 
   ///
   /// 跳到网页
   ///
-  static goWebPage(BuildContext context, String url, [String title = ""]) {
+  static goWeb(BuildContext context, String url, [String title = ""]) {
     if (title
         .trim()
         .isEmpty) {

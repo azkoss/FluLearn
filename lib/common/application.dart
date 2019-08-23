@@ -4,7 +4,7 @@ import 'package:logger/logger.dart';
 ///
 /// 应用全局集中管理
 ///
-class AppManager {
+class Application {
   ///
   /// 调试日志打印工具
   ///

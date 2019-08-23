@@ -3,10 +3,10 @@ import 'package:flutter_app/widget/state_layout.dart';
 import 'package:flutter_app/widget/title_bar.dart';
 
 ///
-/// 路由跳转错误提示页
+/// 空页提示
 /// Adapted from https://github.com/simplezhli/flutter_deer/.../404.dart
 ///
-class PageNotFound extends StatelessWidget {
+class EmptyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

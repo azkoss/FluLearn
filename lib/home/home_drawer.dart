@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../util/image_utils.dart';
-import '../util/toast_utils.dart';
+import 'package:flutter_app/util/image_utils.dart';
+import 'package:flutter_app/util/navigate_utils.dart';
+import 'package:flutter_app/util/toast_utils.dart';
 
 ///
 /// 主页抽屉
@@ -84,10 +84,10 @@ class HomeDrawer extends StatelessWidget {
     return Column(
       children: <Widget>[
         ListTile(
-          leading: CircleAvatar(child: Text("A")),
-          title: Text('Drawer item A'),
+          leading: CircleAvatar(child: Text("网")),
+          title: Text('网页浏览器'),
           onTap: () {
-            ToastUtils.showShort("click item A");
+            return NavigateUtils.goWeb(context, "http://qqtheme.cn");
           },
         ),
         Divider(
@@ -95,11 +95,11 @@ class HomeDrawer extends StatelessWidget {
           color: Colors.grey[350],
         ),
         ListTile(
-          leading: CircleAvatar(child: Text("B")),
-          title: Text('Drawer item B'),
+          leading: CircleAvatar(child: Text("404")),
+          title: Text('Page Not Found'),
           subtitle: Text("Drawer item B subtitle"),
           onTap: () {
-            ToastUtils.showShort("click item B");
+            return NavigateUtils.push(context, "/404");
           },
         ),
         Container(
@@ -111,7 +111,7 @@ class HomeDrawer extends StatelessWidget {
           leading: Icon(Icons.settings),
           title: Text('设置'),
           trailing: new Icon(Icons.keyboard_arrow_right),
-          onTap: () => _goToSettings(),
+          onTap: () => _goToSettings(context),
         ),
         Divider(
           height: 1,
@@ -119,7 +119,7 @@ class HomeDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.copyright),
-          title: Text("许可"),
+          title: Text("Licenses"),
           trailing: new Icon(Icons.keyboard_arrow_right),
           onTap: () => _showLicense(context),
         ),
@@ -131,21 +131,22 @@ class HomeDrawer extends StatelessWidget {
     return SizedBox.shrink();
   }
 
-  void _goToSettings() {
+  void _goToSettings(BuildContext context) {
     ToastUtils.showShort("设置");
   }
 
   void _showLicense(BuildContext context) {
-    showLicensePage(
-      context: context,
-      applicationVersion: "v1.0",
-      applicationIcon: ImageUtils.fromAsset(
-        "assets/image/app_logo.png",
-        width: 120,
-        height: 120,
-        fit: BoxFit.contain,
-      ),
-      applicationLegalese: "本应用使用了第三方开源程序，许可协议详见如下。",
-    );
+    NavigateUtils.goPage(
+        context,
+        LicensePage(
+          applicationVersion: "v1.0",
+          applicationIcon: ImageUtils.fromAsset(
+            "assets/image/app_logo.png",
+            width: 120,
+            height: 120,
+            fit: BoxFit.contain,
+          ),
+          applicationLegalese: "本应用使用了第三方开源程序，许可协议详见如下。",
+        ));
   }
 }

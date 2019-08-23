@@ -2,16 +2,15 @@ import 'dart:async';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/config/prefs_key.dart';
-import 'package:flutter_app/manager/app_manager.dart';
+import 'package:flutter_app/common/application.dart';
+import 'package:flutter_app/common/prefs_key.dart';
+import 'package:flutter_app/home/home_page.dart';
+import 'package:flutter_app/util/image_utils.dart';
 import 'package:flutter_app/util/prefs_utils.dart';
+import 'package:flutter_app/widget/exit_container.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:package_info/package_info.dart';
 import 'package:splashscreen/splashscreen.dart';
-
-import '../home/home_page.dart';
-import '../util/image_utils.dart';
-import '../widget/exit_container.dart';
 
 ///
 /// 闪屏页
@@ -46,7 +45,7 @@ class _SplashPageState extends State<SplashPage> {
     setState(() {
       _imageUrl = PrefsUtils.getString(PrefsKey.splash_image_url);
       _imageLight = PrefsUtils.getBool(PrefsKey.splash_image_light);
-      AppManager.logger.d("imageUrl=$_imageUrl, imageLight=$_imageLight");
+      Application.logger.d("imageUrl=$_imageUrl, imageLight=$_imageLight");
     });
   }
 
@@ -56,18 +55,17 @@ class _SplashPageState extends State<SplashPage> {
         _appName = packageInfo.appName;
         _version = packageInfo.version;
         _buildNumber = packageInfo.buildNumber;
-        AppManager.logger.d(
+        Application.logger.d(
             "appName=$_appName,version=$_version, buildNumber=$_buildNumber");
       });
     });
   }
 
-
   void _updateSplashImage() {
     Future.microtask(() => _fetchFromNetwork())
         .timeout(new Duration(seconds: 2))
         .catchError((e) {
-      AppManager.logger.e("fetch splash image timeout", e);
+      Application.logger.e("fetch splash image timeout", e);
     });
   }
 
@@ -76,7 +74,7 @@ class _SplashPageState extends State<SplashPage> {
     String imageUrl =
         "https://via.placeholder.com/720x1080/0000DD/FFFFFF.webp?text=Splash+Screen";
     bool imageLight = false;
-    AppManager.logger.d("imageUrl=$imageUrl, imageLight=$imageLight");
+    Application.logger.d("imageUrl=$imageUrl, imageLight=$imageLight");
     PrefsUtils.putString(PrefsKey.splash_image_url, imageUrl);
     PrefsUtils.putBool(PrefsKey.splash_image_light, imageLight);
   }

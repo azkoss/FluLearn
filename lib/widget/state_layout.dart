@@ -56,7 +56,7 @@ class _StateLayoutState extends State<StateLayout> {
                       width: 120.0,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("assets/image/{$_hintImage}"),
+                          image: AssetImage("assets/image/$_hintImage"),
                         ),
                       ),
                     )),

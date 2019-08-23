@@ -1,7 +1,7 @@
 import 'package:fluro/fluro.dart';
+import 'package:flutter_app/common/constant.dart';
+import 'package:flutter_app/common/routers.dart' show IRouterProvider;
 
-import '../config/constant.dart';
-import '../manager/router_manager.dart' show IRouterProvider;
 import 'browser_page.dart';
 
 ///

@@ -1,4 +1,4 @@
-import '../manager/app_manager.dart';
+import 'package:flutter_app/common/application.dart';
 
 ///
 /// 重复操作、快速点击
@@ -16,7 +16,7 @@ class RepeatUtils {
       _lastTime = DateTime.now();
       return false;
     }
-    AppManager.logger.d("is fast double action: duration=$diffMs");
+    Application.logger.d("is fast double action: duration=$diffMs");
     return true;
   }
 }

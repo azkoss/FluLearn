@@ -3,14 +3,13 @@ import 'dart:io';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/common/application.dart';
+import 'package:flutter_app/common/constant.dart';
+import 'package:flutter_app/common/routers.dart';
 import 'package:flutter_app/home/home_page.dart';
+import 'package:flutter_app/splash/splash_page.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'config/constant.dart';
-import 'manager/app_manager.dart';
-import 'manager/router_manager.dart';
-import 'splash/splash_page.dart';
 
 Future main() async {
   // 语言代码参见 https://baike.baidu.com/item/ISO 639-1
@@ -19,8 +18,8 @@ Future main() async {
   final Locale english = new Locale('en', 'US');
 
   final router = Router();
-  AppManager.router = router;
-  RouteManager.configureRoutes(router);
+  Application.router = router;
+  Routers.configure(router);
 
   //FlutterI18n+SplashScreen启动黑屏问题，参见 https://github.com/ilteoood/flutter_i18n/issues/17
   final FlutterI18nDelegate flutterI18nDelegate = new FlutterI18nDelegate(
@@ -38,7 +37,7 @@ Future main() async {
       scaffoldBackgroundColor: Colors.white,
     ),
     home: Constant.enableSplash ? SplashPage() : HomePage(),
-    onGenerateRoute: AppManager.router.generator,
+    onGenerateRoute: Application.router.generator,
     localizationsDelegates: [
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate,
