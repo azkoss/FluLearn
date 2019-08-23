@@ -32,7 +32,7 @@
         </activity>
 
         <provider
-            android:name="androidx.core.content.FileProvider"
+            android:name="com.example.flutter_app.util.CompatUtils$CompatFileProvider"
             android:authorities="${applicationId}.FILE_PROVIDER"
             android:exported="false"
             android:grantUriPermissions="true">

@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 
-import androidx.core.content.FileProvider;
-
 import java.io.File;
 
 /**
@@ -19,11 +17,14 @@ public class CompatUtils {
     public static Uri getUriForFile(Context context, File file) {
         Uri fileUri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            fileUri = FileProvider.getUriForFile(context, context.getPackageName() + ".FILE_PROVIDER", file);
+            fileUri = CompatFileProvider.getUriForFile(context, context.getPackageName() + ".FILE_PROVIDER", file);
         } else {
             fileUri = Uri.fromFile(file);
         }
         return fileUri;
+    }
+
+    public static class CompatFileProvider extends androidx.core.content.FileProvider {
     }
 
     public static void setIntentDataAndType(Context context, Intent intent, String type, File file, boolean writeAble) {
