@@ -14,7 +14,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
       this.title: "",
         this.centerTitle: true,
       this.actionName: "",
-      this.backIcon: "assets/image/ic_back_black.png",
+        this.backIcon: "images/ic_back_black.png",
       this.onPressed,
       this.isBack: true})
       : super(key: key);

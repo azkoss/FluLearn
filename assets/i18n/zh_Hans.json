@@ -1,9 +1,0 @@
-{
-  "splash": {
-    "welcome_title": "欢迎进入闪屏页，{user}",
-    "welcome_loading": "加载中"
-  },
-  "exit": {
-    "double_click_tip": "再按一次退出应用"
-  }
-}

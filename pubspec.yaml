@@ -12,7 +12,7 @@ description: Flutter 应用开发学习
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # 语义化版本规范（主版本号.次版本号.修订号）：https://semver.org/lang/zh-CN/
-version: 1.0.0+1
+version: 0.0.1+1
 author: 李玉江 <1032694760@qq.com>
 homepage: https://github.com/gzu-liyujiang
 
@@ -130,6 +130,6 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
-    - assets/i18n/
-    - assets/image/
-    - assets/image/home/
+    - locales/
+    - images/
+    - images/home/

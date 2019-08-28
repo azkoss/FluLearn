@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 /// Adapted from https://github.com/simplezhli/flutter_deer/.../image_utils.dart
 ///
 class ImageUtils {
-  static const String placeholder = "assets/image/ic_placeholder.png";
+  static const String placeholder = "images/ic_placeholder.png";
 
   ///
   /// 加载本地资源图片
@@ -19,7 +19,7 @@ class ImageUtils {
     BoxFit fit,
   }) {
     return Image.asset(
-      name.startsWith("assets") ? name : "assets/image/$name",
+      name.startsWith("images") ? name : "images/$name",
       height: height,
       width: width,
       fit: fit,

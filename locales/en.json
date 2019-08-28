@@ -1,7 +1,6 @@
 {
   "splash": {
-    "welcome_title": "Welcome In SplashScreen, {user}",
-    "welcome_loading": "Loading"
+    "welcome_title": "Loading..."
   },
   "exit": {
     "double_click_tip": "Press again to exit the app"

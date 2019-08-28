@@ -12,9 +12,19 @@ class Constant {
   !const bool.fromEnvironment("dart.vm.product");
 
   ///
+  /// 默认语言标记（语言码+国家码）
+  ///
+  static const languageTag = "zh_TW";
+
+  ///
+  /// 本地化语言文件所在目录
+  ///
+  static const languageDir = "locales";
+
+  ///
   /// 闪屏启用开关
   ///
-  static const bool enableSplash = false;
+  static const bool enableSplash = true;
 
   ///
   /// 标题栏高度

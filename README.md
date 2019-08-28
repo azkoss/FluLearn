@@ -21,32 +21,42 @@
 
 - 运行提示“Android dependency 'androidx...' has different version for the compile...”。
 ```
-问题参见 https://github.com/flutter/flutter/issues/27254 。这是多个安卓模块依赖的androidx版本冲突导致的，解决办法：
-根据报错，在安卓原生项目的根部build.gradle里加入以下类似的规则：
+这是多个安卓模块依赖的androidx版本冲突导致的，问题讨论参见 https://github.com/flutter/flutter/issues/27254#issuecomment-525616582
+#############################
+解决办法一：
+#############################
+Upgrade Android Gradle Plugin and Gradle to the latest version can solve this problem. For Android Studio 3.5, modify these:
+
+android/build.gradle:
+com.android.tools.build:gradle:3.5.0
+
+android/gradle/wrapper/gradle-wrapper.properties:
+distributionUrl=https\://services.gradle.org/distributions/gradle-5.4.1-all.zip
+#############################
+解决办法二：
+#############################
+Of course, you should manually set the same version via DependencyResolution. So, the following resolution strategy can also be used to resolve the conflicts of dependency :
+
+android/gradle.properties:
+androidxCoreVersion=1.0.0
+androidxLifecycleVersion=2.0.0
+
+android/build.gradle:
 subprojects {
     project.configurations.all {
-        //此处可用于解决依赖冲突问题，参阅 https://developer.android.google.cn/studio/build/dependencies#duplicate_classes
-        resolutionStrategy.eachDependency { details ->
-            // Flutter混合开发问题参阅 https://github.com/flutter/flutter/issues/27254
-            if (details.requested.group == 'com.android.support'
-                    && !details.requested.name.contains('multidex')) {
-                details.useVersion "28.0.0"
-            } else if (details.requested.group == 'androidx.core') {
-                details.useVersion "1.0.2"
-            } else if (details.requested.group == 'androidx.appcompat') {
-                details.useVersion "1.0.2"
-            } else if (details.requested.group == 'androidx.arch.core') {
-                details.useVersion "2.0.0"
-            } else if (details.requested.group == 'androidx.versionedparcelable') {
-                details.useVersion "1.1.0"
-            } else if (details.requested.group == 'androidx.vectordrawable') {
-                details.useVersion "1.0.0"
-            }
+        resolutionStrategy {
+            force "androidx.core:core:${androidxCoreVersion}"
+            force "androidx.lifecycle:lifecycle-common:${androidxLifecycleVersion}"
         }
     }
-
-    project.evaluationDependsOn(':app')
 }
+```
+
+
+- 构建正式包报错提示`Conflicting configuration : '...' in ndk abiFilters cannot be present when splits abi filters are set : ...`
+```
+这是因为使用带“--split-per-abi”参数（如flutter build apk --release --split-per-abi --target-platform android-arm）的构建命令和安卓原生的build.gradle里配置的“ndk.abiFilters”或“splits.abi”冲突，删掉“ndk.abiFilters”或“splits.abi”节点即可。
+目测截止2019.8.28，Flutter的发布包貌似只支持armeabi-v7a及arm64-v8a，使用“--target-platform android-x86”参数构建会报错"android-x86" is not an allowed value for option "target-platform"。
 ```
 
 

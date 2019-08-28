@@ -17,7 +17,7 @@ import 'package:splashscreen/splashscreen.dart';
 ///
 class SplashPage extends StatefulWidget {
   final int defaultSeconds = 5;
-  final defaultImageUrl = "assets/image/app_splash.webp";
+  final defaultImageUrl = "images/app_splash.webp";
 
   @override
   _SplashPageState createState() => new _SplashPageState();
@@ -91,8 +91,9 @@ class _SplashPageState extends State<SplashPage> {
       seconds: widget.defaultSeconds,
       navigateAfterSeconds: new HomePage(),
       title: new Text(
-        FlutterI18n.translate(context, "splash.welcome_title",
-            Map.fromIterables(["user"], ["liyujiang"])),
+        TextUtil.isEmpty(_appName)
+            ? FlutterI18n.translate(context, "splash.welcome_title")
+            : "$_appName v$_version [$_buildNumber]",
         style: new TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 20.0,
@@ -113,9 +114,7 @@ class _SplashPageState extends State<SplashPage> {
           .of(context)
           .primaryColor,
       loadingText: Text(
-        TextUtil.isEmpty(_appName)
-            ? FlutterI18n.translate(context, "splash.welcome_loading")
-            : "$_appName v$_version [$_buildNumber]",
+        "Copyright (c) Li Yujiang",
         style: new TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 16.0,

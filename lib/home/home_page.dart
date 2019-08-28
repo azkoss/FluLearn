@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/application.dart';
+import 'package:flutter_app/util/common_utils.dart';
 import 'package:flutter_app/util/image_utils.dart';
 import 'package:flutter_app/widget/exit_container.dart';
 
@@ -36,7 +37,28 @@ class _HomePageState extends State<HomePage> {
 
   void initData() {
     _pageList = [
-      Text("考试"),
+      Column(
+        children: <Widget>[
+          RaisedButton(
+            child: Text("简体中文"),
+            onPressed: () {
+              CommonUtils.changeLanguage(context, "zh_CN");
+            },
+          ),
+          RaisedButton(
+            child: Text("繁体中文"),
+            onPressed: () {
+              CommonUtils.changeLanguage(context, "zh_TW");
+            },
+          ),
+          RaisedButton(
+            child: Text("英语"),
+            onPressed: () {
+              CommonUtils.changeLanguage(context, "en_US");
+            },
+          ),
+        ],
+      ),
       Text("提问"),
       Text("下载"),
       Text("学习"),
@@ -51,7 +73,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       name = _tabIcons[index][0];
     }
-    String icon = "assets/image/home/ic_$name.png";
+    String icon = "images/home/ic_$name.png";
     Application.logger.d("selected: $_tabIndex, index: $index, icon: $icon");
     return ImageUtils.fromAsset(icon);
   }
