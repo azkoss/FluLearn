@@ -36,28 +36,11 @@ android {
     compileSdkVersion Integer.parseInt(gradleProperties.getProperty("compileSdkVersion"))
     buildToolsVersion gradleProperties.getProperty("buildToolsVersion")
 
-    lintOptions {
-        // 如果构建时发现了致命（Fatal）的问题，会中止构建（具体由 abortOnError 控制）
-        checkReleaseBuilds false
-        // 设置为 true，则当 Lint 发现错误时停止 Gradle 构建
-        abortOnError false
-        disable 'InvalidPackage'
-    }
-
     defaultConfig {
         minSdkVersion Integer.parseInt(gradleProperties.getProperty("minSdkVersion"))
         targetSdkVersion Integer.parseInt(gradleProperties.getProperty("targetSdkVersion"))
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        ndk {
-            //支持的CPU架构：armeabi、armeabi-v7a、arm64-v8a、x86、x86_64、mips、mips64
-            //参阅 https://blog.csdn.net/u011733020/article/details/84107354
-            if (Boolean.parseBoolean(gradleProperties.getProperty("supportX86Arch"))) {
-                abiFilters 'armeabi-v7a', 'x86'
-            } else {
-                abiFilters 'armeabi-v7a'
-            }
-        }
     }
 
     buildTypes {
@@ -66,6 +49,14 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+    }
+
+    lintOptions {
+        // 如果构建时发现了致命（Fatal）的问题，会中止构建（具体由 abortOnError 控制）
+        checkReleaseBuilds false
+        // 设置为 true，则当 Lint 发现错误时停止 Gradle 构建
+        abortOnError false
+        disable 'InvalidPackage'
     }
 
     packagingOptions {
@@ -94,6 +85,6 @@ flutter {
 }
 
 dependencies {
-    implementation "androidx.core:core:$androidxVersion"
-    implementation "androidx.lifecycle:lifecycle-common:$lifecycleVersion"
+    implementation "androidx.core:core:$androidxCoreVersion"
+    implementation "androidx.lifecycle:lifecycle-common:$androidxLifecycleVersion"
 }

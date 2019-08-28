@@ -35,21 +35,13 @@ allprojects {
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
+
     project.configurations.all {
-        //此处可用于解决依赖冲突问题，参阅 https://developer.android.google.cn/studio/build/dependencies#duplicate_classes
-        resolutionStrategy.eachDependency { details ->
-            // Flutter混合开发问题参阅 https://github.com/flutter/flutter/issues/27254
-            if (details.requested.group == 'androidx.core') {
-                details.useVersion androidxVersion
-            } else if (details.requested.group == 'androidx.legacy') {
-                details.useVersion androidxVersion
-            } else if (details.requested.group == 'androidx.appcompat') {
-                details.useVersion androidxVersion
-            } else if (details.requested.group == 'androidx.arch.core') {
-                details.useVersion lifecycleVersion
-            }
+        // Android dependency 'androidx...' has different version for the compile...
+        // Flutter构建时依赖冲突问题参阅 https://github.com/flutter/flutter/issues/27254
+        resolutionStrategy {
+            force "androidx.core:core:${androidxCoreVersion}"
+            force "androidx.lifecycle:lifecycle-common:${androidxLifecycleVersion}"
         }
     }
 
