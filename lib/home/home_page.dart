@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/common/application.dart';
-import 'package:flutter_app/util/common_utils.dart';
-import 'package:flutter_app/util/image_utils.dart';
+import 'package:flutter_app/util/image_loader.dart';
+import 'package:flutter_app/util/language.dart';
+import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/widget/exit_container.dart';
 
 import 'home_drawer.dart';
@@ -42,19 +42,19 @@ class _HomePageState extends State<HomePage> {
           RaisedButton(
             child: Text("简体中文"),
             onPressed: () {
-              CommonUtils.changeLanguage(context, "zh_CN");
+              Language.change(context, "zh_CN");
             },
           ),
           RaisedButton(
             child: Text("繁体中文"),
             onPressed: () {
-              CommonUtils.changeLanguage(context, "zh_TW");
+              Language.change(context, "zh_TW");
             },
           ),
           RaisedButton(
             child: Text("英语"),
             onPressed: () {
-              CommonUtils.changeLanguage(context, "en_US");
+              Language.change(context, "en_US");
             },
           ),
         ],
@@ -73,9 +73,9 @@ class _HomePageState extends State<HomePage> {
     } else {
       name = _tabIcons[index][0];
     }
-    String icon = "images/home/ic_$name.png";
-    Application.logger.d("selected: $_tabIndex, index: $index, icon: $icon");
-    return ImageUtils.fromAsset(icon);
+    String icon = ImageLoader.assetPath("home/ic_$name.png");
+    L.d("selected: $_tabIndex, index: $index, icon: $icon");
+    return ImageLoader.fromAsset(icon);
   }
 
   Widget _buildTabText(int index) {
@@ -91,9 +91,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    String langTag = Localizations.localeOf(context).toLanguageTag();
     return ExitContainer(
       child: Scaffold(
-        appBar: AppBar(title: Text("Flutter学习"), centerTitle: true),
+        appBar: AppBar(title: Text("当前语言：$langTag"), centerTitle: true),
         drawer: HomeDrawer(),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.white,

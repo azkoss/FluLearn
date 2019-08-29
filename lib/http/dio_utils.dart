@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app/common/application.dart';
 import 'package:flutter_app/common/constant.dart';
 import 'package:flutter_app/entity_factory.dart';
+import 'package:flutter_app/util/logger.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'api.dart';
@@ -101,7 +101,7 @@ class DioUtils {
         }
       }
     } catch (e) {
-      Application.logger.e("JSON解析出出错", e);
+      L.e("JSON解析出出错", e);
       return HttpRes.Response(ExceptionHandle.parse_error, "数据解析错误", _data);
     }
     return HttpRes.Response(_code, _msg, _data);
@@ -132,7 +132,7 @@ class DioUtils {
         });
       }
     } catch (e) {
-      Application.logger.e("JSON解析出出错", e);
+      L.e("JSON解析出出错", e);
       return HttpRes.Response(ExceptionHandle.parse_error, "数据解析错误", _data);
     }
     return HttpRes.Response(_code, _msg, _data);
@@ -248,12 +248,12 @@ class DioUtils {
 
   _cancelLogPrint(dynamic e, String url) {
     if (e is DioError && CancelToken.isCancel(e)) {
-      Application.logger.d("取消请求接口： $url");
+      L.d("取消请求接口： $url");
     }
   }
 
   _onError(int code, String msg, Function(int code, String mag) onError) {
-    Application.logger.e("接口请求异常： code: $code, mag: $msg");
+    L.e("接口请求异常： code: $code, mag: $msg");
     if (onError != null) {
       onError(code, msg);
     }

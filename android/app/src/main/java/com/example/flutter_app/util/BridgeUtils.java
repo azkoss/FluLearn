@@ -14,7 +14,7 @@ import io.flutter.view.FlutterView;
  * @author liyujiang
  */
 public class BridgeUtils {
-    private static final String CHANNEL_NAME = "bridge";
+    private static final String CHANNEL_NAME = "gzu-liyujiang/bridge";
 
     public static void installApk(FlutterView flutterView) {
         new MethodChannel(flutterView, CHANNEL_NAME).setMethodCallHandler((methodCall, result) -> {

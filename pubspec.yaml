@@ -43,8 +43,6 @@ dependencies:
   dio: ^2.1.13
   # 响应式编程 https://github.com/ReactiveX/rxdart
   rxdart: ^0.22.1+1
-  # 国际化方案 https://github.com/ilteoood/flutter_i18n
-  flutter_i18n: ^0.6.4
   # 主题 https://github.com/Norbert515/dynamic_theme
   dynamic_theme: ^1.0.1
   # 路由框架 https://github.com/theyakka/fluro
@@ -130,6 +128,7 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
-    - locales/
+    - res/values/
+    - res/images/
     - images/
     - images/home/

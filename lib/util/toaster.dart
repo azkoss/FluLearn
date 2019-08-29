@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 ///
 /// 吐司工具类
 ///
-class ToastUtils {
+class Toaster {
   static showShort(String msg) {
     _show(msg, isShort: true);
   }

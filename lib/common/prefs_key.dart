@@ -1,5 +1,5 @@
 ///
-/// SharedPreferences存储键集中管理
+/// [SharedPreferences]存储键集中管理
 ///
 class PrefsKey {
   static const String splash_image_url = 'prefs_key_splash_image_url';

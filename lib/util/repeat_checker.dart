@@ -1,9 +1,9 @@
-import 'package:flutter_app/common/application.dart';
+import 'package:flutter_app/util/logger.dart';
 
 ///
 /// 重复操作、快速点击
 ///
-class RepeatUtils {
+class RepeatChecker {
   static DateTime _lastTime;
 
   static bool isFastClick() {
@@ -16,7 +16,7 @@ class RepeatUtils {
       _lastTime = DateTime.now();
       return false;
     }
-    Application.logger.d("is fast double action: duration=$diffMs");
+    L.d("is fast double action: duration=$diffMs");
     return true;
   }
 }

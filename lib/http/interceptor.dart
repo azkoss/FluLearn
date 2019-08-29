@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_app/common/application.dart';
 import 'package:flutter_app/common/prefs_key.dart';
-import 'package:flutter_app/util/prefs_utils.dart';
+import 'package:flutter_app/util/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'error_handle.dart';
 
@@ -17,11 +17,12 @@ import 'error_handle.dart';
 ///
 class AuthInterceptor extends Interceptor {
   @override
-  onRequest(RequestOptions options) {
-    String accessToken = PrefsUtils.getString(PrefsKey.access_token);
+  onRequest(RequestOptions options) async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    String accessToken = sp.getString(PrefsKey.access_token);
     if (accessToken.isNotEmpty) {
       options.headers["Authorization"] =
-          "Bearer ${PrefsUtils.getString(PrefsKey.access_token)}";
+      "Bearer ${sp.getString(PrefsKey.access_token)}";
     }
     return super.onRequest(options);
   }
@@ -37,20 +38,20 @@ class LoggingInterceptor extends Interceptor {
   @override
   onRequest(RequestOptions options) {
     startTime = DateTime.now();
-    Application.logger.d("----------Start----------");
+    L.d("----------Start----------");
     if (options.queryParameters.isEmpty) {
-      Application.logger.i("RequestUrl: " + options.baseUrl + options.path);
+      L.d("RequestUrl: " + options.baseUrl + options.path);
     } else {
-      Application.logger.i("RequestUrl: " +
+      L.d("RequestUrl: " +
           options.baseUrl +
           options.path +
           "?" +
           Transformer.urlEncodeMap(options.queryParameters));
     }
-    Application.logger.d("RequestMethod: " + options.method);
-    Application.logger.d("RequestHeaders:" + options.headers.toString());
-    Application.logger.d("RequestContentType: ${options.contentType}");
-    Application.logger.d("RequestData: ${options.data.toString()}");
+    L.d("RequestMethod: " + options.method);
+    L.d("RequestHeaders:" + options.headers.toString());
+    L.d("RequestContentType: ${options.contentType}");
+    L.d("RequestData: ${options.data.toString()}");
     return super.onRequest(options);
   }
 
@@ -59,19 +60,19 @@ class LoggingInterceptor extends Interceptor {
     endTime = DateTime.now();
     int duration = endTime.difference(startTime).inMilliseconds;
     if (response.statusCode == ExceptionHandle.success) {
-      Application.logger.d("ResponseCode: ${response.statusCode}");
+      L.d("ResponseCode: ${response.statusCode}");
     } else {
-      Application.logger.e("ResponseCode: ${response.statusCode}");
+      L.e("ResponseCode: ${response.statusCode}");
     }
     // 输出结果
-    Application.logger.d(response.data.toString());
-    Application.logger.d("----------End: $duration 毫秒----------");
+    L.d(response.data.toString());
+    L.d("----------End: $duration 毫秒----------");
     return super.onResponse(response);
   }
 
   @override
   onError(DioError err) {
-    Application.logger.d("----------Error-----------", err);
+    L.e("----------Error-----------", err.stackTrace);
     return super.onError(err);
   }
 }
@@ -144,7 +145,7 @@ class AdapterInterceptor extends Interceptor {
               response.statusCode = ExceptionHandle.success;
             }
           } catch (e) {
-            Application.logger.d("异常信息：$e");
+            L.d("异常信息：$e");
             // 解析异常直接按照返回原数据处理（一般为返回500,503 HTML页面代码）
             msg = "服务器异常";
           }

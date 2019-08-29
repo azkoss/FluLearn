@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 ///
 /// 常量集中管理
 ///
@@ -12,19 +10,9 @@ class Constant {
   !const bool.fromEnvironment("dart.vm.product");
 
   ///
-  /// 默认语言标记（语言码+国家码）
+  /// 闪屏时长，大于1秒才显示闪屏页
   ///
-  static const languageTag = "zh_TW";
-
-  ///
-  /// 本地化语言文件所在目录
-  ///
-  static const languageDir = "locales";
-
-  ///
-  /// 闪屏启用开关
-  ///
-  static const bool enableSplash = true;
+  static const int splashSeconds = 5;
 
   ///
   /// 标题栏高度
@@ -32,18 +20,7 @@ class Constant {
   static const double titleBarHeight = 48.0;
 
   ///
-  /// 主色
-  ///
-  static const Color primaryColor = Color(0xFFF2F2F2);
-
-  ///
   /// 路由协议头
   ///
   static const String urlScheme = "lyj://";
-
-  ///
-  /// 网页加载器代理串
-  ///
-  static const String userAgent =
-      "Mozilla/5.0 (Linux; Android 7.0; PLUS Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.98 Mobile Safari/537.36";
 }

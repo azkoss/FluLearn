@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app/util/image_loader.dart';
 
 ///
 /// 无网络\无数据\出错等空页面
@@ -56,7 +57,7 @@ class _StateLayoutState extends State<StateLayout> {
                       width: 120.0,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("images/$_hintImage"),
+                          image: ImageLoader.fromProvider(_hintImage),
                         ),
                       ),
                     )),

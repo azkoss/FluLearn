@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/util/repeat_utils.dart';
-import 'package:flutter_app/util/toast_utils.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_app/util/language.dart';
+import 'package:flutter_app/util/repeat_checker.dart';
+import 'package:flutter_app/util/toaster.dart';
 
 ///
 /// 按两次返回键可退出应用
@@ -19,12 +19,12 @@ class ExitContainer extends StatelessWidget {
         child: child,
       ),
       onWillPop: () async {
-        if (!RepeatUtils.isFastClick()) {
-          ToastUtils.showLong(
-              FlutterI18n.translate(context, "exit.double_click_tip"));
+        if (!RepeatChecker.isFastClick()) {
+          Toaster.showLong(
+              Language.translate(context, "toast.press_again_to_exit"));
           return Future.value(false);
         }
-        ToastUtils.cancel();
+        Toaster.cancel();
         await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
         return Future.value(true);
       },

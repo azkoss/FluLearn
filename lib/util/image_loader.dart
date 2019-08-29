@@ -2,13 +2,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/common/asset_dir.dart';
 
 ///
 /// 图片加载工具类
 /// Adapted from https://github.com/simplezhli/flutter_deer/.../image_utils.dart
 ///
-class ImageUtils {
-  static const String placeholder = "images/ic_placeholder.png";
+class ImageLoader {
+  static const String placeholder = AssetDir.images + '/ic_placeholder.png';
+
+  static String assetPath(String name) {
+    return AssetDir.images + '/' + name;
+  }
 
   ///
   /// 加载本地资源图片
@@ -19,7 +24,7 @@ class ImageUtils {
     BoxFit fit,
   }) {
     return Image.asset(
-      name.startsWith("images") ? name : "images/$name",
+      name.startsWith(AssetDir.images) ? name : assetPath(name),
       height: height,
       width: width,
       fit: fit,
@@ -33,7 +38,7 @@ class ImageUtils {
       {double width,
       double height,
       BoxFit fit: BoxFit.cover,
-        String placeholder: placeholder,
+        String placeholder: "",
         bool cacheEnable: true}) {
     if (TextUtil.isEmpty(imageUrl)) {
       return fromAsset(placeholder, height: height, width: width, fit: fit);
@@ -60,7 +65,7 @@ class ImageUtils {
   }
 
   static ImageProvider fromProvider(String imageUrl,
-      ErrorListener errorListener) {
+      [ErrorListener errorListener]) {
     if (TextUtil.isEmpty(imageUrl)) {
       return AssetImage(placeholder);
     }

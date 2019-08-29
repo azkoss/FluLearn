@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/common/asset_dir.dart';
 import 'package:flutter_app/common/constant.dart';
 
 ///
@@ -14,7 +15,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
       this.title: "",
         this.centerTitle: true,
       this.actionName: "",
-        this.backIcon: "images/ic_back_black.png",
+        this.backIcon: AssetDir.images + "/ic_back_black.png",
       this.onPressed,
       this.isBack: true})
       : super(key: key);

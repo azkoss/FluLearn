@@ -2,28 +2,27 @@ import 'dart:async';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/common/application.dart';
+import 'package:flutter_app/common/constant.dart';
 import 'package:flutter_app/common/prefs_key.dart';
 import 'package:flutter_app/home/home_page.dart';
-import 'package:flutter_app/util/image_utils.dart';
-import 'package:flutter_app/util/prefs_utils.dart';
+import 'package:flutter_app/util/image_loader.dart';
+import 'package:flutter_app/util/language.dart';
+import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/widget/exit_container.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:package_info/package_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 ///
 /// 闪屏页
 ///
 class SplashPage extends StatefulWidget {
-  final int defaultSeconds = 5;
-  final defaultImageUrl = "images/app_splash.webp";
-
   @override
   _SplashPageState createState() => new _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final defaultImageUrl = ImageLoader.assetPath("app_splash.webp");
   String _imageUrl;
   bool _imageLight;
   String _appName;
@@ -32,32 +31,30 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void initState() {
-    _imageUrl = widget.defaultImageUrl;
+    _imageUrl = defaultImageUrl;
     _imageLight = true;
-    Future.microtask(() => PrefsUtils.getInstance())
-        .then((result) => _obtainSplashImage(result));
+    _obtainSplashImage();
     _obtainAppVersion();
     _updateSplashImage();
     super.initState();
   }
 
-  _obtainSplashImage(PrefsUtils prefsUtils) {
+  void _obtainSplashImage() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
     setState(() {
-      _imageUrl = PrefsUtils.getString(PrefsKey.splash_image_url);
-      _imageLight = PrefsUtils.getBool(PrefsKey.splash_image_light);
-      Application.logger.d("imageUrl=$_imageUrl, imageLight=$_imageLight");
+      _imageUrl = sp.getString(PrefsKey.splash_image_url);
+      _imageLight = sp.getBool(PrefsKey.splash_image_light);
+      L.d("imageUrl=$_imageUrl, imageLight=$_imageLight");
     });
   }
 
-  void _obtainAppVersion() {
-    PackageInfo.fromPlatform().then((packageInfo) {
-      setState(() {
-        _appName = packageInfo.appName;
-        _version = packageInfo.version;
-        _buildNumber = packageInfo.buildNumber;
-        Application.logger.d(
-            "appName=$_appName,version=$_version, buildNumber=$_buildNumber");
-      });
+  void _obtainAppVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appName = packageInfo.appName;
+      _version = packageInfo.version;
+      _buildNumber = packageInfo.buildNumber;
+      L.d("appName=$_appName,version=$_version, buildNumber=$_buildNumber");
     });
   }
 
@@ -65,7 +62,7 @@ class _SplashPageState extends State<SplashPage> {
     Future.microtask(() => _fetchFromNetwork())
         .timeout(new Duration(seconds: 2))
         .catchError((e) {
-      Application.logger.e("fetch splash image timeout", e);
+      L.e("fetch splash image timeout", e);
     });
   }
 
@@ -74,9 +71,10 @@ class _SplashPageState extends State<SplashPage> {
     String imageUrl =
         "https://via.placeholder.com/720x1080/0000DD/FFFFFF.webp?text=Splash+Screen";
     bool imageLight = false;
-    Application.logger.d("imageUrl=$imageUrl, imageLight=$imageLight");
-    PrefsUtils.putString(PrefsKey.splash_image_url, imageUrl);
-    PrefsUtils.putBool(PrefsKey.splash_image_light, imageLight);
+    L.d("imageUrl=$imageUrl, imageLight=$imageLight");
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setString(PrefsKey.splash_image_url, imageUrl);
+    sp.setBool(PrefsKey.splash_image_light, imageLight);
   }
 
   @override
@@ -88,11 +86,11 @@ class _SplashPageState extends State<SplashPage> {
 
   Widget _buildSplashScreen(BuildContext context) {
     return SplashScreen(
-      seconds: widget.defaultSeconds,
+      seconds: Constant.splashSeconds,
       navigateAfterSeconds: new HomePage(),
       title: new Text(
         TextUtil.isEmpty(_appName)
-            ? FlutterI18n.translate(context, "splash.welcome_title")
+            ? ""
             : "$_appName v$_version [$_buildNumber]",
         style: new TextStyle(
           fontWeight: FontWeight.bold,
@@ -102,9 +100,9 @@ class _SplashPageState extends State<SplashPage> {
               .primaryColor,
         ),
       ),
-      imageBackground: ImageUtils.fromProvider(_imageUrl, () {
+      imageBackground: ImageLoader.fromProvider(_imageUrl, () {
         setState(() {
-          _imageUrl = widget.defaultImageUrl;
+          _imageUrl = defaultImageUrl;
           _imageLight = true;
         });
       }),
@@ -114,10 +112,10 @@ class _SplashPageState extends State<SplashPage> {
           .of(context)
           .primaryColor,
       loadingText: Text(
-        "Copyright (c) Li Yujiang",
+        Language.translate(context, "copyright.statement"),
         style: new TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16.0,
+          fontWeight: FontWeight.normal,
+          fontSize: 12.5,
           color: _imageLight ? Colors.black87 : Theme
               .of(context)
               .primaryColor,

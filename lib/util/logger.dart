@@ -1,14 +1,10 @@
-import 'package:fluro/fluro.dart';
 import 'package:logger/logger.dart';
 
 ///
-/// 应用全局集中管理
+/// 调试日志打印工具
 ///
-class Application {
-  ///
-  /// 调试日志打印工具
-  ///
-  static Logger logger = new Logger(
+class L {
+  static Logger _logger = new Logger(
     // Use the default LogFilter (-> only log in debug mode)
     filter: new DebugFilter(),
     // Use the PrettyPrinter to format and print log
@@ -30,8 +26,11 @@ class Application {
     output: new ConsoleOutput(),
   );
 
-  ///
-  /// 页面路由
-  ///
-  static Router router;
+  static void d(dynamic message) {
+    _logger.d(message);
+  }
+
+  static void e(dynamic message, [StackTrace stackTrace]) {
+    _logger.e(message, stackTrace);
+  }
 }

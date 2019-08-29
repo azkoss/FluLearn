@@ -1,76 +1,90 @@
-import 'dart:io';
-
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/common/application.dart';
 import 'package:flutter_app/common/constant.dart';
-import 'package:flutter_app/common/routers.dart';
+import 'package:flutter_app/empty/empty_router.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/home/home_page.dart';
+import 'package:flutter_app/home/home_router.dart';
 import 'package:flutter_app/splash/splash_page.dart';
-import 'package:flutter_app/util/common_utils.dart';
-import 'package:flutter_i18n/flutter_i18n_delegate.dart';
+import 'package:flutter_app/util/language.dart';
+import 'package:flutter_app/util/other_tool.dart';
+import 'package:flutter_app/util/route_navigator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final router = Router();
-  Application.router = router;
-  Routers.configure(router);
-
-  // 注意可能启动黑屏问题，参见 https://github.com/ilteoood/flutter_i18n/issues/17
-  FlutterI18nDelegate delegate = FlutterI18nDelegate(
-    useCountryCode: true,
-    // 语言标记参见 http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
-    fallbackFile: Constant.languageTag,
-    path: Constant.languageDir,
-  );
-  delegate
-      .load(CommonUtils.obtainLocale(Constant.languageTag))
-      .whenComplete(() {
-    runApp(new MainApp(delegate));
-  });
-
-  if (Platform.isAndroid) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ));
-  }
+  OtherTool.setUiOverlayStyle(Brightness.dark);
+  RouteNavigator.registerRouter([
+    new EmptyRouter(),
+    new HomeRouter(),
+  ]);
+  runApp(new MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  MainApp(this.languageLocalizationsDelegate);
+ValueChanged<Locale> localeChanged;
 
-  final FlutterI18nDelegate languageLocalizationsDelegate;
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //右上角调试标记
       debugShowCheckedModeBanner: true,
-      theme: new ThemeData(
-        primaryColor: Constant.primaryColor,
+      //界面风格
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Color(0xFFF2F2F2),
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: Constant.enableSplash ? SplashPage() : HomePage(),
-      onGenerateRoute: Application.router.generator,
-      localizationsDelegates: [
-        languageLocalizationsDelegate,
-        GlobalMaterialLocalizations.delegate,
+      //主入口页面
+      home: LocalizationHome(),
+      //生成页面路由（用于Router）
+      onGenerateRoute: RouteNavigator.router.generator,
+      //生成页面标题（用于AppBar）
+      onGenerateTitle: (context) {
+        return S
+            .of(context)
+            .textDirection
+            .toString();
+      },
+      //区域设置，用于语言、日期时间、文字方向等本地化
+      supportedLocales: S.delegate.supportedLocales,
+      localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
+        S.delegate,
       ],
-      supportedLocales: [
-        // 语言代码参见 https://baike.baidu.com/item/ISO 639-1
-        // 国家代码参见 https://baike.baidu.com/item/ISO 3166-1
-        new Locale("zh", 'CN'),
-        new Locale("zh", 'TW'),
-        new Locale('en', 'US'),
-      ],
+      localeResolutionCallback: S.delegate.resolution(
+        fallback: Language.defaultLocale,
+        withCountry: true,
+      ),
+    );
+  }
+}
+
+class LocalizationHome extends StatefulWidget {
+  @override
+  _LocalizationHomeState createState() => _LocalizationHomeState();
+}
+
+class _LocalizationHomeState extends State<LocalizationHome> {
+  Locale _locale = Language.defaultLocale;
+
+  @override
+  void initState() {
+    super.initState();
+    localeChanged = (locale) {
+      setState(() {
+        _locale = locale;
+      });
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Localizations.override(
+      context: context,
+      locale: _locale,
+      child: Constant.splashSeconds > 1 ? SplashPage() : HomePage(),
     );
   }
 }

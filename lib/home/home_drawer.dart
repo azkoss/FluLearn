@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/util/image_utils.dart';
-import 'package:flutter_app/util/navigate_utils.dart';
-import 'package:flutter_app/util/toast_utils.dart';
+import 'package:flutter_app/util/image_loader.dart';
+import 'package:flutter_app/util/language.dart';
+import 'package:flutter_app/util/route_navigator.dart';
+import 'package:flutter_app/util/toaster.dart';
+import 'package:flutter_app/util/web_browser.dart';
 
 ///
 /// 主页抽屉
@@ -56,9 +58,9 @@ class HomeDrawer extends StatelessWidget {
           ClipOval(
             child: GestureDetector(
               onTap: () {
-                ToastUtils.showShort("用户头像");
+                Toaster.showShort("用户头像");
               },
-              child: ImageUtils.fromNetwork(
+              child: ImageLoader.fromNetwork(
                 "https://avatars3.githubusercontent.com/u/16816717?s=460&v=4",
                 width: 60,
                 height: 60,
@@ -87,7 +89,7 @@ class HomeDrawer extends StatelessWidget {
           leading: CircleAvatar(child: Text("网")),
           title: Text('网页浏览器'),
           onTap: () {
-            return NavigateUtils.goWeb(context, "http://qqtheme.cn");
+            return WebBrowser.launch(context, "http://qqtheme.cn");
           },
         ),
         Divider(
@@ -99,7 +101,7 @@ class HomeDrawer extends StatelessWidget {
           title: Text('Page Not Found'),
           subtitle: Text("Drawer item B subtitle"),
           onTap: () {
-            return NavigateUtils.push(context, "/404");
+            return RouteNavigator.goTo(context, "/404");
           },
         ),
         Container(
@@ -109,7 +111,7 @@ class HomeDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.settings),
-          title: Text('设置'),
+          title: Text(Language.translate(context, "home.drawer.settings")),
           trailing: new Icon(Icons.keyboard_arrow_right),
           onTap: () => _goToSettings(context),
         ),
@@ -119,7 +121,7 @@ class HomeDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.copyright),
-          title: Text("Licenses"),
+          title: Text(Language.translate(context, "home.drawer.licenses")),
           trailing: new Icon(Icons.keyboard_arrow_right),
           onTap: () => _showLicense(context),
         ),
@@ -132,21 +134,21 @@ class HomeDrawer extends StatelessWidget {
   }
 
   void _goToSettings(BuildContext context) {
-    ToastUtils.showShort("设置");
+    Toaster.showShort("设置");
   }
 
   void _showLicense(BuildContext context) {
-    NavigateUtils.goPage(
-        context,
-        LicensePage(
-          applicationVersion: "v1.0",
-          applicationIcon: ImageUtils.fromAsset(
-            "images/app_logo.png",
-            width: 120,
-            height: 120,
-            fit: BoxFit.contain,
-          ),
-          applicationLegalese: "本应用使用了第三方开源程序，许可协议详见如下。",
-        ));
+    RouteNavigator.goPage(
+      context,
+      LicensePage(
+        applicationIcon: ImageLoader.fromAsset(
+          "app_logo.png",
+          width: 120,
+          height: 120,
+          fit: BoxFit.contain,
+        ),
+        applicationLegalese: Language.translate(context, "copyright.legalese"),
+      ),
+    );
   }
 }
