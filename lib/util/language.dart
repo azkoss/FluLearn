@@ -1,6 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/main.dart';
 import 'package:flutter_app/util/logger.dart';
 
 ///
@@ -18,32 +19,25 @@ class Language {
       languageCode: 'zh', scriptCode: 'Hans', countryCode: 'CN');
 
   ///
-  ///获取指定的本地化语言
-  ///
-  static String translate(BuildContext context, String key) {
-    return key;
-  }
-
-  ///
   /// 切换语言
   ///
   static void change(BuildContext context, String langTag) {
-    Locale changeLocale = locale(langTag);
-    Locale currentLocale = Localizations.localeOf(context);
-    L.d("current locale is $currentLocale");
+    Locale switchLocale = toLocale(langTag);
+    L.d("switch locale is $switchLocale from tag $langTag");
+    localeChanged(switchLocale);
   }
 
   ///
   /// 根据语言标签得到[Locale]对象
   ///
-  /// [langTag] e.g. zh, zh_CN, zh_Hans, zh_Hans_CN
+  /// [langTag] e.g. zh, zh_CN, zh_Hans, zh_Hans_CN, zh-Hans-CN
   ///
-  static Locale locale(String langTag) {
-    if (langTag.indexOf('_') == -1) {
+  static Locale toLocale(String langTag) {
+    if (langTag.indexOf('_') == -1 && langTag.indexOf('-') == -1) {
       return new Locale(langTag);
     }
     Locale locale;
-    final List<String> codes = langTag.split('_');
+    final List<String> codes = langTag.split(new RegExp(r'(_|-)'));
     if (codes.length == 2) {
       if (codes[1].length > 2) {
         locale = Locale.fromSubtags(

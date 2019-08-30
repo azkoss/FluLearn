@@ -1,9 +1,9 @@
 {
-  "app_name": "Flutter Learn",
-  "copyright_statement": "Copyright © Li Yujiang, Chuanqing in Guizhou",
-  "copyright_legalese": "1. Anyone who logs on this APP in any way, or directly or indirectly uses this APP data, shall be deemed to have voluntarily accepted the relevant declarations of this APP and the constraints of the User Service Agreement.\n2. The text, pictures, audio and video data reproduced by mobile APP are provided by the users of this APP. The authenticity, accuracy and legitimacy of the reproduced information are the responsibility of the information publisher. APP mobile APP does not provide any guarantee and does not bear any legal responsibility.\n3. If the text, pictures, audio and video materials reproduced by APP mobile phone infringe the intellectual property rights or other rights of third parties, the responsibility shall be borne by the author or the reproducer himself. This APP shall not be liable for this.\n4. App mobile phone does not guarantee the accuracy and integrity of the external links set up to provide convenience to users. At the same time, this App does not assume any responsibility for the content of any web pages that the external links point to that are not actually controlled by APP.\n5. Users clearly and agree that the risks of using APP mobile phone network service will be borne by themselves; all consequences arising from using APP mobile phone network service will also be borne by themselves, and APP mobile phone does not bear any responsibility for this.\n6. Apart from the service clause specified in APP, APP Mobile Phone shall not be liable for any accident, negligence, contract destruction, defamation, copyright or other intellectual property infringement caused by improper use of this APP, nor shall it bear any legal liability.\n7. App Mobile App does not take any responsibility for the interruption of network services or other defects caused by force majeure or by reasons beyond the control of APP Mobile AP, such as hacker attacks, communication line interruptions, etc., but will try its best to reduce the losses or impacts caused to users.\n8. Refer to the relevant laws and regulations of the state for the issues not covered in this statement. When this statement conflicts with the relevant laws and regulations of the state, the state laws and regulations shall prevail."
-  "toast_press_again_to_exit": "Press again to exit the app",
-  "toast_call_phone_failed": "Call phone failed",
-  "home_drawer_settings": "Settings",
-  "home_drawer_licenses": "Licenses"
+  "appName": "Flutter Learn",
+  "copyrightStatement": "©2019 Li Yujiang, Chuanqing of Guizhou. All Rights Reserved.",
+  "copyrightLegalese": "This APP uses third-party open source code, the license details below.",
+  "toastPressAgainToExit": "Press again to exit the app",
+  "toastCallPhoneFailed": "Call phone failed",
+  "homeDrawerSettings": "Settings",
+  "homeDrawerLicenses": "Open-Source Licenses"
 }

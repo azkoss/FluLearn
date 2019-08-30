@@ -42,19 +42,19 @@ class _HomePageState extends State<HomePage> {
           RaisedButton(
             child: Text("简体中文"),
             onPressed: () {
-              Language.change(context, "zh_CN");
+              Language.change(context, "zh-CN");
             },
           ),
           RaisedButton(
             child: Text("繁体中文"),
             onPressed: () {
-              Language.change(context, "zh_TW");
+              Language.change(context, "zh-TW");
             },
           ),
           RaisedButton(
             child: Text("英语"),
             onPressed: () {
-              Language.change(context, "en_US");
+              Language.change(context, "en-US");
             },
           ),
         ],
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
       name = _tabIcons[index][0];
     }
     String icon = ImageLoader.assetPath("home/ic_$name.png");
-    L.d("selected: $_tabIndex, index: $index, icon: $icon");
+    //L.d("selected: $_tabIndex, index: $index, icon: $icon");
     return ImageLoader.fromAsset(icon);
   }
 

@@ -53,10 +53,14 @@ subprojects {
 ```
 
 
-- 构建正式包报错提示`Conflicting configuration : '...' in ndk abiFilters cannot be present when splits abi filters are set : ...`
+- 构建正式包报错提示“Conflicting configuration : '...' in ndk abiFilters cannot be present when splits abi filters are set : ...”
 ```
 这是因为使用带“--split-per-abi”参数（如flutter build apk --release --split-per-abi --target-platform android-arm）的构建命令和安卓原生的build.gradle里配置的“ndk.abiFilters”或“splits.abi”冲突，删掉“ndk.abiFilters”或“splits.abi”节点即可。
 目测截止2019.8.28，Flutter的发布包貌似只支持armeabi-v7a及arm64-v8a，使用“--target-platform android-x86”参数构建会报错"android-x86" is not an allowed value for option "target-platform"。
 ```
 
+- Flutter I18N插件生成的“generated/i18n.dart”未包含arb中设置的语言？
+```
+可能是arb文件内容格式或命名不正确。必须是JSON格式，只能是一个层级的键值对，键名不能含下划线（最好用小驼峰命名法）
+```
 

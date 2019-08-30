@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/util/image_loader.dart';
-import 'package:flutter_app/util/language.dart';
 import 'package:flutter_app/util/route_navigator.dart';
 import 'package:flutter_app/util/toaster.dart';
 import 'package:flutter_app/util/web_browser.dart';
@@ -111,7 +111,9 @@ class HomeDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.settings),
-          title: Text(Language.translate(context, "home.drawer.settings")),
+          title: Text(S
+              .of(context)
+              .homeDrawerSettings),
           trailing: new Icon(Icons.keyboard_arrow_right),
           onTap: () => _goToSettings(context),
         ),
@@ -121,7 +123,9 @@ class HomeDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.copyright),
-          title: Text(Language.translate(context, "home.drawer.licenses")),
+          title: Text(S
+              .of(context)
+              .homeDrawerLicenses),
           trailing: new Icon(Icons.keyboard_arrow_right),
           onTap: () => _showLicense(context),
         ),
@@ -141,13 +145,17 @@ class HomeDrawer extends StatelessWidget {
     RouteNavigator.goPage(
       context,
       LicensePage(
+        applicationName: '',
+        applicationVersion: '',
         applicationIcon: ImageLoader.fromAsset(
-          "app_logo.png",
+          'app_logo.png',
           width: 120,
           height: 120,
           fit: BoxFit.contain,
         ),
-        applicationLegalese: Language.translate(context, "copyright.legalese"),
+        applicationLegalese: S
+            .of(context)
+            .copyrightLegalese,
       ),
     );
   }

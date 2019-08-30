@@ -4,9 +4,9 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/constant.dart';
 import 'package:flutter_app/common/prefs_key.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/home/home_page.dart';
 import 'package:flutter_app/util/image_loader.dart';
-import 'package:flutter_app/util/language.dart';
 import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/widget/exit_container.dart';
 import 'package:package_info/package_info.dart';
@@ -112,10 +112,12 @@ class _SplashPageState extends State<SplashPage> {
           .of(context)
           .primaryColor,
       loadingText: Text(
-        Language.translate(context, "copyright.statement"),
+        S
+            .of(context)
+            .copyrightStatement,
         style: new TextStyle(
           fontWeight: FontWeight.normal,
-          fontSize: 12.5,
+          fontSize: 10.0,
           color: _imageLight ? Colors.black87 : Theme
               .of(context)
               .primaryColor,

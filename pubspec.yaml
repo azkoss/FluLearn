@@ -130,5 +130,5 @@ flutter:
   assets:
     - res/values/
     - res/images/
-    - images/
-    - images/home/
+    - res/images/home/
+

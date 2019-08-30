@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart' show BuildContext;
-import 'package:flutter_app/util/language.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/util/toaster.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,7 +35,9 @@ class OtherTool {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      Toaster.showShort(Language.translate(context, "toast.call_phone_failed"));
+      Toaster.showShort(S
+          .of(context)
+          .toastCallPhoneFailed);
     }
   }
 }

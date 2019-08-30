@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/util/language.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/util/repeat_checker.dart';
 import 'package:flutter_app/util/toaster.dart';
 
@@ -20,8 +20,9 @@ class ExitContainer extends StatelessWidget {
       ),
       onWillPop: () async {
         if (!RepeatChecker.isFastClick()) {
-          Toaster.showLong(
-              Language.translate(context, "toast.press_again_to_exit"));
+          Toaster.showLong(S
+              .of(context)
+              .toastPressAgainToExit);
           return Future.value(false);
         }
         Toaster.cancel();
