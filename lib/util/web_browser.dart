@@ -101,7 +101,7 @@ class _BrowserPageState extends State<BrowserPage> {
                     (InAppWebViewController controller, String url) {
                   L.d("should override url loading: $url");
                   if (url.startsWith(Constant.urlScheme)) {
-                    RouteNavigator.goTo(context, url);
+                    RouteNavigator.goPath(context, url);
                     return;
                   }
                   if (url.startsWith("http") || url.startsWith("ftp")) {
@@ -134,7 +134,7 @@ class _BrowserPageState extends State<BrowserPage> {
                     int code, String message) {
                   _notifyLoadStateChanged(false);
                   L.d("page error: url=$url, code=$code, message=$message");
-                  RouteNavigator.goTo(context, EmptyRouter.emptyPage,
+                  RouteNavigator.goPath(context, EmptyRouter.emptyPage,
                       replace: true);
                 },
                 onLoadStop: (InAppWebViewController controller, String url) {

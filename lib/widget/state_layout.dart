@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_app/util/image_loader.dart';
 
 ///
@@ -6,8 +7,7 @@ import 'package:flutter_app/util/image_loader.dart';
 /// Adapted from https://github.com/simplezhli/flutter_deer/.../state_layout.dart
 ///
 class StateLayout extends StatefulWidget {
-  const StateLayout(
-      {Key key, @required this.type, this.hintImage, this.hintText})
+  const StateLayout({Key key, this.type, this.hintImage, this.hintText})
       : super(key: key);
 
   final StateType type;
@@ -29,15 +29,15 @@ class _StateLayoutState extends State<StateLayout> {
         _hintImage = "state_no_network.png";
         _hintText = "无网络连接";
         break;
-      case StateType.loading:
-        _hintImage = "";
-        _hintText = "";
-        break;
       case StateType.error:
         _hintImage = "state_error.png";
         _hintText = "出错了";
         break;
-      case StateType.empty:
+      case StateType.no_data:
+        _hintImage = "state_no_data.png";
+        _hintText = "";
+        break;
+      default:
         _hintImage = "";
         _hintText = "";
         break;
@@ -48,44 +48,59 @@ class _StateLayoutState extends State<StateLayout> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          widget.type == StateType.loading
-              ? CupertinoActivityIndicator(radius: 16.0)
-              : (widget.type == StateType.empty
-                  ? SizedBox()
-                  : Container(
-                      height: 120.0,
-                      width: 120.0,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: ImageLoader.fromProvider(_hintImage),
-                        ),
-                      ),
-                    )),
+          _buildIndicator(context),
           const SizedBox(width: 16),
-          Text(
-            widget.hintText ?? _hintText,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF999999),
-            ),
-          ),
+          _buildText(context),
           const SizedBox(height: 50),
         ],
+      ),
+    );
+  }
+
+  Widget _buildIndicator(BuildContext context) {
+    if (widget.type == StateType.loading) {
+      return CupertinoActivityIndicator(radius: 16.0);
+    }
+    if (widget.type == StateType.blank) {
+      return SizedBox();
+    }
+    return Container(
+      height: 120.0,
+      width: 120.0,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: ImageLoader.fromProvider(widget.hintImage ?? _hintImage),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildText(BuildContext context) {
+    return Text(
+      widget.hintText ?? _hintText,
+      style: TextStyle(
+        fontSize: 14,
+        color: Theme
+            .of(context)
+            .primaryColor,
       ),
     );
   }
 }
 
 enum StateType {
-  /// 无网络
-  network,
-
   /// 加载中
   loading,
+
+  /// 无网络
+  network,
 
   /// 出错
   error,
 
-  /// 空
-  empty
+  /// 无数据
+  no_data,
+
+  /// 空白
+  blank
 }

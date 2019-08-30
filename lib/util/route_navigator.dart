@@ -1,12 +1,12 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/empty/empty_page.dart';
 import 'package:flutter_app/util/logger.dart';
+import 'package:flutter_app/widget/state_layout.dart';
+import 'package:flutter_app/widget/title_bar.dart';
 
 ///
 /// 路由定义接口约束
-/// Adapted from https://github.com/simplezhli/flutter_deer/.../router_init.dart
 ///
 abstract class IRouterDefinition {
   void defineRouter(Router router);
@@ -27,7 +27,15 @@ class RouteNavigator {
     router.notFoundHandler = new Handler(
         handlerFunc: (BuildContext context, Map<String, List<String>> params) {
           L.e("未找到目标页：" + params.toString());
-          return new EmptyPage();
+          return Scaffold(
+            appBar: TitleBar(
+              title: "页面不存在",
+            ),
+            body: const StateLayout(
+              type: StateType.error,
+              hintText: "页面不存在",
+            ),
+          );
         });
     routerProviders.forEach((routerProvider) {
       routerProvider.defineRouter(router);
@@ -37,7 +45,7 @@ class RouteNavigator {
   ///
   ///打开新页面
   ///
-  static goTo(BuildContext context, String path,
+  static goPath(BuildContext context, String path,
       {bool replace = false, bool clearStack = false}) {
     L.d("open route: path=" + path);
     router.navigateTo(context, path,
@@ -50,8 +58,7 @@ class RouteNavigator {
   ///
   ///打开新页面,返回上一页时携带参数
   ///
-  static goToResult(
-      BuildContext context, String path, Function(Object) function,
+  static goResult(BuildContext context, String path, Function(Object) function,
       {bool replace = false, bool clearStack = false}) {
     L.d("open route for result: path=" + path);
     router

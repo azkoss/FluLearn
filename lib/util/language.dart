@@ -5,26 +5,16 @@ import 'package:flutter_app/main.dart';
 import 'package:flutter_app/util/logger.dart';
 
 ///
-/// 本地化语言
+/// 本地化语言工具类
 ///
 class Language {
-  ///
-  /// 默认语系（语言代码-区域脚本代码-国家或地区代码）
-  ///
-  /// 语言代码参见 https://baike.baidu.com/item/ISO%20639-1
-  /// 区域脚本代码 https://github.com/unicode-org/cldr/blob/master/common/validity/script.xml
-  /// 国家或地区代码参见 https://baike.baidu.com/item/ISO%203166-1
-  ///
-  static const Locale defaultLocale = const Locale.fromSubtags(
-      languageCode: 'zh', scriptCode: 'Hans', countryCode: 'CN');
-
   ///
   /// 切换语言
   ///
   static void change(BuildContext context, String langTag) {
     Locale switchLocale = toLocale(langTag);
     L.d("switch locale is $switchLocale from tag $langTag");
-    localeChanged(switchLocale);
+    localizationStateKey.currentState.changeLocale(switchLocale);
   }
 
   ///

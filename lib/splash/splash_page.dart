@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/common/constant.dart';
 import 'package:flutter_app/common/prefs_key.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/home/home_page.dart';
+import 'package:flutter_app/splash/splash_screen.dart';
 import 'package:flutter_app/util/image_loader.dart';
 import 'package:flutter_app/util/logger.dart';
+import 'package:flutter_app/util/toaster.dart';
 import 'package:flutter_app/widget/exit_container.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:splashscreen/splashscreen.dart';
 
 ///
 /// 闪屏页
@@ -69,8 +69,8 @@ class _SplashPageState extends State<SplashPage> {
   Future _fetchFromNetwork() async {
     // TODO: fetch from network
     String imageUrl =
-        "https://via.placeholder.com/720x1080/0000DD/FFFFFF.webp?text=Splash+Screen";
-    bool imageLight = false;
+        "https://via.placeholder.com/720x1080/FF0000/0000DD.webp?text=Splash+Screen";
+    bool imageLight = true;
     L.d("imageUrl=$imageUrl, imageLight=$imageLight");
     SharedPreferences sp = await SharedPreferences.getInstance();
     sp.setString(PrefsKey.splash_image_url, imageUrl);
@@ -80,48 +80,44 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return ExitContainer(
-      child: _buildSplashScreen(context),
-    );
-  }
-
-  Widget _buildSplashScreen(BuildContext context) {
-    return SplashScreen(
-      seconds: Constant.splashSeconds,
-      navigateAfterSeconds: new HomePage(),
-      title: new Text(
-        TextUtil.isEmpty(_appName)
-            ? ""
-            : "$_appName v$_version [$_buildNumber]",
-        style: new TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20.0,
-          color: _imageLight ? Colors.black87 : Theme
-              .of(context)
-              .primaryColor,
+      child: SplashScreen(
+        seconds: Constant.splashSeconds,
+        navigateTo: new SplashPage(),
+        skipButton: RaisedButton(
+          child: Text('跳过'),
+          onPressed: () {
+            Toaster.showShort("点击跳过");
+          },
         ),
-      ),
-      imageBackground: ImageLoader.fromProvider(_imageUrl, () {
-        setState(() {
-          _imageUrl = defaultImageUrl;
-          _imageLight = true;
-        });
-      }),
-      backgroundColor: Colors.transparent,
-      loaderColor:
-      _imageLight ? Colors.black87 : Theme
-          .of(context)
-          .primaryColor,
-      loadingText: Text(
-        S
+        image: ImageLoader.fromProvider(_imageUrl, () {
+          setState(() {
+            _imageUrl = defaultImageUrl;
+            _imageLight = true;
+          });
+        }),
+        loaderColor:
+        _imageLight ? Colors.black87 : Theme
             .of(context)
-            .copyrightStatement,
-        style: new TextStyle(
-          fontWeight: FontWeight.normal,
-          fontSize: 10.0,
-          color: _imageLight ? Colors.black87 : Theme
-              .of(context)
-              .primaryColor,
+            .primaryColor,
+        loadingText: Text(
+          TextUtil.isEmpty(_appName)
+              ? ""
+              : "$_appName v$_version [$_buildNumber]\n" +
+              S
+                  .of(context)
+                  .copyrightStatement,
+          textAlign: TextAlign.center,
+          style: new TextStyle(
+            fontSize: 10.0,
+            color:
+            _imageLight ? Colors.black87 : Theme
+                .of(context)
+                .primaryColor,
+          ),
         ),
+        onClick: () {
+          Toaster.showShort("点击闪屏");
+        },
       ),
     );
   }

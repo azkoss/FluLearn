@@ -89,7 +89,7 @@ class HomeDrawer extends StatelessWidget {
           leading: CircleAvatar(child: Text("网")),
           title: Text('网页浏览器'),
           onTap: () {
-            return WebBrowser.launch(context, "http://qqtheme.cn");
+            return WebBrowser.launch(context, "http://github.com/chaunqingren");
           },
         ),
         Divider(
@@ -101,7 +101,7 @@ class HomeDrawer extends StatelessWidget {
           title: Text('Page Not Found'),
           subtitle: Text("Drawer item B subtitle"),
           onTap: () {
-            return RouteNavigator.goTo(context, "/404");
+            return RouteNavigator.goPath(context, "/404");
           },
         ),
         Container(

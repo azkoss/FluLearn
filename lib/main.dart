@@ -6,11 +6,13 @@ import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/home/home_page.dart';
 import 'package:flutter_app/home/home_router.dart';
 import 'package:flutter_app/splash/splash_page.dart';
-import 'package:flutter_app/util/language.dart';
 import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/util/other_tool.dart';
 import 'package:flutter_app/util/route_navigator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+GlobalKey<LocalizationAppState> localizationStateKey =
+new GlobalKey<LocalizationAppState>();
 
 void main() {
   OtherTool.setUiOverlayStyle(Brightness.dark);
@@ -21,27 +23,30 @@ void main() {
   runApp(new MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return LocalizationApp(key: localizationStateKey);
+  }
 }
 
-//参阅《Flutter-国际化适配终结者》 https://www.jianshu.com/p/b9f830efe1f8
-ValueChanged<Locale> localeChanged;
-
-class _MyAppState extends State<MyApp> {
-  Locale _locale = Language.defaultLocale;
+class LocalizationApp extends StatefulWidget {
+  LocalizationApp({Key key}) : super(key: key);
 
   @override
-  void initState() {
-    super.initState();
-    localeChanged = (locale) {
-      setState(() {
-        _locale = locale;
-        Locale currentLocale = Localizations.localeOf(context);
-        L.d("locale changed: $locale, current locale is $currentLocale");
-      });
-    };
+  LocalizationAppState createState() {
+    return LocalizationAppState();
+  }
+}
+
+class LocalizationAppState extends State<LocalizationApp> {
+  Locale _locale = Constant.defaultLocale;
+
+  void changeLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+      L.d("change locale to: $locale");
+    });
   }
 
   @override
