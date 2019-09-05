@@ -1,7 +1,7 @@
 {
   "appName": "Flutter學習",
   "copyrightStatement": "©2019 貴州穿青人李玉江 版權所有",
-  "copyrightLegalese": "本APP使用的第三方開源代碼，授權證詳見下文。",
+  "copyrightLegalese": "免責聲明\n本產品中的開放原始程式碼軟件是在希望它會有用的情况下發佈的，但沒有任何保證。有關更多詳細資訊，請參閱適用的許可證，如下所示。",
   "toastPressAgainToExit": "再按一次退出應用程式",
   "toastCallPhoneFailed": "撥號失敗！",
   "homeDrawerSettings": "設置",

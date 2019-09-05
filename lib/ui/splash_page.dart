@@ -66,7 +66,7 @@ class _SplashPageState extends State<SplashPage> {
   Future _fetchFromNetwork() async {
     // TODO: fetch from network
     String imageUrl =
-        "https://via.placeholder.com/720x1080/FF0000/0000DD.webp?text=Splash+Screen";
+        "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3095878455,1424909459&fm=26&gp=0.jpg";
     L.d("imageUrl=$imageUrl");
     await SpUtil.getInstance();
     SpUtil.putString(PrefsKey.splash_image_url, imageUrl);
