@@ -1,5 +1,5 @@
 import 'package:fluro/fluro.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
 import 'package:flutter/material.dart';
 import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/widget/state_layout.dart';

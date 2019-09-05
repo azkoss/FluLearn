@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/common/constant.dart';
-import 'package:flutter_app/empty/empty_router.dart';
+import 'package:flutter_app/config/constant.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/home/home_page.dart';
-import 'package:flutter_app/home/home_router.dart';
-import 'package:flutter_app/splash/splash_page.dart';
+import 'package:flutter_app/ui/empty/empty_router.dart';
+import 'package:flutter_app/ui/home/home_page.dart';
+import 'package:flutter_app/ui/home/home_router.dart';
+import 'package:flutter_app/ui/splash_page.dart';
 import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/util/other_tool.dart';
 import 'package:flutter_app/util/route_navigator.dart';

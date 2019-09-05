@@ -4,6 +4,7 @@ import 'package:flutter_app/util/image_loader.dart';
 import 'package:flutter_app/util/route_navigator.dart';
 import 'package:flutter_app/util/toaster.dart';
 import 'package:flutter_app/util/web_browser.dart';
+import 'package:package_info/package_info.dart';
 
 ///
 /// 主页抽屉
@@ -111,9 +112,7 @@ class HomeDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.settings),
-          title: Text(S
-              .of(context)
-              .homeDrawerSettings),
+          title: Text(S.of(context).homeDrawerSettings),
           trailing: new Icon(Icons.keyboard_arrow_right),
           onTap: () => _goToSettings(context),
         ),
@@ -123,9 +122,7 @@ class HomeDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.copyright),
-          title: Text(S
-              .of(context)
-              .homeDrawerLicenses),
+          title: Text(S.of(context).homeDrawerLicenses),
           trailing: new Icon(Icons.keyboard_arrow_right),
           onTap: () => _showLicense(context),
         ),
@@ -142,21 +139,25 @@ class HomeDrawer extends StatelessWidget {
   }
 
   void _showLicense(BuildContext context) {
-    RouteNavigator.goPage(
-      context,
-      LicensePage(
-        applicationName: '',
-        applicationVersion: '',
-        applicationIcon: ImageLoader.fromAsset(
-          'app_logo.png',
-          width: 120,
-          height: 120,
-          fit: BoxFit.contain,
+    PackageInfo.fromPlatform().then((packageInfo) {
+      RouteNavigator.goPage(
+        context,
+        LicensePage(
+          applicationName: packageInfo.appName,
+          applicationVersion:
+              'v ' + packageInfo.version + ' build' + packageInfo.buildNumber,
+          applicationLegalese: S.of(context).copyrightLegalese,
         ),
-        applicationLegalese: S
-            .of(context)
-            .copyrightLegalese,
-      ),
-    );
+      );
+    }).catchError(() {
+      RouteNavigator.goPage(
+        context,
+        LicensePage(
+          applicationName: S.of(context).appName,
+          applicationVersion: '',
+          applicationLegalese: S.of(context).copyrightLegalese,
+        ),
+      );
+    });
   }
 }

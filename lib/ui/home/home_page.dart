@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/util/image_loader.dart';
 import 'package:flutter_app/util/language.dart';
-import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/widget/exit_container.dart';
 
 import 'home_drawer.dart';
@@ -73,7 +72,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       name = _tabIcons[index][0];
     }
-    String icon = ImageLoader.assetPath("home/ic_$name.png");
+    String icon = ImageLoader.assetPath("/home/ic_$name.png");
     //L.d("selected: $_tabIndex, index: $index, icon: $icon");
     return ImageLoader.fromAsset(icon);
   }

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_app/common/prefs_key.dart';
+import 'package:flutter_app/config/prefs_key.dart';
 import 'package:flutter_app/util/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

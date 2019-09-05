@@ -1,7 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/common/constant.dart';
+import 'package:flutter_app/config/constant.dart';
 
 ///
 /// 闪屏，参阅 https://github.com/KarimMohamed2005/SplashScreenFlutterPackage

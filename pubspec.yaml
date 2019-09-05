@@ -64,7 +64,7 @@ dependencies:
   # 图片裁剪 https://github.com/hnvn/flutter_image_cropper
   image_cropper: ^1.0.2
   # 文件下载 https://github.com/fluttercommunity/flutter_downloader
-  flutter_downloader: ^1.1.9
+  #flutter_downloader: ^1.2.1
   # 键盘操作 https://github.com/diegoveloper/flutter_keyboard_actions
   keyboard_actions: ^2.1.2
   # 手势识别 https://github.com/aleksanderwozniak/simple_gesture_detector

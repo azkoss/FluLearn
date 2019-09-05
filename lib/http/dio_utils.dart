@@ -3,14 +3,14 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app/common/constant.dart';
+import 'package:flutter_app/config/constant.dart';
 import 'package:flutter_app/entity_factory.dart';
 import 'package:flutter_app/util/logger.dart';
 
 import 'api.dart';
+import 'base_resp.dart' as HttpRes;
 import 'error_handle.dart';
 import 'interceptor.dart';
-import 'response.dart' as HttpRes;
 
 ///
 /// 网络请求工具类

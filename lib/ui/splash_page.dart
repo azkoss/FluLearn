@@ -2,16 +2,19 @@ import 'dart:async';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/common/constant.dart';
-import 'package:flutter_app/common/prefs_key.dart';
+import 'package:flutter_app/config/constant.dart';
+import 'package:flutter_app/config/prefs_key.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/splash/splash_screen.dart';
 import 'package:flutter_app/util/image_loader.dart';
 import 'package:flutter_app/util/logger.dart';
+import 'package:flutter_app/util/route_navigator.dart';
 import 'package:flutter_app/util/toaster.dart';
 import 'package:flutter_app/widget/exit_container.dart';
+import 'package:flutter_app/widget/splash_screen.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'home/home_router.dart';
 
 ///
 /// 闪屏页
@@ -24,7 +27,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   final defaultImageUrl = ImageLoader.assetPath("app_splash.webp");
   String _imageUrl;
-  bool _imageLight;
+  bool _imageLight = true;
   String _appName;
   String _version;
   String _buildNumber;
@@ -32,7 +35,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     _imageUrl = defaultImageUrl;
-    _imageLight = true;
     _obtainSplashImage();
     _obtainAppVersion();
     _updateSplashImage();
@@ -86,7 +88,7 @@ class _SplashPageState extends State<SplashPage> {
         skipButton: RaisedButton(
           child: Text('跳过'),
           onPressed: () {
-            Toaster.showShort("点击跳过");
+            return RouteNavigator.goPath(context, HomeRouter.homePage);
           },
         ),
         image: ImageLoader.fromProvider(_imageUrl, () {
@@ -102,7 +104,7 @@ class _SplashPageState extends State<SplashPage> {
         loadingText: Text(
           TextUtil.isEmpty(_appName)
               ? ""
-              : "$_appName v$_version [$_buildNumber]\n" +
+              : "$_appName v$_version build$_buildNumber\n" +
               S
                   .of(context)
                   .copyrightStatement,

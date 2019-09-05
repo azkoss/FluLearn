@@ -1,6 +1,6 @@
 import 'package:fluro/fluro.dart';
-import 'package:flutter_app/common/constant.dart';
-import 'package:flutter_app/empty/empty_page.dart';
+import 'package:flutter_app/config/constant.dart';
+import 'package:flutter_app/ui/empty/empty_page.dart';
 import 'package:flutter_app/util/route_navigator.dart' show IRouterDefinition;
 
 ///

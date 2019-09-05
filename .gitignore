@@ -31,6 +31,7 @@ build/
 pubspec.lock
 
 # Android related
+gen/
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
 **/android/captures/
@@ -38,6 +39,8 @@ pubspec.lock
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
+**/.settings
+**/.project
 
 # iOS/XCode related
 **/ios/**/*.mode1v3

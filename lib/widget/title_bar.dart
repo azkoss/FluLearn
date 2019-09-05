@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/common/asset_dir.dart';
-import 'package:flutter_app/common/constant.dart';
+import 'package:flutter_app/config/asset_dir.dart';
+import 'package:flutter_app/config/constant.dart';
 
 ///
 /// 自定义标题栏，类似于[AppBar]
