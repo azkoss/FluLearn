@@ -1,18 +1,16 @@
 import 'dart:async';
 
 import 'package:common_utils/common_utils.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/config/constant.dart';
 import 'package:flutter_app/config/prefs_key.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/util/image_loader.dart';
 import 'package:flutter_app/util/logger.dart';
-import 'package:flutter_app/util/route_navigator.dart';
-import 'package:flutter_app/util/toaster.dart';
 import 'package:flutter_app/widget/exit_container.dart';
 import 'package:flutter_app/widget/splash_screen.dart';
 import 'package:package_info/package_info.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home/home_router.dart';
 
@@ -26,15 +24,13 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   final defaultImageUrl = ImageLoader.assetPath("app_splash.webp");
-  String _imageUrl;
-  bool _imageLight = true;
+  String _imageUrl = '';
   String _appName;
   String _version;
   String _buildNumber;
 
   @override
   void initState() {
-    _imageUrl = defaultImageUrl;
     _obtainSplashImage();
     _obtainAppVersion();
     _updateSplashImage();
@@ -42,11 +38,10 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void _obtainSplashImage() async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
+    await SpUtil.getInstance();
     setState(() {
-      _imageUrl = sp.getString(PrefsKey.splash_image_url);
-      _imageLight = sp.getBool(PrefsKey.splash_image_light);
-      L.d("imageUrl=$_imageUrl, imageLight=$_imageLight");
+      _imageUrl = SpUtil.getString(PrefsKey.splash_image_url, defValue: '');
+      L.d("imageUrl=$_imageUrl");
     });
   }
 
@@ -62,7 +57,7 @@ class _SplashPageState extends State<SplashPage> {
 
   void _updateSplashImage() {
     Future.microtask(() => _fetchFromNetwork())
-        .timeout(new Duration(seconds: 2))
+        .timeout(new Duration(seconds: Constant.splashSeconds))
         .catchError((e) {
       L.e("fetch splash image timeout", e);
     });
@@ -72,53 +67,39 @@ class _SplashPageState extends State<SplashPage> {
     // TODO: fetch from network
     String imageUrl =
         "https://via.placeholder.com/720x1080/FF0000/0000DD.webp?text=Splash+Screen";
-    bool imageLight = true;
-    L.d("imageUrl=$imageUrl, imageLight=$imageLight");
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.setString(PrefsKey.splash_image_url, imageUrl);
-    sp.setBool(PrefsKey.splash_image_light, imageLight);
+    L.d("imageUrl=$imageUrl");
+    await SpUtil.getInstance();
+    SpUtil.putString(PrefsKey.splash_image_url, imageUrl);
   }
 
   @override
   Widget build(BuildContext context) {
+    final countdownSeconds = Constant.splashSeconds;
+    final bool noAd = TextUtil.isEmpty(_imageUrl);
+    String bottomText = S.of(context).copyrightStatement;
+    if (!TextUtil.isEmpty(_appName)) {
+      bottomText = "$_appName v$_version build$_buildNumber\n$bottomText";
+    }
     return ExitContainer(
       child: SplashScreen(
-        seconds: Constant.splashSeconds,
-        navigateTo: new SplashPage(),
-        skipButton: RaisedButton(
-          child: Text('跳过'),
-          onPressed: () {
-            return RouteNavigator.goPath(context, HomeRouter.homePage);
-          },
-        ),
-        image: ImageLoader.fromProvider(_imageUrl, () {
-          setState(() {
-            _imageUrl = defaultImageUrl;
-            _imageLight = true;
-          });
-        }),
-        loaderColor:
-        _imageLight ? Colors.black87 : Theme
-            .of(context)
-            .primaryColor,
-        loadingText: Text(
-          TextUtil.isEmpty(_appName)
-              ? ""
-              : "$_appName v$_version build$_buildNumber\n" +
-              S
-                  .of(context)
-                  .copyrightStatement,
+        seconds: countdownSeconds,
+        navigateTo: HomeRouter.homePage,
+        imageUrl: noAd ? defaultImageUrl : _imageUrl,
+        skipButtonText: noAd ? null : '跳过',
+        bottomText: Text(
+          bottomText,
           textAlign: TextAlign.center,
           style: new TextStyle(
             fontSize: 10.0,
-            color:
-            _imageLight ? Colors.black87 : Theme
-                .of(context)
-                .primaryColor,
+            color: Colors.black87,
           ),
         ),
-        onClick: () {
-          Toaster.showShort("点击闪屏");
+        onTickEvent: (seconds) {
+          if (noAd && seconds == countdownSeconds - 1) {
+            //若无广告图，则只无需展示那么多秒
+            return true;
+          }
+          return false;
         },
       ),
     );

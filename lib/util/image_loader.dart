@@ -37,7 +37,7 @@ class ImageLoader {
       {double width,
       double height,
       BoxFit fit: BoxFit.cover,
-        String placeholder: "",
+        String placeholder: placeholder,
         bool cacheEnable: true}) {
     if (TextUtil.isEmpty(imageUrl)) {
       return fromAsset(placeholder, height: height, width: width, fit: fit);

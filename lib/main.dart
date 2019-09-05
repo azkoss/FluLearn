@@ -12,7 +12,7 @@ import 'package:flutter_app/util/route_navigator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 GlobalKey<LocalizationAppState> localizationStateKey =
-new GlobalKey<LocalizationAppState>();
+    new GlobalKey<LocalizationAppState>();
 
 void main() {
   OtherTool.setUiOverlayStyle(Brightness.dark);
@@ -66,9 +66,7 @@ class LocalizationAppState extends State<LocalizationApp> {
       onGenerateRoute: RouteNavigator.router.generator,
       //生成页面标题（用于AppBar）
       onGenerateTitle: (context) {
-        return S
-            .of(context)
-            .appName;
+        return S.of(context).appName;
       },
       //区域设置，用于语言、日期时间、文字方向等本地化
       locale: _locale,
