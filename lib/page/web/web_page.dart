@@ -1,43 +1,32 @@
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/config/constant.dart';
-import 'package:flutter_app/ui/empty/empty_router.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_app/config/route_url.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/util/route_navigator.dart';
+import 'package:flutter_app/util/toaster.dart';
 import 'package:flutter_app/util/url_scheme.dart';
 import 'package:flutter_app/widget/title_bar.dart';
 import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
 
-///
-/// 网页浏览器
-///
-class WebBrowser {
-  static const Map<String, String> HEADERS = {};
-  static const Map<String, Object> OPTIONS = {
-    "userAgent": "Mozilla/5.0 (Linux; Android 9; POCOPHONE F1) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.136 "
-        "Mobile Safari/537.36",
-    "javaScriptEnabled": true,
-    "domStorageEnabled": true,
-    "databaseEnabled": true,
-    "useShouldOverrideUrlLoading": true,
-    "useOnLoadResource": false,
-    "mixedContentMode": "MIXED_CONTENT_ALWAYS_ALLOW",
-  };
+const Map<String, String> _HEADERS = {};
+const Map<String, Object> _OPTIONS = {
+  "userAgent": "Mozilla/5.0 (Linux; Android 9; POCOPHONE F1) "
+      "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.136 "
+      "Mobile Safari/537.36",
+  "javaScriptEnabled": true,
+  "domStorageEnabled": true,
+  "databaseEnabled": true,
+  "useShouldOverrideUrlLoading": true,
+  "useOnLoadResource": false,
+  "mixedContentMode": "MIXED_CONTENT_ALWAYS_ALLOW",
+};
 
-  ///
-  /// 加载网页
-  ///
-  static void launch(BuildContext context, String url, [String title = ""]) {
-    if (TextUtil.isEmpty(title)) {
-      title = "网页浏览器";
-    }
-    RouteNavigator.goPage(context, new BrowserPage(url: url, title: title));
-  }
-}
-
-class BrowserPage extends StatefulWidget {
-  const BrowserPage({
+///
+/// 网页加载页
+///
+class WebPage extends StatefulWidget {
+  const WebPage({
     Key key,
     @required this.url,
     @required this.title,
@@ -49,18 +38,20 @@ class BrowserPage extends StatefulWidget {
   final bool changeTitle;
 
   @override
-  _BrowserPageState createState() => new _BrowserPageState();
+  _WebPageState createState() => new _WebPageState();
 }
 
-class _BrowserPageState extends State<BrowserPage> {
+class _WebPageState extends State<WebPage> {
   InAppWebViewController _controller;
   String _title = "";
+  String _url = "";
   bool _loading = true;
 
   @override
   void initState() {
     super.initState();
     _title = widget.title;
+    _url = widget.url;
   }
 
   @override
@@ -71,10 +62,7 @@ class _BrowserPageState extends State<BrowserPage> {
       child: Scaffold(
         appBar: TitleBar(
           title: widget.changeTitle ? _title : widget.title,
-          actionName: "关闭",
-          onPressed: () {
-            RouteNavigator.goBack(context);
-          },
+          actionWidget: _buildPopupMenu(context),
         ),
         body: Column(
           children: <Widget>[
@@ -88,6 +76,7 @@ class _BrowserPageState extends State<BrowserPage> {
               ),
             ),
             Expanded(
+              flex: 1,
               child: _buildWebView(),
             ),
           ],
@@ -96,11 +85,43 @@ class _BrowserPageState extends State<BrowserPage> {
     );
   }
 
-  InAppWebView _buildWebView() {
+  PopupMenuButton<String> _buildPopupMenu(BuildContext context) {
+    return PopupMenuButton(
+      icon: Icon(Icons.more_vert),
+      onSelected: (String value) {
+        if ('close' == value) {
+          RouteNavigator.goBack(context);
+        } else if ('copy' == value) {
+          Clipboard.setData(new ClipboardData(text: _url));
+          Toaster.showShort(S.of(context).toastCopyWebUrl);
+        } else if ('browser' == value) {
+          UrlScheme.tryOpen(_url);
+        }
+      },
+      itemBuilder: (BuildContext context) {
+        return <PopupMenuItem<String>>[
+          new PopupMenuItem(
+            value: "copy",
+            child: new Text(S.of(context).browserCopyUrl),
+          ),
+          new PopupMenuItem(
+            value: "browser",
+            child: new Text(S.of(context).browserOpenExternal),
+          ),
+          new PopupMenuItem(
+            value: "close",
+            child: new Text(S.of(context).browserClose),
+          ),
+        ];
+      },
+    );
+  }
+
+  Widget _buildWebView() {
     return InAppWebView(
       initialUrl: widget.url,
-      initialHeaders: WebBrowser.HEADERS,
-      initialOptions: WebBrowser.OPTIONS,
+      initialHeaders: _HEADERS,
+      initialOptions: _OPTIONS,
       onWebViewCreated: _onWebViewCreated,
       shouldOverrideUrlLoading: _shouldOverrideUrlLoading,
       onLoadResource: _onLoadResource,
@@ -122,18 +143,18 @@ class _BrowserPageState extends State<BrowserPage> {
     L.d("page started: url=$url");
   }
 
-  void _onLoadError(InAppWebViewController controller, String url, int code,
-      String message) {
+  void _onLoadError(
+      InAppWebViewController controller, String url, int code, String message) {
     _notifyLoadStateChanged(false);
     L.d("page error: url=$url, code=$code, message=$message");
-    RouteNavigator.goPath(context, EmptyRouter.emptyPage, replace: true);
+    RouteNavigator.goPath(context, RouteUrl.empty, replace: true);
   }
 
   void _onLoadStop(InAppWebViewController controller, String url) {
     _notifyLoadStateChanged(false);
     controller.getTitle().then((String title) {
       setState(() {
-        this._title = title;
+        _title = title;
         L.d("page stopped: url=$url, title=$title");
       });
     });
@@ -141,10 +162,11 @@ class _BrowserPageState extends State<BrowserPage> {
 
   void _onProgressChanged(InAppWebViewController controller, int progress) {}
 
-  void _shouldOverrideUrlLoading(InAppWebViewController controller,
-      String url) {
+  void _shouldOverrideUrlLoading(
+      InAppWebViewController controller, String url) {
     L.d("should override url loading: $url");
-    if (url.startsWith(Constant.urlScheme)) {
+    _url = url;
+    if (url.startsWith(RouteUrl.scheme)) {
       RouteNavigator.goPath(context, url);
       return;
     }
@@ -165,8 +187,8 @@ class _BrowserPageState extends State<BrowserPage> {
   void _onLoadResource(InAppWebViewController controller,
       WebResourceResponse response, WebResourceRequest request) {}
 
-  void _onConsoleMessage(InAppWebViewController controller,
-      ConsoleMessage consoleMessage) {}
+  void _onConsoleMessage(
+      InAppWebViewController controller, ConsoleMessage consoleMessage) {}
 
   void _notifyLoadStateChanged(bool loading) {
     setState(() {

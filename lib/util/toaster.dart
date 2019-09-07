@@ -5,15 +5,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 /// 吐司工具类
 ///
 class Toaster {
-  static showShort(String msg) {
+  static void showShort(String msg) {
     _show(msg, isShort: true);
   }
 
-  static showLong(String msg) {
+  static void showLong(String msg) {
     _show(msg, isShort: false);
   }
 
-  static _show(String msg, {isShort = true}) {
+  static void _show(String msg, {isShort = true}) {
     Fluttertoast.showToast(
         msg: msg,
         gravity: ToastGravity.CENTER,
@@ -24,7 +24,7 @@ class Toaster {
         timeInSecForIos: isShort ? 1 : 5);
   }
 
-  static cancel() {
+  static void cancel() {
     Fluttertoast.cancel();
   }
 }

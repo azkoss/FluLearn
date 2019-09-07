@@ -1,6 +1,8 @@
 import 'package:fluro/fluro.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart' show CupertinoPageRoute;
 import 'package:flutter/material.dart';
+import 'package:flutter_app/page/web/web_page.dart';
 import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/widget/state_layout.dart';
 import 'package:flutter_app/widget/title_bar.dart';
@@ -26,17 +28,17 @@ class RouteNavigator {
   static void registerRouter(List<IRouterDefinition> routerProviders) {
     router.notFoundHandler = new Handler(
         handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-          L.e("未找到目标页：" + params.toString());
-          return Scaffold(
-            appBar: TitleBar(
-              title: "页面不存在",
-            ),
-            body: const StateLayout(
-              type: StateType.error,
-              hintText: "页面不存在",
-            ),
-          );
-        });
+      L.e("未找到目标页：" + params.toString());
+      return Scaffold(
+        appBar: TitleBar(
+          title: "页面不存在",
+        ),
+        body: const StateLayout(
+          type: StateType.error,
+          hintText: "页面不存在",
+        ),
+      );
+    });
     routerProviders.forEach((routerProvider) {
       routerProvider.defineRouter(router);
     });
@@ -63,10 +65,10 @@ class RouteNavigator {
     L.d("open route for result: path=" + path);
     router
         .navigateTo(context, path,
-        replace: replace,
-        clearStack: clearStack,
-        transitionDuration: Duration(seconds: transitionDurationSeconds),
-        transition: TransitionType.cupertino)
+            replace: replace,
+            clearStack: clearStack,
+            transitionDuration: Duration(seconds: transitionDurationSeconds),
+            transition: TransitionType.cupertino)
         .then((result) {
       if (result == null) {
         return;
@@ -99,5 +101,15 @@ class RouteNavigator {
   ///
   static void goBackWithParams(BuildContext context, result) {
     Navigator.pop(context, result);
+  }
+
+  ///
+  /// 加载网页
+  ///
+  static void goWeb(BuildContext context, String url, [String title = ""]) {
+    if (TextUtil.isEmpty(title)) {
+      title = "网页浏览器";
+    }
+    goPage(context, new WebPage(url: url, title: title));
   }
 }

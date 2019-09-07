@@ -17,11 +17,15 @@ class ImageLoader {
   ///
   /// 加载本地资源图片
   ///
-  static Widget fromAsset(String name, {
+  static Widget fromAsset(
+    String name, {
     double width,
     double height,
     BoxFit fit,
   }) {
+    if (TextUtil.isEmpty(name)) {
+      return SizedBox();
+    }
     return Image.asset(
       name.startsWith(AssetDir.images) ? name : assetPath(name),
       height: height,
@@ -37,8 +41,8 @@ class ImageLoader {
       {double width,
       double height,
       BoxFit fit: BoxFit.cover,
-        String placeholder: placeholder,
-        bool cacheEnable: true}) {
+      String placeholder: placeholder,
+      bool cacheEnable: true}) {
     if (TextUtil.isEmpty(imageUrl)) {
       return fromAsset(placeholder, height: height, width: width, fit: fit);
     }

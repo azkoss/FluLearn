@@ -4,6 +4,10 @@
   "copyrightLegalese": "Warranty Disclaimer\nThe open source software in this product is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY. See the applicable licenses for more details as follow.",
   "toastPressAgainToExit": "Press again to exit the app",
   "toastCallPhoneFailed": "Call phone failed",
+  "toastCopyWebUrl": "Copied to the clipboard",
   "homeDrawerSettings": "Settings",
-  "homeDrawerLicenses": "Open-Source Licenses"
+  "homeDrawerLicenses": "Open-Source Licenses",
+  "browserCopyUrl": "copy Link",
+  "browserOpenExternal": "Open in browser",
+  "browserClose": "Close"
 }

@@ -9,6 +9,7 @@
 - [Flutter开发环境搭建](https://flutter.dev/docs/get-started/install)
 - [Flutter开发文档](https://flutter-io.cn/docs)
 - [FlutterAPI手册](https://api.flutter.dev)
+- [Flutter图标字体生成](http://fluttericon.com/)
 - [电子书《Flutter实战》](https://book.flutterchina.club)
 - [闲鱼团队技术博客Flutter专题](https://www.yuque.com/xytech/flutter)
 

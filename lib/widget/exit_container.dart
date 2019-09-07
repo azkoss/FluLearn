@@ -1,6 +1,9 @@
+import 'dart:io' as DartVM show exit;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/generated/i18n.dart';
+import 'package:flutter_app/util/android_bridge.dart';
 import 'package:flutter_app/util/repeat_checker.dart';
 import 'package:flutter_app/util/toaster.dart';
 
@@ -20,13 +23,13 @@ class ExitContainer extends StatelessWidget {
       ),
       onWillPop: () async {
         if (!RepeatChecker.isFastClick()) {
-          Toaster.showLong(S
-              .of(context)
-              .toastPressAgainToExit);
+          Toaster.showLong(S.of(context).toastPressAgainToExit);
           return Future.value(false);
         }
         Toaster.cancel();
-        await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        await SystemNavigator.pop();
+        DartVM.exit(0);
+        await AndroidBridge.exitApp(true);
         return Future.value(true);
       },
     );

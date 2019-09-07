@@ -87,4 +87,6 @@ flutter {
 dependencies {
     implementation "androidx.core:core:$androidxCoreVersion"
     implementation "androidx.lifecycle:lifecycle-common:$androidxLifecycleVersion"
+    implementation "androidx.annotation:annotation:$androidxCoreVersion"
+    implementation "androidx.fragment:fragment:$androidxCoreVersion"
 }

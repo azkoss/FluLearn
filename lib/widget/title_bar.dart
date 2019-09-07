@@ -1,42 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/config/asset_dir.dart';
-import 'package:flutter_app/config/constant.dart';
+import 'package:flutter_app/util/overlay_style.dart';
 
 ///
 /// 自定义标题栏，类似于[AppBar]
 /// Adapted from https://github.com/simplezhli/flutter_deer/.../app_bar.dart
 ///
 class TitleBar extends StatelessWidget implements PreferredSizeWidget {
-  const TitleBar(
-      {Key key,
-      this.backgroundColor: Colors.white,
-      this.title: "",
-        this.centerTitle: true,
-      this.actionName: "",
-        this.backIcon: AssetDir.images + "/ic_back_black.png",
-      this.onPressed,
-      this.isBack: true})
-      : super(key: key);
+  const TitleBar({
+    Key key,
+    this.behindColor: Colors.white,
+    this.leadingWidget,
+    this.backIcon: AssetDir.images + '/ic_back_black.png',
+    this.title: "",
+    this.centerTitle: true,
+    this.actionName: '',
+    this.actionWidget,
+    this.onActionPressed,
+  }) : super(key: key);
 
-  final Color backgroundColor;
+  final Color behindColor;
+  final Widget leadingWidget;
+  final String backIcon;
   final String title;
   final bool centerTitle;
-  final String backIcon;
+  final Widget actionWidget;
   final String actionName;
-  final VoidCallback onPressed;
-  final bool isBack;
+  final VoidCallback onActionPressed;
 
   @override
   Widget build(BuildContext context) {
-    SystemUiOverlayStyle _overlayStyle =
-        ThemeData.estimateBrightnessForColor(backgroundColor) == Brightness.dark
-            ? SystemUiOverlayStyle.light
-            : SystemUiOverlayStyle.dark;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _overlayStyle,
+      value: OverlayStyle.estimateOverlayStyle(behindColor),
       child: Material(
-        color: backgroundColor,
+        color: behindColor,
         child: SafeArea(
           child: Stack(
             alignment: Alignment.centerLeft,
@@ -46,36 +44,20 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
                 children: <Widget>[
                   Container(
                     alignment:
-                    centerTitle ? Alignment.center : Alignment.centerLeft,
+                        centerTitle ? Alignment.center : Alignment.centerLeft,
                     width: double.infinity,
                     child: Text(title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 18,
-                          color: _overlayStyle == SystemUiOverlayStyle.light
-                              ? Colors.white
-                              : Color(0xFF333333),
+                          color: OverlayStyle.estimateFrontColor(behindColor),
                         )),
                     padding: const EdgeInsets.symmetric(horizontal: 48.0),
                   )
                 ],
               ),
-              isBack
-                  ? IconButton(
-                      onPressed: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        Navigator.maybePop(context);
-                      },
-                      padding: const EdgeInsets.all(12.0),
-                      icon: Image.asset(
-                        backIcon,
-                        color: _overlayStyle == SystemUiOverlayStyle.light
-                            ? Colors.white
-                            : Color(0xFF333333),
-                      ),
-                    )
-                  : SizedBox(),
+              _buildLeading(context),
               Positioned(
                 right: 0.0,
                 child: Theme(
@@ -84,16 +66,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     minWidth: 60.0,
                   )),
-                  child: actionName.isEmpty
-                      ? Container()
-                      : FlatButton(
-                          child: Text(actionName),
-                          textColor: _overlayStyle == SystemUiOverlayStyle.light
-                              ? Colors.white
-                              : Color(0xFF333333),
-                          highlightColor: Colors.transparent,
-                          onPressed: onPressed,
-                        ),
+                  child: _buildAction(context),
                 ),
               ),
             ],
@@ -103,6 +76,41 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
+  Widget _buildLeading(BuildContext context) {
+    if (leadingWidget != null) {
+      return leadingWidget;
+    }
+    if (backIcon == null || backIcon.isEmpty) {
+      return SizedBox();
+    }
+    return IconButton(
+      onPressed: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+        Navigator.maybePop(context);
+      },
+      padding: const EdgeInsets.all(12.0),
+      icon: Image.asset(
+        backIcon,
+        color: OverlayStyle.estimateFrontColor(behindColor),
+      ),
+    );
+  }
+
+  Widget _buildAction(BuildContext context) {
+    if (actionWidget != null) {
+      return actionWidget;
+    }
+    if (actionName.isEmpty) {
+      return SizedBox();
+    }
+    return FlatButton(
+      child: Text(actionName),
+      textColor: OverlayStyle.estimateFrontColor(behindColor),
+      highlightColor: Colors.transparent,
+      onPressed: onActionPressed,
+    );
+  }
+
   @override
-  Size get preferredSize => Size.fromHeight(Constant.titleBarHeight);
+  Size get preferredSize => Size.fromHeight(48.0);
 }

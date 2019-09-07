@@ -2,22 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/config/constant.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/ui/empty/empty_router.dart';
-import 'package:flutter_app/ui/home/home_page.dart';
-import 'package:flutter_app/ui/home/home_router.dart';
-import 'package:flutter_app/ui/splash_page.dart';
+import 'package:flutter_app/page/empty/empty_router.dart';
+import 'package:flutter_app/page/guide/guide_router.dart';
+import 'package:flutter_app/page/home/home_page.dart';
+import 'package:flutter_app/page/home/home_router.dart';
+import 'package:flutter_app/page/splash_page.dart';
+import 'package:flutter_app/page/web/web_router.dart';
 import 'package:flutter_app/util/logger.dart';
-import 'package:flutter_app/util/other_tool.dart';
+import 'package:flutter_app/util/overlay_style.dart';
 import 'package:flutter_app/util/route_navigator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-GlobalKey<LocalizationAppState> localizationStateKey =
+final GlobalKey<LocalizationAppState> localizationStateKey =
     new GlobalKey<LocalizationAppState>();
 
 void main() {
-  OtherTool.setUiOverlayStyle(Brightness.dark);
+  OverlayStyle.setOverlayStyle(Brightness.dark);
   RouteNavigator.registerRouter([
     new EmptyRouter(),
+    new WebRouter(),
+    new GuideRouter(),
     new HomeRouter(),
   ]);
   runApp(new MyApp());

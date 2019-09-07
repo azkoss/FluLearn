@@ -1,4 +1,4 @@
-package com.example.flutter_app.util;
+package com.example.flutter_app.toolkit;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,11 +8,11 @@ import android.os.Build;
 import java.io.File;
 
 /**
- * Android7文件系统兼容工具类
+ * Android系统版本兼容工具类
  *
  * @author liyujiang
  */
-public class CompatUtils {
+public class VersionCompat {
 
     public static Uri getUriForFile(Context context, File file) {
         Uri fileUri;
@@ -25,6 +25,7 @@ public class CompatUtils {
     }
 
     public static class CompatFileProvider extends androidx.core.content.FileProvider {
+        //androidx.core:core
     }
 
     public static void setIntentDataAndType(Context context, Intent intent, String type, File file, boolean writeAble) {

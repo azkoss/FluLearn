@@ -17,16 +17,6 @@ class Constant {
   static const int splashSeconds = 5;
 
   ///
-  /// 标题栏高度
-  ///
-  static const double titleBarHeight = 48.0;
-
-  ///
-  /// 路由协议头
-  ///
-  static const String urlScheme = "lyj://";
-
-  ///
   /// 默认区域设置（语言代码-区域脚本代码-国家或地区代码）
   ///
   /// 语言代码参见 https://baike.baidu.com/item/ISO%20639-1

@@ -3,7 +3,6 @@ import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/util/image_loader.dart';
 import 'package:flutter_app/util/route_navigator.dart';
 import 'package:flutter_app/util/toaster.dart';
-import 'package:flutter_app/util/web_browser.dart';
 import 'package:package_info/package_info.dart';
 
 ///
@@ -25,22 +24,22 @@ class HomeDrawer extends StatelessWidget {
   Widget _buildDrawer(BuildContext context) {
     return Column(
       children: <Widget>[
-//        ListView(
-//          padding: EdgeInsets.zero,
-//          shrinkWrap: true,
-//          children: <Widget>[
-//            _buildHeader(context),
-//            _buildBody(context),
-//          ],
-//        ),
-        SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              _buildHeader(context),
-              _buildBody(context),
-            ],
-          ),
+        ListView(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          children: <Widget>[
+            _buildHeader(context),
+            _buildBody(context),
+          ],
         ),
+//        SingleChildScrollView(
+//          child: Column(
+//            children: <Widget>[
+//              _buildHeader(context),
+//              _buildBody(context),
+//            ],
+//          ),
+//        ),
         Expanded(
           child: Container(
             color: Colors.grey[300],
@@ -90,7 +89,8 @@ class HomeDrawer extends StatelessWidget {
           leading: CircleAvatar(child: Text("网")),
           title: Text('网页浏览器'),
           onTap: () {
-            return WebBrowser.launch(context, "http://github.com/chaunqingren");
+            return RouteNavigator.goWeb(
+                context, "http://github.com/chaunqingren");
           },
         ),
         Divider(

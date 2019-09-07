@@ -5,13 +5,12 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_app/config/constant.dart';
 import 'package:flutter_app/util/image_loader.dart';
 import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/util/route_navigator.dart';
 
 ///
-/// 闪屏，参阅 https://github.com/KarimMohamed2005/SplashScreenFlutterPackage
+/// 闪屏
 ///
 class SplashScreen extends StatefulWidget {
   final int seconds;
@@ -19,6 +18,7 @@ class SplashScreen extends StatefulWidget {
   final Color backgroundColor;
   final String skipButtonText;
   final String imageUrl;
+  final String imagePlaceholder;
   final Text bottomText;
   final bool Function(int value) onTickEvent;
 
@@ -28,6 +28,7 @@ class SplashScreen extends StatefulWidget {
     this.backgroundColor = Colors.transparent,
     this.skipButtonText,
     this.imageUrl,
+    this.imagePlaceholder = '',
     this.bottomText = const Text(''),
     this.onTickEvent,
   });
@@ -91,12 +92,12 @@ class _SplashScreenState extends State<SplashScreen> {
           ImageLoader.fromNetwork(
             widget.imageUrl,
             fit: BoxFit.fitWidth,
-            placeholder: ImageLoader.assetPath("app_splash.webp"),
+            placeholder: widget.imagePlaceholder,
           ),
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: EdgeInsets.only(top: Constant.titleBarHeight, right: 25),
+              padding: EdgeInsets.only(top: 45, right: 20),
               child: _buildSkipButton(),
             ),
           ),
@@ -113,10 +114,10 @@ class _SplashScreenState extends State<SplashScreen> {
       opacity: 0.5,
       child: FlatButton(
         textColor: Colors.white,
-        color: Colors.grey,
+        color: Colors.grey[700],
         shape: RoundedRectangleBorder(
             side: BorderSide.none,
-            borderRadius: BorderRadius.all(Radius.circular(40))),
+            borderRadius: BorderRadius.all(Radius.circular(50))),
         child: Text(
           widget.skipButtonText + (_seconds + 1).toString() + 'S',
           textAlign: TextAlign.center,

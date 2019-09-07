@@ -5,14 +5,13 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/config/constant.dart';
 import 'package:flutter_app/config/prefs_key.dart';
+import 'package:flutter_app/config/route_url.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/util/image_loader.dart';
 import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/widget/exit_container.dart';
 import 'package:flutter_app/widget/splash_screen.dart';
 import 'package:package_info/package_info.dart';
-
-import 'home/home_router.dart';
 
 ///
 /// 闪屏页
@@ -83,8 +82,9 @@ class _SplashPageState extends State<SplashPage> {
     return ExitContainer(
       child: SplashScreen(
         seconds: countdownSeconds,
-        navigateTo: HomeRouter.homePage,
+        navigateTo: RouteUrl.home,
         imageUrl: noAd ? defaultImageUrl : _imageUrl,
+        imagePlaceholder: defaultImageUrl,
         skipButtonText: noAd ? null : '跳过',
         bottomText: Text(
           bottomText,
