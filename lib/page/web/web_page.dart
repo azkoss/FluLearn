@@ -57,11 +57,12 @@ class _WebPageState extends State<WebPage> {
   @override
   Widget build(BuildContext context) {
     //监听左上角按钮返回和实体键返回
+    bool needChangeTitle = widget.changeTitle && _title.isNotEmpty;
     return WillPopScope(
       onWillPop: _goBack,
       child: Scaffold(
         appBar: TitleBar(
-          title: widget.changeTitle ? _title : widget.title,
+          title: needChangeTitle ? _title : widget.title,
           actionWidget: _buildPopupMenu(context),
         ),
         body: Column(
