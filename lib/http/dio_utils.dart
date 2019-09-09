@@ -7,7 +7,7 @@ import 'package:flutter_app/config/constant.dart';
 import 'package:flutter_app/entity_factory.dart';
 import 'package:flutter_app/util/logger.dart';
 
-import 'api.dart';
+import '../config/api.dart';
 import 'base_resp.dart' as HttpRes;
 import 'error_handle.dart';
 import 'interceptor.dart';
@@ -45,17 +45,6 @@ class DioUtils {
           ContentType('application', 'x-www-form-urlencoded', charset: 'utf-8'),
     );
     _dio = Dio(options);
-
-//    /// Fiddler抓包代理配置 https://www.jianshu.com/p/d831b1f7c45b
-//    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-//        (HttpClient client) {
-//      client.findProxy = (uri) {
-//        //proxy all request to localhost:8888
-//        return "PROXY 10.41.0.132:8888";
-//      };
-//      client.badCertificateCallback =
-//          (X509Certificate cert, String host, int port) => true;
-//    };
 
     /// 统一添加身份验证请求头
     _dio.interceptors.add(AuthInterceptor());
@@ -202,7 +191,7 @@ class DioUtils {
   }
 
   /// 统一处理(onSuccess返回T对象，onSuccessList返回List<T>)
-  requestNetwork<T>(Method method, String url,
+  void requestNetwork<T>(Method method, String url,
       {Function(T t) onSuccess,
       Function(List<T> list) onSuccessList,
       Function(int code, String mag) onError,
@@ -244,13 +233,13 @@ class DioUtils {
     });
   }
 
-  _cancelLogPrint(dynamic e, String url) {
+  void _cancelLogPrint(dynamic e, String url) {
     if (e is DioError && CancelToken.isCancel(e)) {
       L.d("取消请求接口： $url");
     }
   }
 
-  _onError(int code, String msg, Function(int code, String mag) onError) {
+  void _onError(int code, String msg, Function(int code, String mag) onError) {
     L.e("接口请求异常： code: $code, mag: $msg");
     if (onError != null) {
       onError(code, msg);

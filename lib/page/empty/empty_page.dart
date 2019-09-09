@@ -11,11 +11,11 @@ class EmptyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TitleBar(
-        title: "页面不存在",
+        title: '页面不存在',
       ),
       body: const StateLayout(
         type: StateType.error,
-        hintText: "页面不存在",
+        hintText: '页面不存在',
       ),
     );
   }

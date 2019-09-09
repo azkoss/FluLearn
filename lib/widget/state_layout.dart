@@ -80,9 +80,7 @@ class _StateLayoutState extends State<StateLayout> {
       widget.hintText ?? _hintText,
       style: TextStyle(
         fontSize: 14,
-        color: Theme
-            .of(context)
-            .primaryColor,
+        color: Colors.black87,
       ),
     );
   }

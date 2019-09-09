@@ -96,13 +96,12 @@ class _HomePageState extends State<HomePage> {
         drawer: HomeDrawer(),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.white,
-          items: List.generate(
-              _tabTexts.length,
-                  (i) =>
-                  BottomNavigationBarItem(
-                    icon: _buildTabIcon(i),
-                    title: _buildTabText(i),
-                  )),
+          items: List.generate(_tabTexts.length, (i) {
+            return BottomNavigationBarItem(
+              icon: _buildTabIcon(i),
+              title: _buildTabText(i),
+            );
+          }),
           type: BottomNavigationBarType.fixed,
           currentIndex: _tabIndex,
           elevation: 5.0,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
+import 'package:flutter_app/page/settings_page.dart';
 import 'package:flutter_app/util/image_loader.dart';
 import 'package:flutter_app/util/route_navigator.dart';
 import 'package:flutter_app/util/toaster.dart';
@@ -22,31 +23,15 @@ class HomeDrawer extends StatelessWidget {
   }
 
   Widget _buildDrawer(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ListView(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          children: <Widget>[
-            _buildHeader(context),
-            _buildBody(context),
-          ],
-        ),
-//        SingleChildScrollView(
-//          child: Column(
-//            children: <Widget>[
-//              _buildHeader(context),
-//              _buildBody(context),
-//            ],
-//          ),
-//        ),
-        Expanded(
-          child: Container(
-            color: Colors.grey[300],
-          ),
-        ),
-        _buildFooter(context),
-      ],
+    return Container(
+      color: Colors.grey[300],
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          _buildHeader(context),
+          _buildBody(context),
+        ],
+      ),
     );
   }
 
@@ -77,65 +62,64 @@ class HomeDrawer extends StatelessWidget {
         ],
       ),
       decoration: BoxDecoration(
-        color: Colors.grey[300],
+        color: Colors.blue[300],
       ),
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ListTile(
-          leading: CircleAvatar(child: Text("网")),
-          title: Text('网页浏览器'),
-          onTap: () {
-            return RouteNavigator.goWeb(
-                context, "http://github.com/chaunqingren");
-          },
-        ),
-        Divider(
-          height: 1,
-          color: Colors.grey[350],
-        ),
-        ListTile(
-          leading: CircleAvatar(child: Text("404")),
-          title: Text('Page Not Found'),
-          subtitle: Text("Drawer item B subtitle"),
-          onTap: () {
-            return RouteNavigator.goPath(context, "/404");
-          },
-        ),
-        Container(
-          width: double.infinity,
-          height: 10,
-          color: Colors.grey[300],
-        ),
-        ListTile(
-          leading: Icon(Icons.settings),
-          title: Text(S.of(context).homeDrawerSettings),
-          trailing: new Icon(Icons.keyboard_arrow_right),
-          onTap: () => _goToSettings(context),
-        ),
-        Divider(
-          height: 1,
-          color: Colors.grey[350],
-        ),
-        ListTile(
-          leading: Icon(Icons.copyright),
-          title: Text(S.of(context).homeDrawerLicenses),
-          trailing: new Icon(Icons.keyboard_arrow_right),
-          onTap: () => _showLicense(context),
-        ),
-      ],
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: CircleAvatar(child: Text("网")),
+            title: Text('网页浏览器'),
+            onTap: () {
+              return RouteNavigator.goWeb(
+                  context, "http://github.com/chaunqingren");
+            },
+          ),
+          Divider(
+            height: 1,
+            color: Colors.grey[350],
+          ),
+          ListTile(
+            leading: CircleAvatar(child: Text("404")),
+            title: Text('Page Not Found'),
+            subtitle: Text("Drawer item B subtitle"),
+            onTap: () {
+              return RouteNavigator.goPath(context, "/404");
+            },
+          ),
+          Container(
+            width: double.infinity,
+            height: 10,
+            color: Colors.grey[300],
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text(S.of(context).homeDrawerSettings),
+            trailing: new Icon(Icons.keyboard_arrow_right),
+            onTap: () => _goToSettings(context),
+          ),
+          Divider(
+            height: 1,
+            color: Colors.grey[350],
+          ),
+          ListTile(
+            leading: Icon(Icons.copyright),
+            title: Text(S.of(context).homeDrawerLicenses),
+            trailing: new Icon(Icons.keyboard_arrow_right),
+            onTap: () => _showLicense(context),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildFooter(BuildContext context) {
-    return SizedBox.shrink();
-  }
-
   void _goToSettings(BuildContext context) {
-    Toaster.showShort("设置");
+    RouteNavigator.goPage(context, new SettingPage());
   }
 
   void _showLicense(BuildContext context) {

@@ -97,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: EdgeInsets.only(top: 45, right: 20),
+              padding: EdgeInsets.only(top: 40, right: 20),
               child: _buildSkipButton(),
             ),
           ),
@@ -111,7 +111,7 @@ class _SplashScreenState extends State<SplashScreen> {
       return SizedBox();
     }
     return Opacity(
-      opacity: 0.5,
+      opacity: 0.7,
       child: FlatButton(
         textColor: Colors.white,
         color: Colors.grey[700],

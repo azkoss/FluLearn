@@ -11,21 +11,21 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
   const TitleBar({
     Key key,
     this.behindColor: Colors.white,
-    this.leadingWidget,
+    this.leading,
     this.backIcon: AssetDir.images + '/ic_back_black.png',
     this.title: "",
     this.centerTitle: true,
+    this.action,
     this.actionName: '',
-    this.actionWidget,
     this.onActionPressed,
   }) : super(key: key);
 
   final Color behindColor;
-  final Widget leadingWidget;
+  final Widget leading;
   final String backIcon;
   final String title;
   final bool centerTitle;
-  final Widget actionWidget;
+  final Widget action;
   final String actionName;
   final VoidCallback onActionPressed;
 
@@ -77,8 +77,8 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildLeading(BuildContext context) {
-    if (leadingWidget != null) {
-      return leadingWidget;
+    if (leading != null) {
+      return leading;
     }
     if (backIcon == null || backIcon.isEmpty) {
       return SizedBox();
@@ -89,6 +89,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
         Navigator.maybePop(context);
       },
       padding: const EdgeInsets.all(12.0),
+      //icon: Icon(Icons.arrow_back),
       icon: Image.asset(
         backIcon,
         color: OverlayStyle.estimateFrontColor(behindColor),
@@ -97,8 +98,8 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildAction(BuildContext context) {
-    if (actionWidget != null) {
-      return actionWidget;
+    if (action != null) {
+      return action;
     }
     if (actionName.isEmpty) {
       return SizedBox();

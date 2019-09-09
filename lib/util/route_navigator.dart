@@ -47,8 +47,12 @@ class RouteNavigator {
   ///
   ///打开新页面
   ///
-  static goPath(BuildContext context, String path,
-      {bool replace = false, bool clearStack = false}) {
+  static goPath(
+    BuildContext context,
+    String path, {
+    bool replace = false,
+    bool clearStack = false,
+  }) {
     L.d("open route: path=" + path);
     router.navigateTo(context, path,
         replace: replace,
@@ -82,11 +86,18 @@ class RouteNavigator {
   ///
   ///打开新页面
   ///
-  static goPage(BuildContext context, Widget page) {
+  static goPage(BuildContext context, Widget page,
+      {bool fullscreenDialog = false}) {
     L.d("open page: page=" + page.toString());
-    Navigator.push(context, new CupertinoPageRoute(builder: (context) {
-      return page;
-    }));
+    Navigator.push(
+      context,
+      new CupertinoPageRoute(
+        builder: (context) {
+          return page;
+        },
+        fullscreenDialog: fullscreenDialog,
+      ),
+    );
   }
 
   ///

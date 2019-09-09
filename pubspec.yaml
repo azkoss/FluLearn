@@ -49,6 +49,12 @@ dependencies:
   cached_network_image: ^1.1.1
   # 用工具类库 https://github.com/Sky24n/flustars
   flustars: ^0.2.6+1
+  # 荧光效果 https://github.com/hnvn/flutter_shimmer
+  shimmer: ^1.0.0
+  # 分享 https://github.com/flutter/plugins/tree/master/packages/share
+  share: 0.6.2+1
+  # Markdown文档 https://github.com/flutter/flutter_markdown
+  flutter_markdown: ^0.2.0
   # 轮播图 https://github.com/best-flutter/flutter_swiper
   flutter_swiper: ^1.1.6
   # 网页加载 https://github.com/pichillilorenzo/flutter_inappbrowser
@@ -121,6 +127,7 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
+    - res/
     - res/values/
     - res/images/
     - res/images/home/

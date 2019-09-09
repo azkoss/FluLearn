@@ -63,7 +63,7 @@ class _WebPageState extends State<WebPage> {
       child: Scaffold(
         appBar: TitleBar(
           title: needChangeTitle ? _title : widget.title,
-          actionWidget: _buildPopupMenu(context),
+          action: _buildPopupMenu(context),
         ),
         body: Column(
           children: <Widget>[
