@@ -5,9 +5,15 @@
   "toastPressAgainToExit": "Press again to exit the app",
   "toastCallPhoneFailed": "Call phone failed",
   "toastCopyWebUrl": "Copied to the clipboard",
-  "homeDrawerSettings": "Settings",
-  "homeDrawerLicenses": "Open-Source Licenses",
-  "browserCopyUrl": "copy Link",
-  "browserOpenExternal": "Open in browser",
-  "browserClose": "Close"
+  "titleSettings": "Settings",
+  "titleLicenses": "Licenses",
+  "titleAbout": "About Us",
+  "titleWebSite": "Web Site",
+  "titleChangeLog": "Change Log",
+  "webMenuCopyLink": "Copy Link",
+  "webMenuOpenBrowser": "Open Browser",
+  "webMenuClose": "Close",
+  "settingsLanguage": "Language",
+  "settingsLanguageAutoBySystem": "Auto",
+  "settingsTheme": "Theme"
 }

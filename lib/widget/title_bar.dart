@@ -9,20 +9,19 @@ import 'package:flutter_app/util/overlay_style.dart';
 ///
 class TitleBar extends StatelessWidget implements PreferredSizeWidget {
   const TitleBar({
-    Key key,
-    this.behindColor: Colors.white,
+    this.backgroundColor,
     this.leading,
-    this.backIcon: AssetDir.images + '/ic_back_black.png',
-    this.title: "",
+    this.leadingIcon: AssetDir.images + '/ic_back_black.png',
+    this.title: '',
     this.centerTitle: true,
     this.action,
     this.actionName: '',
     this.onActionPressed,
-  }) : super(key: key);
+  });
 
-  final Color behindColor;
+  final Color backgroundColor;
   final Widget leading;
-  final String backIcon;
+  final String leadingIcon;
   final String title;
   final bool centerTitle;
   final Widget action;
@@ -30,11 +29,17 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onActionPressed;
 
   @override
+  Size get preferredSize => Size.fromHeight(48.0);
+
+  @override
   Widget build(BuildContext context) {
+    final Color _bgColor = backgroundColor ?? Theme.of(context).primaryColor;
+    final Color _frontColor = OverlayStyle.estimateFrontColor(_bgColor);
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: OverlayStyle.estimateOverlayStyle(behindColor),
+      value: OverlayStyle.estimateOverlayStyle(_bgColor),
       child: Material(
-        color: behindColor,
+        color: _bgColor,
+        elevation: 1.0,
         child: SafeArea(
           child: Stack(
             alignment: Alignment.centerLeft,
@@ -51,13 +56,14 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 18,
-                          color: OverlayStyle.estimateFrontColor(behindColor),
+                          fontWeight: FontWeight.bold,
+                          color: _frontColor,
                         )),
                     padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                  )
+                  ),
                 ],
               ),
-              _buildLeading(context),
+              _buildLeading(context, _frontColor),
               Positioned(
                 right: 0.0,
                 child: Theme(
@@ -66,7 +72,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     minWidth: 60.0,
                   )),
-                  child: _buildAction(context),
+                  child: _buildAction(context, _frontColor),
                 ),
               ),
             ],
@@ -76,11 +82,11 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _buildLeading(BuildContext context) {
+  Widget _buildLeading(BuildContext context, Color _frontColor) {
     if (leading != null) {
       return leading;
     }
-    if (backIcon == null || backIcon.isEmpty) {
+    if (leadingIcon == null || leadingIcon.isEmpty) {
       return SizedBox();
     }
     return IconButton(
@@ -91,13 +97,13 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
       padding: const EdgeInsets.all(12.0),
       //icon: Icon(Icons.arrow_back),
       icon: Image.asset(
-        backIcon,
-        color: OverlayStyle.estimateFrontColor(behindColor),
+        leadingIcon,
+        color: _frontColor,
       ),
     );
   }
 
-  Widget _buildAction(BuildContext context) {
+  Widget _buildAction(BuildContext context, Color _frontColor) {
     if (action != null) {
       return action;
     }
@@ -106,12 +112,9 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
     }
     return FlatButton(
       child: Text(actionName),
-      textColor: OverlayStyle.estimateFrontColor(behindColor),
+      textColor: _frontColor,
       highlightColor: Colors.transparent,
       onPressed: onActionPressed,
     );
   }
-
-  @override
-  Size get preferredSize => Size.fromHeight(48.0);
 }

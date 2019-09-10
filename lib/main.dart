@@ -1,3 +1,4 @@
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/config/constant.dart';
@@ -6,8 +7,9 @@ import 'package:flutter_app/page/empty/empty_router.dart';
 import 'package:flutter_app/page/guide/guide_router.dart';
 import 'package:flutter_app/page/home/home_page.dart';
 import 'package:flutter_app/page/home/home_router.dart';
+import 'package:flutter_app/page/login/login_router.dart';
 import 'package:flutter_app/page/splash_page.dart';
-import 'package:flutter_app/page/web/web_router.dart';
+import 'package:flutter_app/util/language.dart';
 import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/util/overlay_style.dart';
 import 'package:flutter_app/util/route_navigator.dart';
@@ -17,14 +19,21 @@ final GlobalKey<LocalizationAppState> localizationStateKey =
     new GlobalKey<LocalizationAppState>();
 
 void main() {
+  initAsync().then((v) {
+    runApp(new MyApp());
+  });
+}
+
+Future<void> initAsync() async {
+  WidgetsFlutterBinding.ensureInitialized();
   OverlayStyle.setOverlayStyle(Brightness.dark);
   RouteNavigator.registerRouter([
     new EmptyRouter(),
-    new WebRouter(),
     new GuideRouter(),
     new HomeRouter(),
+    new LoginRouter(),
   ]);
-  runApp(new MyApp());
+  await SpUtil.getInstance();
 }
 
 class MyApp extends StatelessWidget {
@@ -44,13 +53,20 @@ class LocalizationApp extends StatefulWidget {
 }
 
 class LocalizationAppState extends State<LocalizationApp> {
-  Locale _locale = Constant.defaultLocale;
+  Locale _locale;
 
   void changeLocale(Locale locale) {
     setState(() {
       _locale = locale;
       L.d("change locale to: $locale");
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _locale = Language.currentLocaleFromSp();
+    L.d("current locale is: $_locale");
   }
 
   @override
@@ -61,8 +77,13 @@ class LocalizationAppState extends State<LocalizationApp> {
       //界面风格
       theme: ThemeData(
         brightness: Brightness.light,
-        primaryColor: Color(0xFFF2F2F2),
+        primaryColor: Colors.green,
+        primaryColorDark: Colors.green,
+        primaryColorLight: Colors.lightGreen,
+        accentColor: Colors.lightGreen,
+        backgroundColor: Color(0xFFF2F2F2),
         scaffoldBackgroundColor: Colors.white,
+        cardColor: Colors.lightGreen,
       ),
       //主入口页面
       home: Constant.splashSeconds > 1 ? SplashPage() : HomePage(),

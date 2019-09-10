@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_app/config/route_url.dart';
-import 'package:flutter_app/generated/i18n.dart';
+import 'package:flutter_app/page/web/web_popup_menu.dart';
 import 'package:flutter_app/util/logger.dart';
 import 'package:flutter_app/util/route_navigator.dart';
-import 'package:flutter_app/util/toaster.dart';
 import 'package:flutter_app/util/url_scheme.dart';
 import 'package:flutter_app/widget/title_bar.dart';
 import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
@@ -63,7 +61,7 @@ class _WebPageState extends State<WebPage> {
       child: Scaffold(
         appBar: TitleBar(
           title: needChangeTitle ? _title : widget.title,
-          action: _buildPopupMenu(context),
+          action: WebActionMenu(url: _url),
         ),
         body: Column(
           children: <Widget>[
@@ -83,38 +81,6 @@ class _WebPageState extends State<WebPage> {
           ],
         ),
       ),
-    );
-  }
-
-  PopupMenuButton<String> _buildPopupMenu(BuildContext context) {
-    return PopupMenuButton(
-      icon: Icon(Icons.more_vert),
-      onSelected: (String value) {
-        if ('close' == value) {
-          RouteNavigator.goBack(context);
-        } else if ('copy' == value) {
-          Clipboard.setData(new ClipboardData(text: _url));
-          Toaster.showShort(S.of(context).toastCopyWebUrl);
-        } else if ('browser' == value) {
-          UrlScheme.tryOpen(_url);
-        }
-      },
-      itemBuilder: (BuildContext context) {
-        return <PopupMenuItem<String>>[
-          new PopupMenuItem(
-            value: "copy",
-            child: new Text(S.of(context).browserCopyUrl),
-          ),
-          new PopupMenuItem(
-            value: "browser",
-            child: new Text(S.of(context).browserOpenExternal),
-          ),
-          new PopupMenuItem(
-            value: "close",
-            child: new Text(S.of(context).browserClose),
-          ),
-        ];
-      },
     );
   }
 

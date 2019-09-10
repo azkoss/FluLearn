@@ -5,9 +5,15 @@
   "toastPressAgainToExit": "再按一次退出应用程序",
   "toastCallPhoneFailed": "拨号失败",
   "toastCopyWebUrl": "已复制到剪切板",
-  "homeDrawerSettings": "设置",
-  "homeDrawerLicenses": "开源许可证",
-  "browserCopyUrl": "复制链接",
-  "browserOpenExternal": "在浏览器打开",
-  "browserClose": "关闭"
+  "titleSettings": "设置",
+  "titleLicenses": "开源许可证",
+  "titleAbout": "关于我们",
+  "titleWebSite": "官网",
+  "titleChangeLog": "更新日志",
+  "webMenuCopyLink": "复制链接",
+  "webMenuOpenBrowser": "浏览器打开",
+  "webMenuClose": "关闭",
+  "settingsLanguage": "语言",
+  "settingsLanguageAutoBySystem": "跟随系统",
+  "settingsTheme": "主题"
 }

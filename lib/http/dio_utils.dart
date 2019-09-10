@@ -7,8 +7,7 @@ import 'package:flutter_app/config/constant.dart';
 import 'package:flutter_app/entity_factory.dart';
 import 'package:flutter_app/util/logger.dart';
 
-import '../config/api.dart';
-import 'base_resp.dart' as HttpRes;
+import 'base_resp.dart';
 import 'error_handle.dart';
 import 'interceptor.dart';
 
@@ -40,7 +39,7 @@ class DioUtils {
         // 不使用http状态码判断状态，使用AdapterInterceptor来处理（适用于标准REST风格）
         return true;
       },
-      baseUrl: Api.baseUrl,
+      baseUrl: '',
       contentType:
           ContentType('application', 'x-www-form-urlencoded', charset: 'utf-8'),
     );
@@ -59,7 +58,7 @@ class DioUtils {
   }
 
   // 数据返回格式统一，统一处理异常
-  Future<HttpRes.BaseResp<T>> _request<T>(String method, String url,
+  Future<BaseResp<T>> _request<T>(String method, String url,
       {dynamic data,
       Map<String, dynamic> queryParameters,
       CancelToken cancelToken,
@@ -90,12 +89,12 @@ class DioUtils {
       }
     } catch (e) {
       L.e("JSON解析出出错", e);
-      return HttpRes.BaseResp(ExceptionHandle.parse_error, "数据解析错误", _data);
+      return BaseResp(ExceptionHandle.parse_error, "数据解析错误", _data);
     }
-    return HttpRes.BaseResp(_code, _msg, _data);
+    return BaseResp(_code, _msg, _data);
   }
 
-  Future<HttpRes.BaseResp<List<T>>> _requestList<T>(String method, String url,
+  Future<BaseResp<List<T>>> _requestList<T>(String method, String url,
       {dynamic data,
       Map<String, dynamic> queryParameters,
       CancelToken cancelToken,
@@ -121,9 +120,9 @@ class DioUtils {
       }
     } catch (e) {
       L.e("JSON解析出出错", e);
-      return HttpRes.BaseResp(ExceptionHandle.parse_error, "数据解析错误", _data);
+      return BaseResp(ExceptionHandle.parse_error, "数据解析错误", _data);
     }
-    return HttpRes.BaseResp(_code, _msg, _data);
+    return BaseResp(_code, _msg, _data);
   }
 
   Options _checkOptions(method, options) {
@@ -147,7 +146,7 @@ class DioUtils {
             queryParameters: queryParameters,
             options: options,
             cancelToken: cancelToken)
-        .then((HttpRes.BaseResp<T> result) {
+        .then((BaseResp<T> result) {
       if (result.code == 0) {
         if (onSuccess != null) {
           onSuccess(result.data);
@@ -175,7 +174,7 @@ class DioUtils {
             queryParameters: queryParameters,
             options: options,
             cancelToken: cancelToken)
-        .then((HttpRes.BaseResp<List<T>> result) {
+        .then((BaseResp<List<T>> result) {
       if (result.code == 0) {
         if (onSuccess != null) {
           onSuccess(result.data);
@@ -203,15 +202,15 @@ class DioUtils {
     String m = _getRequestMethod(method);
     Future future = isList
         ? _requestList<T>(m, url,
-        data: params,
-        queryParameters: queryParameters,
-        options: options,
-        cancelToken: cancelToken)
+            data: params,
+            queryParameters: queryParameters,
+            options: options,
+            cancelToken: cancelToken)
         : _request<T>(m, url,
-        data: params,
-        queryParameters: queryParameters,
-        options: options,
-        cancelToken: cancelToken);
+            data: params,
+            queryParameters: queryParameters,
+            options: options,
+            cancelToken: cancelToken);
     future.asStream().listen((result) {
       if (result.code == 0) {
         if (isList) {

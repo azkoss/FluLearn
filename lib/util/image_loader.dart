@@ -37,12 +37,14 @@ class ImageLoader {
   ///
   /// 加载网络图片
   ///
-  static Widget fromNetwork(String imageUrl,
-      {double width,
-      double height,
-      BoxFit fit: BoxFit.cover,
-      String placeholder: placeholder,
-      bool cacheEnable: true}) {
+  static Widget fromNetwork(
+    String imageUrl, {
+    double width,
+    double height,
+    BoxFit fit: BoxFit.cover,
+    String placeholder: placeholder,
+    bool cacheEnable: true,
+  }) {
     if (TextUtil.isEmpty(imageUrl)) {
       return fromAsset(placeholder, height: height, width: width, fit: fit);
     }

@@ -1,5 +1,3 @@
-import 'dart:ui' show Locale;
-
 ///
 /// 常量集中管理
 ///
@@ -9,7 +7,7 @@ class Constant {
   /// 运行在Release环境时为true；运行在Debug和Profile环境时为false
   ///
   static const bool enableDebug =
-  !const bool.fromEnvironment("dart.vm.product");
+      !const bool.fromEnvironment("dart.vm.product");
 
   ///
   /// 闪屏时长，大于1秒才显示闪屏页
@@ -17,12 +15,7 @@ class Constant {
   static const int splashSeconds = 5;
 
   ///
-  /// 默认区域设置（语言代码-区域脚本代码-国家或地区代码）
+  /// 服务端接口基础地址
   ///
-  /// 语言代码参见 https://baike.baidu.com/item/ISO%20639-1
-  /// 区域脚本代码 https://github.com/unicode-org/cldr/blob/master/common/validity/script.xml
-  /// 国家或地区代码参见 https://baike.baidu.com/item/ISO%203166-1
-  ///
-  static const Locale defaultLocale = const Locale.fromSubtags(
-      languageCode: 'zh', scriptCode: 'Hans', countryCode: 'CN');
+  static const String baseApiUrl = 'http://hn216.api.yesapi.cn/';
 }

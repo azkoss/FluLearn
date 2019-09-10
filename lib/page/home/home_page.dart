@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/page/home/home_drawer.dart';
+import 'package:flutter_app/page/login/login_page.dart';
 import 'package:flutter_app/util/image_loader.dart';
 import 'package:flutter_app/util/language.dart';
+import 'package:flutter_app/util/overlay_style.dart';
 import 'package:flutter_app/widget/exit_container.dart';
+import 'package:flutter_app/widget/title_bar.dart';
 
 ///
 /// 主页
@@ -60,7 +63,8 @@ class _HomePageState extends State<HomePage> {
       Text("提问"),
       Text("下载"),
       Text("学习"),
-      Text("我的"),
+      //Text("我的"),
+      new LoginPage(),
     ];
   }
 
@@ -89,10 +93,23 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    String langTag = Localizations.localeOf(context).toLanguageTag();
     return ExitContainer(
       child: Scaffold(
-        appBar: AppBar(title: Text("当前语言：$langTag"), centerTitle: true),
+        appBar: TitleBar(
+          title: _tabTexts[_tabIndex],
+          leading: Builder(
+            builder: (context) {
+              return IconButton(
+                color: OverlayStyle.estimateFrontColor(
+                    Theme.of(context).primaryColor),
+                icon: Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              );
+            },
+          ),
+        ),
         drawer: HomeDrawer(),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.white,
@@ -106,10 +123,8 @@ class _HomePageState extends State<HomePage> {
           currentIndex: _tabIndex,
           elevation: 5.0,
           iconSize: 25.0,
-          selectedFontSize: 15,
-          unselectedFontSize: 15,
-          selectedItemColor: Colors.blueAccent,
-          unselectedItemColor: Color(0xFFBFBFBF),
+          selectedFontSize: 15.5,
+          unselectedFontSize: 15.0,
           onTap: (index) {
             _pageController.jumpToPage(index);
           },

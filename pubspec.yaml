@@ -17,7 +17,8 @@ author: 李玉江 <1032694760@qq.com>
 homepage: https://github.com/gzu-liyujiang
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  # 2.2.2之前的版本会报“suppress: sdk_version_ui_as_code”
+  sdk: ">=2.2.2 <3.0.0"
 
 # Flutter和Dart生态系统的共享软件包 https://pub.dev
 # 关于版本号中的"^"说明,参见 https://codeday.me/bug/20190727/1549058.html

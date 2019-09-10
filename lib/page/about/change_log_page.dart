@@ -4,6 +4,8 @@ import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/widget/title_bar.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
+const _ASSET_PATH = 'res/CHANGELOG.md';
+
 ///
 /// 版本更新日志页
 ///
@@ -11,7 +13,7 @@ class ChangeLogPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TitleBar(
-        title: S.of(context).appName,
+        title: S.of(context).titleChangeLog,
       ),
       body: ChangeLog(),
     );
@@ -29,7 +31,7 @@ class _ChangeLogState extends State<ChangeLog> {
   @override
   void initState() {
     super.initState();
-    PlatformAssetBundle().loadString("res/CHANGELOG.md").then((data) {
+    PlatformAssetBundle().loadString(_ASSET_PATH).then((data) {
       setState(() {
         _data = data;
       });

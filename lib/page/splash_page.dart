@@ -36,8 +36,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
   }
 
-  void _obtainSplashImage() async {
-    await SpUtil.getInstance();
+  void _obtainSplashImage() {
     setState(() {
       _imageUrl = SpUtil.getString(PrefsKey.splash_image_url, defValue: '');
       L.d("imageUrl=$_imageUrl");
@@ -67,7 +66,6 @@ class _SplashPageState extends State<SplashPage> {
     String imageUrl =
         "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3095878455,1424909459&fm=26&gp=0.jpg";
     L.d("imageUrl=$imageUrl");
-    await SpUtil.getInstance();
     SpUtil.putString(PrefsKey.splash_image_url, imageUrl);
   }
 

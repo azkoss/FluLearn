@@ -19,7 +19,7 @@ abstract class IRouterDefinition {
 /// Adapted from https://github.com/simplezhli/flutter_deer/.../NavigatorUtils.dart
 ///
 class RouteNavigator {
-  static const transitionDurationSeconds = 250;
+  static const Duration transitionDuration = Duration(seconds: 250);
   static final Router router = new Router();
 
   ///
@@ -57,7 +57,7 @@ class RouteNavigator {
     router.navigateTo(context, path,
         replace: replace,
         clearStack: clearStack,
-        transitionDuration: Duration(seconds: transitionDurationSeconds),
+        transitionDuration: transitionDuration,
         transition: TransitionType.cupertino);
   }
 
@@ -71,7 +71,7 @@ class RouteNavigator {
         .navigateTo(context, path,
             replace: replace,
             clearStack: clearStack,
-            transitionDuration: Duration(seconds: transitionDurationSeconds),
+            transitionDuration: transitionDuration,
             transition: TransitionType.cupertino)
         .then((result) {
       if (result == null) {
@@ -86,18 +86,12 @@ class RouteNavigator {
   ///
   ///打开新页面
   ///
-  static goPage(BuildContext context, Widget page,
-      {bool fullscreenDialog = false}) {
+  static goPage(BuildContext context, Widget page) {
     L.d("open page: page=" + page.toString());
-    Navigator.push(
-      context,
-      new CupertinoPageRoute(
-        builder: (context) {
-          return page;
-        },
-        fullscreenDialog: fullscreenDialog,
-      ),
-    );
+    PageRoute pageRoute = new CupertinoPageRoute(builder: (context) {
+      return page;
+    });
+    Navigator.push(context, pageRoute);
   }
 
   ///
