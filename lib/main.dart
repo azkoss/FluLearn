@@ -80,10 +80,15 @@ class LocalizationAppState extends State<LocalizationApp> {
         primaryColor: Colors.green,
         primaryColorDark: Colors.green,
         primaryColorLight: Colors.lightGreen,
-        accentColor: Colors.lightGreen,
+        accentColor: Colors.green[900],
         backgroundColor: Color(0xFFF2F2F2),
         scaffoldBackgroundColor: Colors.white,
         cardColor: Colors.lightGreen,
+        dividerTheme: DividerThemeData(
+          color: Colors.grey[350],
+          space: 0.8,
+        ),
+        cursorColor: Colors.green[900],
       ),
       //主入口页面
       home: Constant.splashSeconds > 1 ? SplashPage() : HomePage(),

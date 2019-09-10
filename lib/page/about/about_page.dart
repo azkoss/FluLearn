@@ -53,10 +53,7 @@ class _AboutPageState extends State<AboutPage> {
                   },
                   trailing: Icon(Icons.chevron_right),
                 ),
-                Divider(
-                  height: 1,
-                  color: Colors.grey[350],
-                ),
+                Divider(),
                 ListTile(
                   title: Text(S.of(context).titleWebSite),
                   trailing: new Icon(Icons.chevron_right),
@@ -64,10 +61,7 @@ class _AboutPageState extends State<AboutPage> {
                     return RouteNavigator.goWeb(context, 'http://qqtheme.cn');
                   },
                 ),
-                Divider(
-                  height: 1,
-                  color: Colors.grey[350],
-                ),
+                Divider(),
                 ListTile(
                   title: Text(S.of(context).titleLicenses),
                   trailing: new Icon(Icons.chevron_right),
@@ -80,10 +74,7 @@ class _AboutPageState extends State<AboutPage> {
                     );
                   },
                 ),
-                Divider(
-                  height: 1,
-                  color: Colors.grey[350],
-                ),
+                Divider(),
               ],
             ),
           ),

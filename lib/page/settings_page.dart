@@ -66,19 +66,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 )
               ],
             ),
-            Divider(
-              height: 1,
-              color: Colors.grey[350],
-            ),
+            Divider(),
             ListTile(
               title: Text(S.of(context).settingsTheme),
               leading: Icon(Icons.color_lens),
               trailing: Icon(Icons.chevron_right),
             ),
-            Divider(
-              height: 1,
-              color: Colors.grey[350],
-            ),
+            Divider(),
           ],
         ),
       ),

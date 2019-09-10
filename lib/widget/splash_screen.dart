@@ -40,6 +40,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Timer _timer;
   int _seconds;
+  double _statusBarHeight;
 
   @override
   void initState() {
@@ -70,6 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
       body: Container(
         color: widget.backgroundColor,
@@ -97,7 +99,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: EdgeInsets.only(top: 40, right: 20),
+              padding: EdgeInsets.only(top: _statusBarHeight, right: 20),
               child: _buildSkipButton(),
             ),
           ),
