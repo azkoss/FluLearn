@@ -29,6 +29,8 @@ dependencies:
   # 参阅《Flutter-国际化适配终结者》 https://www.jianshu.com/p/b9f830efe1f8
   flutter_localizations:
     sdk: flutter
+  # IOS风格的图标 https://github.com/flutter/cupertino_icons
+  cupertino_icons: ^0.1.2
   # SharedPreferences或NSUserDefaults https://github.com/flutter/plugins
   shared_preferences: ^0.5.3+4
   # 获取APP版本信息 https://github.com/flutter/plugins/tree/master/packages/package_info
@@ -56,30 +58,16 @@ dependencies:
   share: 0.6.2+1
   # Markdown文档 https://github.com/flutter/flutter_markdown
   flutter_markdown: ^0.2.0
+  # 向导页 https://github.com/duytq94/flutter-intro-slider
+  intro_slider: ^2.2.7
   # 轮播图 https://github.com/best-flutter/flutter_swiper
   flutter_swiper: ^1.1.6
   # 网页加载 https://github.com/pichillilorenzo/flutter_inappbrowser
   flutter_inappbrowser: ^1.2.1
   # 下拉刷新上拉加载 https://github.com/peng8350/flutter_pulltorefresh
   pull_to_refresh: ^1.5.4
-  # 向导页 https://github.com/duytq94/flutter-intro-slider
-  intro_slider: ^2.2.7
-  # 图片选择 https://github.com/flutter/plugins/tree/master/packages/image_picker
-  image_picker: ^0.6.1+3
   # 图片预览 https://github.com/renancaraujo/photo_view
   photo_view: ^0.4.2
-  # 图片裁剪 https://github.com/hnvn/flutter_image_cropper
-  image_cropper: ^1.0.2
-  # 文件下载 https://github.com/fluttercommunity/flutter_downloader
-  #flutter_downloader: ^1.2.1
-  # 键盘操作 https://github.com/diegoveloper/flutter_keyboard_actions
-  keyboard_actions: ^2.1.2
-  # 手势识别 https://github.com/aleksanderwozniak/simple_gesture_detector
-  simple_gesture_detector: ^0.1.3
-  # 依赖注入及状态管理 https://github.com/rrousselGit/provider
-  provider: ^3.0.0+1
-  # 日期时间滚轮选择 https://github.com/Realank/flutter_datetime_picker
-  flutter_datetime_picker: ^1.2.6
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,5 @@
 package com.example.flutter_app;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
@@ -18,8 +17,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import com.example.flutter_app.toolkit.CrashHandler;
+import com.example.flutter_app.toolkit.L;
+
 import java.util.List;
 import java.util.Stack;
 
@@ -40,7 +40,8 @@ public class MyFlutterApp extends FlutterApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        android.util.Log.w(LOG_TAG, "Android native load finished");
+        L.enable(LOG_TAG);
+        L.d("Android native load finished");
         initInApplication(this);
     }
 
@@ -48,9 +49,9 @@ public class MyFlutterApp extends FlutterApplication {
         if (application != null && app.getClass() != application.getClass()) {
             application.unregisterActivityLifecycleCallbacks(LIFECYCLE_CALLBACK);
         }
+        app.registerActivityLifecycleCallbacks(LIFECYCLE_CALLBACK);
+        CrashHandler.install(app);
         application = app;
-        //注册生命周期监听器
-        application.registerActivityLifecycleCallbacks(LIFECYCLE_CALLBACK);
     }
 
     /**
@@ -104,7 +105,7 @@ public class MyFlutterApp extends FlutterApplication {
                 appTask.finishAndRemoveTask();
             }
         } catch (SecurityException e) {
-            android.util.Log.w(LOG_TAG, "", e);
+            L.e("", e);
         }
     }
 

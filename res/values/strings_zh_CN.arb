@@ -1,5 +1,6 @@
 {
   "appName": "Flutter学习",
+  "splashAdSkip": "跳过",
   "copyrightStatement": "©2019 贵州穿青人李玉江 版权所有",
   "copyrightLegalese": "免责声明\n本产品中的开放源代码软件是在希望它会有用的情况下发布的，但没有任何保证。有关更多详细信息，请参阅适用的许可证，如下所示。",
   "toastPressAgainToExit": "再按一次退出应用程序",
@@ -14,6 +15,7 @@
   "webMenuOpenBrowser": "浏览器打开",
   "webMenuClose": "关闭",
   "settingsLanguage": "语言",
-  "settingsLanguageAutoBySystem": "跟随系统",
+  "settingsAutoBySystem": "跟随系统",
+  "settingsDarkMode": "夜间模式",
   "settingsTheme": "主题"
 }

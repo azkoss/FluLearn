@@ -3,29 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/config/constant.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/page/empty/empty_router.dart';
-import 'package:flutter_app/page/guide/guide_router.dart';
-import 'package:flutter_app/page/home/home_page.dart';
-import 'package:flutter_app/page/home/home_router.dart';
-import 'package:flutter_app/page/login/login_router.dart';
-import 'package:flutter_app/page/splash_page.dart';
-import 'package:flutter_app/util/language.dart';
-import 'package:flutter_app/util/logger.dart';
-import 'package:flutter_app/util/overlay_style.dart';
-import 'package:flutter_app/util/route_navigator.dart';
+import 'package:flutter_app/toolkit/theme_kit.dart';
+import 'package:flutter_app/ui/empty/empty_router.dart';
+import 'package:flutter_app/ui/guide/guide_router.dart';
+import 'package:flutter_app/ui/home/home_page.dart';
+import 'package:flutter_app/ui/home/home_router.dart';
+import 'package:flutter_app/ui/login/login_router.dart';
+import 'package:flutter_app/ui/splash/splash_page.dart';
+import 'package:flutter_app/toolkit/l.dart';
+import 'package:flutter_app/toolkit/language_kit.dart';
+import 'package:flutter_app/toolkit/overlay_style.dart';
+import 'package:flutter_app/toolkit/route_navigator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-final GlobalKey<LocalizationAppState> localizationStateKey =
-    new GlobalKey<LocalizationAppState>();
+final GlobalKey<AppWrapperState> appStateKey = new GlobalKey<AppWrapperState>();
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   initAsync().then((v) {
-    runApp(new MyApp());
+    L.d('app init end');
+    runApp(MyApp());
   });
 }
 
 Future<void> initAsync() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  L.d('app init start');
   OverlayStyle.setOverlayStyle(Brightness.dark);
   RouteNavigator.registerRouter([
     new EmptyRouter(),
@@ -39,34 +41,42 @@ Future<void> initAsync() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return LocalizationApp(key: localizationStateKey);
+    return AppWrapper(key: appStateKey);
   }
 }
 
-class LocalizationApp extends StatefulWidget {
-  LocalizationApp({Key key}) : super(key: key);
+class AppWrapper extends StatefulWidget {
+  AppWrapper({Key key}) : super(key: key);
 
   @override
-  LocalizationAppState createState() {
-    return LocalizationAppState();
-  }
+  AppWrapperState createState() => AppWrapperState();
 }
 
-class LocalizationAppState extends State<LocalizationApp> {
+class AppWrapperState extends State<AppWrapper> {
   Locale _locale;
+  ThemeData _themeData;
 
   void changeLocale(Locale locale) {
     setState(() {
+      L.d('change locale to $locale from $_locale');
       _locale = locale;
-      L.d("change locale to: $locale");
+    });
+  }
+
+  void changeThemeData(ThemeData themeData) {
+    setState(() {
+      L.d('''change theme data
+            to ${themeData.brightness} ${themeData.primaryColor}
+            from ${_themeData.brightness} ${_themeData.primaryColor}''');
+      _themeData = themeData;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _locale = Language.currentLocaleFromSp();
-    L.d("current locale is: $_locale");
+    _locale = LanguageKit.locale;
+    _themeData = ThemeKit.themeData;
   }
 
   @override
@@ -74,22 +84,8 @@ class LocalizationAppState extends State<LocalizationApp> {
     return MaterialApp(
       //右上角调试标记
       debugShowCheckedModeBanner: true,
-      //界面风格
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Colors.green,
-        primaryColorDark: Colors.green,
-        primaryColorLight: Colors.lightGreen,
-        accentColor: Colors.green[900],
-        backgroundColor: Color(0xFFF2F2F2),
-        scaffoldBackgroundColor: Colors.white,
-        cardColor: Colors.lightGreen,
-        dividerTheme: DividerThemeData(
-          color: Colors.grey[350],
-          space: 0.8,
-        ),
-        cursorColor: Colors.green[900],
-      ),
+      //主题色彩
+      theme: _themeData,
       //主入口页面
       home: Constant.splashSeconds > 1 ? SplashPage() : HomePage(),
       //生成页面路由（用于Router）
