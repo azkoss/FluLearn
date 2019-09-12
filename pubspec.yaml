@@ -9,9 +9,8 @@ description: Flutter应用开发学习
 # In Android, build-name is used as versionName while build-number used as versionCode.
 # Read more about Android versioning at https://developer.android.com/studio/publish/versioning
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# 语义化版本规范（主版本号.次版本号.修订号）：https://semver.org/lang/zh-CN/
+# Read more about iOS versioning at https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# 语义化版本规范（主版本号.次版本号.修订号），参阅 https://semver.org/lang/zh-CN/
 version: 1.0.0+1
 author: 李玉江 <1032694760@qq.com>
 homepage: https://github.com/gzu-liyujiang
