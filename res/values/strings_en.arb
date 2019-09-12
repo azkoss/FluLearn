@@ -1,8 +1,8 @@
 {
   "appName": "Flutter Learn",
   "splashAdSkip": "Skip ",
-  "copyrightStatement": "©2019 Li Yujiang, Chuanqing of Guizhou. All Rights Reserved.",
-  "copyrightLegalese": "Warranty Disclaimer\nThe open source software in this product is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY. See the applicable licenses for more details as follow.",
+  "copyrightStatement": "©2019 Li Yujiang, Chuanqing People. All Rights Reserved.",
+  "copyrightLegalese": "Warranty Disclaimer\nThe software is FREE for your personal use, if it don't work as expected, you should know that it comes WITHOUT WARRANTY of any kind. The third-party software used in the software are distributed AS-IS, WITHOUT ANY WARRANTY. third-party software for more details, see the following applicable licenses:",
   "toastPressAgainToExit": "Press again to exit the app",
   "toastCallPhoneFailed": "Call phone failed",
   "toastCopyWebUrl": "Copied to the clipboard",
@@ -11,6 +11,7 @@
   "titleAbout": "About Us",
   "titleWebSite": "Web Site",
   "titleChangeLog": "Change Log",
+  "titlePrivacy": "Privacy",
   "webMenuCopyLink": "Copy Link",
   "webMenuOpenBrowser": "Open Browser",
   "webMenuClose": "Close",

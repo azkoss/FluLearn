@@ -1,9 +1,7 @@
-# flutter_app
-
 安卓 Native+Flutter 应用开发实战
 
 
-## Getting Started
+## 参考资料
 
 - [第三方共享包检索](https://pub.dev/flutter)
 - [Flutter开发环境搭建](https://flutter.dev/docs/get-started/install)

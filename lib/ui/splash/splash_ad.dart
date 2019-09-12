@@ -15,6 +15,7 @@ import 'package:flutter_app/toolkit/route_navigator.dart';
 class SplashAd extends StatefulWidget {
   final int seconds;
   final dynamic navigateTo;
+  final Color backgroundColor;
   final String skipButtonText;
   final String imageUrl;
   final String imagePlaceholder;
@@ -24,6 +25,7 @@ class SplashAd extends StatefulWidget {
   SplashAd({
     @required this.seconds,
     this.navigateTo,
+    this.backgroundColor = Colors.transparent,
     this.skipButtonText,
     this.imageUrl,
     this.imagePlaceholder = '',
@@ -71,11 +73,14 @@ class _SplashAdState extends State<SplashAd> {
   Widget build(BuildContext context) {
     _statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          _buildBody(),
-          _buildBottom(),
-        ],
+      body: Container(
+        color: widget.backgroundColor,
+        child: Column(
+          children: <Widget>[
+            _buildBody(),
+            _buildBottom(),
+          ],
+        ),
       ),
     );
   }

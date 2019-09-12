@@ -5,6 +5,7 @@ import 'package:flutter_app/toolkit/image_loader.dart';
 import 'package:flutter_app/toolkit/route_navigator.dart';
 import 'package:flutter_app/ui/about/change_log_page.dart';
 import 'package:flutter_app/ui/about/licenses_page.dart';
+import 'package:flutter_app/ui/about/privacy_page.dart';
 import 'package:flutter_app/ui/widget/back_screen.dart';
 import 'package:package_info/package_info.dart';
 
@@ -106,11 +107,18 @@ class _AboutPageState extends State<AboutPage> {
             trailing: new Icon(Icons.chevron_right),
             onTap: () {
               return RouteNavigator.goPage(
-                context,
-                LicensesPage(
-                  legalese: S.of(context).copyrightLegalese,
-                ),
-              );
+                  context,
+                  LicensesPage(
+                    legalese: S.of(context).copyrightLegalese,
+                  ));
+            },
+          ),
+          Divider(),
+          ListTile(
+            title: Text(S.of(context).titlePrivacy),
+            trailing: new Icon(Icons.chevron_right),
+            onTap: () {
+              return RouteNavigator.goPage(context, PrivacyPage());
             },
           ),
           Divider(),

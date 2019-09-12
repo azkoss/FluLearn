@@ -87,6 +87,7 @@ class _SplashPageState extends State<SplashPage> {
     }
     return ExitContainer(
       child: SplashAd(
+        backgroundColor: Colors.white,
         seconds: countdownSeconds,
         navigateTo: RouteUrl.home,
         imageUrl: noAd ? defaultImageUrl : _imageUrl,
