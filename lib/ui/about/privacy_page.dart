@@ -3,18 +3,17 @@ import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/ui/widget/back_screen.dart';
 import 'package:flutter_app/ui/widget/markdown_viewer.dart';
 
-//const _PATH='res/CHANGELOG.md';
-const _PATH =
-    'https://raw.githubusercontent.com/gzu-liyujiang/AndroidPicker/master/ChangeLog.md';
+const _PATH = 'res/PRIVACY.md';
 
 ///
-/// 版本更新日志页
+/// 隐私声明页
 ///
-class ChangeLogPage extends StatelessWidget {
+class PrivacyPage extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return BackScreen(
       presetScroll: false,
-      title: S.of(context).titleChangeLog,
+      title: S.of(context).titlePrivacy,
       body: MarkdownViewer(path: _PATH),
     );
   }
