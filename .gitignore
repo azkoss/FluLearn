@@ -26,6 +26,7 @@ build/
 .flutter-plugins
 .packages
 **/generated/
+!**/generated/i18n.dart
 .pub-cache/
 .pub/
 pubspec.lock
