@@ -9,6 +9,7 @@ import 'package:flutter_app/config/route_url.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/toolkit/image_loader.dart';
 import 'package:flutter_app/toolkit/l.dart';
+import 'package:flutter_app/toolkit/universal.dart';
 import 'package:flutter_app/ui/splash/splash_ad.dart';
 import 'package:flutter_app/ui/widget/exit_container.dart';
 import 'package:package_info/package_info.dart';
@@ -81,7 +82,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     final countdownSeconds = Constant.splashSeconds;
     final bool noAd = TextUtil.isEmpty(_imageUrl);
-    String bottomText = S.of(context).copyrightStatement;
+    String bottomText = S.of(context).copyrightStatement(Universal.currentYear);
     if (!TextUtil.isEmpty(_appName)) {
       bottomText = "$_appName v$_version build$_buildNumber\n$bottomText";
     }

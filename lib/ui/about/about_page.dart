@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/toolkit/image_loader.dart';
 import 'package:flutter_app/toolkit/route_navigator.dart';
+import 'package:flutter_app/toolkit/universal.dart';
 import 'package:flutter_app/ui/about/change_log_page.dart';
 import 'package:flutter_app/ui/about/licenses_page.dart';
 import 'package:flutter_app/ui/about/privacy_page.dart';
@@ -70,7 +71,7 @@ class _AboutPageState extends State<AboutPage> {
               child: Padding(
                 padding: EdgeInsets.only(bottom: 10, top: 15),
                 child: Text(
-                  S.of(context).copyrightStatement,
+                  S.of(context).copyrightStatement(Universal.currentYear),
                   style: TextStyle(fontSize: 10),
                 ),
               ),

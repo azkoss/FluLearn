@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/toolkit/route_navigator.dart';
 import 'package:flutter_app/toolkit/toaster.dart';
-import 'package:flutter_app/toolkit/url_scheme.dart';
+import 'package:flutter_app/toolkit/universal.dart';
 
 ///
 /// 网页加载器右上角弹出菜单
@@ -24,7 +24,7 @@ class WebActionMenu extends StatelessWidget {
           Clipboard.setData(new ClipboardData(text: url));
           Toaster.showShort(S.of(context).toastCopyWebUrl);
         } else if ('browser' == value) {
-          UrlScheme.tryOpen(url);
+          Universal.tryOpenUrl(url);
         }
       },
       itemBuilder: (BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/config/route_url.dart';
 import 'package:flutter_app/toolkit/l.dart';
 import 'package:flutter_app/toolkit/route_navigator.dart';
-import 'package:flutter_app/toolkit/url_scheme.dart';
+import 'package:flutter_app/toolkit/universal.dart';
 import 'package:flutter_app/ui/web/web_popup_menu.dart';
 import 'package:flutter_app/ui/widget/title_bar.dart';
 import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
@@ -140,7 +140,7 @@ class _WebPageState extends State<WebPage> {
     if (url.startsWith("http") || url.startsWith("ftp")) {
       if (url.endsWith(".apk")) {
         L.d('APK下载： $url');
-        UrlScheme.tryOpen(url);
+        Universal.tryOpenUrl(url);
         return;
       }
       _notifyLoadStateChanged(true);
@@ -148,7 +148,7 @@ class _WebPageState extends State<WebPage> {
       return;
     }
     L.d('Url Scheme 未知： $url');
-    UrlScheme.tryOpen(url);
+    Universal.tryOpenUrl(url);
   }
 
   void _onLoadResource(InAppWebViewController controller,
